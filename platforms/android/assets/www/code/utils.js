@@ -27,8 +27,13 @@ lottery_name
 Borrar siempre la ultima partida
 
 */
-
 var utils = {
+	getServices : function(){
+		var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
+		return {			
+			login : url + "service/manager/login.php"
+		};
+	},
 	saveUserData : function(data) {
 		localStorage.setItem("id_vendor", data[0].idVendor);
 		localStorage.setItem("id_phone", data[0].idPhone);

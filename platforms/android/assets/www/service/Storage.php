@@ -1,16 +1,16 @@
 <?php
 class Storage {
+	
 	//public $host = "localhost";
-	//public $host = "http://192.168.15.16/";
 	//public $server = "root";
 	//public $password = "";
 	//public $dataBase = "quiniela";
 	
-	//public $host = "deaene.com.ar";
 	public $host = "190.210.186.144";
 	public $server = "deaene.com.ar";
 	public $password = "arcomdeaene";
 	public $dataBase = "deaene_com_ar";
+	
 	private $sql;
 
 	public function Storage() { }
@@ -27,7 +27,6 @@ class Storage {
 	public function login($data) {
 		$this->connect();
 
-		
 		$user = $data['user'];
 		$password = $data['password'];
 
@@ -46,9 +45,16 @@ class Storage {
 		array_push($dataQuery, $obj);
 		
 		echo json_encode($dataQuery);
-		/**/
 		$this->close();	
+	}
 
+	public function insertBet() {
+		$this->connect();
+		$lotteryType = "23";
+		$query = 'INSERT INTO bets (lottery_type) VALUES (' . $lotteryType . ');';
+		$result = mysql_query($query) or die('Error en la consulta -> ' .  $query);
+		echo mysql_insert_id();
+		$this->close();
 	}
 }
 ?>

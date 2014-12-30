@@ -39,10 +39,7 @@ Login.prototype.signIn = function(e) {
 			async : false,
 			type : "POST",
 			data : { user : user, password : password },			
-			//type : "GET",
-			//data : "user=" + user + "&password=" + password,	
-			//url : "service/manager/login.php",
-			url : "http://deaene.com.ar/apps/Quiniela/mobile/service/manager/login.php",
+			url : utils.getServices().login,
 			success : function(_result_) {
 				var result = JSON.parse(_result_);
 				
@@ -56,7 +53,6 @@ Login.prototype.signIn = function(e) {
 				
 			},
 			error : function(error) {
-				//debugger;
 				errorElement.text("error",error);
 			}
 		});
