@@ -1,0 +1,43 @@
+<section class="view bet">
+    <div class="content-view">
+        <h1 class="main-title">Agregar nueva jugada</h1>
+        <ul class="list-options-bet">
+            <li class="item-bet-option">
+                <label>Número:</label>
+                <input id="bet-number" type="text" />
+            </li>
+            <li id="container-lotteries" class="item-bet-option">
+                <label>Loterias disponibles:</label>
+                <div class="wrapper-container-lotteries"></div>
+            </li>
+            <li class="item-bet-option">
+                <label>Posición:</label>
+                <select id="position">
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>20</option>
+                </select>
+            </li>
+            <li class="item-bet-option">
+                <label>Importe por jugada:</label>
+                <input id="partial-amount" type="text" />
+            </li>
+             <li class="item-bet-option">
+                <span>Importe total: </span>$<span class="total-amount">0</span>
+            </li>
+        </ul>
+    </div>
+    <nav class="commands-nav">
+        <ul class="commands-list">
+            <li>
+                <div class="btn btn-cancel">CANCELAR
+                </div>
+            </li>
+            <li>
+                <div class="btn btn-save">GUARDAR
+                </div>
+            </li>
+        </ul>
+    </nav>
+</section>

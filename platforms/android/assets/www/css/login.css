@@ -1,0 +1,56 @@
+section.view.login .content-view {
+	padding-top:10em;
+
+}
+
+section.view.login form {
+	padding:7.625em 0 2.625em 0;
+	display: inline-block;
+}
+
+section.view.login form input { 
+	width: 96%;
+	padding: 0 0 0 4%;
+	height: 11.56rem;
+	font-size: 6em;
+	margin-bottom: 4.25rem;
+	font-family: "Lato-Italic";
+}
+
+section.view.login form input:last-child {
+	margin-bottom: 0;
+}
+
+.logo-login {
+	margin-bottom: 4em;
+}
+
+section.view.login .error-log {
+	height: 1em;
+	font-size: 4.25em;
+}
+
+.btn-sign-in { 
+	width: 100%;
+	background-color:#00ADEF;
+	margin-top:6.25em;
+	float: left;
+	padding: 1em 0;	
+}
+
+.btn-sign-in .description { 
+	font-size: 6em;
+	display: inline-block;
+	float: left;
+}
+
+.btn-sign-in .wrapper-icon {
+	margin: 2em 0 0 2em;
+}
+
+.btn-sign-in .wrapper-icon .icon-sign-in {
+	width:6.375em;
+	height: 3.875em;
+	background-position: -148px -642px;
+	line-height: 6.25em;
+}

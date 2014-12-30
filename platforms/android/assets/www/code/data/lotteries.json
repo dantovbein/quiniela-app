@@ -1,0 +1,131 @@
+{
+	"days" : [
+		{ 	
+			"day" : 1,
+			"lotteries" : [ 
+				{
+					"lotteryType" : 1,
+					"expirate" : "11:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 2,
+					"expirate" : "14:30",
+					"lotteryNames" : [ 1,2,3,5 ]
+				},{
+					"lotteryType" : 3,
+					"expirate" : "17:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 4,
+					"expirate" : "21:00",
+					"lotteryNames" : [ 1,2,3,5 ]
+				} 
+			] 
+		},{ 	
+			"day" : 2,
+			"lotteries" : [ 
+				{
+					"lotteryType" : 1,
+					"expirate" : "11:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 2,
+					"expirate" : "14:30",
+					"lotteryNames" : [ 1,2,3,5 ]
+				},{
+					"lotteryType" : 3,
+					"expirate" : "17:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 4,
+					"expirate" : "21:00",
+					"lotteryNames" : [ 1,2,3,5 ]
+				} 
+			] 
+		},{ 	
+			"day" : 3,
+			"lotteries" : [ 
+				{
+					"lotteryType" : 1,
+					"expirate" : "11:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 2,
+					"expirate" : "14:30",
+					"lotteryNames" : [ 1,2,3,5 ]
+				},{
+					"lotteryType" : 3,
+					"expirate" : "17:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 4,
+					"expirate" : "21:00",
+					"lotteryNames" : [ 1,2,3,4,6 ]
+				} 
+			] 
+		},{ 	
+			"day" : 4,
+			"lotteries" : [ 
+				{
+					"lotteryType" : 1,
+					"expirate" : "11:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 2,
+					"expirate" : "14:30",
+					"lotteryNames" : [ 1,2,3,5 ]
+				},{
+					"lotteryType" : 3,
+					"expirate" : "17:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 4,
+					"expirate" : "21:00",
+					"lotteryNames" : [ 1,2,3,5 ]
+				} 
+			] 
+		},{ 	
+			"day" : 5,
+			"lotteries" : [ 
+				{
+					"lotteryType" : 1,
+					"expirate" : "11:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 2,
+					"expirate" : "14:30",
+					"lotteryNames" : [ 1,2,3,5 ]
+				},{
+					"lotteryType" : 3,
+					"expirate" : "17:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 4,
+					"expirate" : "21:00",
+					"lotteryNames" : [ 1,2,3,5 ]
+				} 
+			] 
+		},{ 	
+			"day" : 6,
+			"lotteries" : [ 
+				{
+					"lotteryType" : 1,
+					"expirate" : "11:30",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 2,
+					"expirate" : "15:00",
+					"lotteryNames" : [ 1,2,3,5 ]
+				},{
+					"lotteryType" : 3,
+					"expirate" : "18:00",
+					"lotteryNames" : [ 1,2,3 ]
+				},{
+					"lotteryType" : 4,
+					"expirate" : "21:00",
+					"lotteryNames" : [ 1,2,3,5,7 ]
+				} 
+			] 
+		}
+	]
+}

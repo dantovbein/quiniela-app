@@ -1,0 +1,33 @@
+section.view.user-settings {
+	color:#fff;
+	width: 80%;
+	min-height: 111em;
+	background-color: #000;
+	top: 9em;
+	clear: both;
+	position: fixed;
+	right: 0;
+	margin-top: 0;
+}
+
+.list-user-settings {
+	padding: 1em 0 0 0;
+}
+
+.item-user-settings {
+	padding: .75em 0;
+	background-color: red;
+	text-align: center;
+	font-size: 3em;
+	margin-bottom: 1em;
+}
+
+.user-data {
+	padding: 1em 0;
+	font-size: 3em;
+}
+
+.user-data .user-name {
+	font-family: "Lato-Bold";
+	padding-left: .25em;
+}

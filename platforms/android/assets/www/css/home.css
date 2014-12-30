@@ -1,0 +1,32 @@
+section.view.home .content-view {
+	padding-top: 10em;
+}
+
+.list-menu-home {
+	display: inline-block;
+	padding: 0 1.275em;
+}
+
+.item-menu-home {
+	width: 25em;
+	margin:0 5.5em 5.5em 0;
+	text-align: center;
+	float: left;
+}
+
+.item-menu-home:nth-child(even) {
+	margin-right: 0;
+}
+
+.btn-home {
+	width: 100%;
+	height: 25em;
+	margin: 0 auto;
+	background-color:#F1623D;
+}
+
+.item-menu-home span {
+	display: inline-block;
+	padding-top: .5em;
+	font-size:3.5em;
+}

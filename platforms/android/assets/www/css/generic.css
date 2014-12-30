@@ -1,0 +1,168 @@
+@import "font-lato.css";
+
+section,nav,header,aside,h1,h2,h3,h4,h5,h6,hgroup,footer,ul,li,main { display: block; padding: 0; margin: 0; }
+body { padding: 0; margin: 0; background-color:#004056; font-size: 16px;  font-family: "Lato-Regular"; position: relative; }
+
+main { 
+	display: inline-block;
+	width: 100%; 
+	height: 100%;
+	color: #fff; 
+}
+label {
+	width: 100%;
+	display: inline-block;
+	font-size: 2em;
+}
+input { 
+	width: 98%;
+	padding: 0 0 0 2%;
+	height: 8rem;
+	font-size: 1.5em;
+}
+
+input[type=checkbox] {
+   padding-left:5px;
+    padding-right:5px;
+    border-radius:15px;
+
+    /*-webkit-appearance:button;*/
+
+    border: double 2px #00F;
+
+    background-color:#0b0095;
+    color:#FFF;
+    white-space: nowrap;
+    overflow:hidden;
+
+    width:.8em;
+    height:.8em;
+}
+
+select { 
+	/*background: transparent;*/
+   width: 100%;
+	padding: 0 0 0 2%;
+	height: 8rem;
+	font-size: 4em;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   -webkit-appearance: none;
+}
+
+ul { 
+	list-style: none;
+}
+
+/* GENERIC CLASSES */
+.btn {
+	text-align: center;
+	cursor: pointer;
+}
+.btn .btn-content {
+	display: inline-block;
+}
+
+.icon {
+	display: inline-block;
+	vertical-align: middle;
+	background: transparent url("../images/assets.svg");	
+}
+
+.wrapper-icon {
+	display: inline-block;
+}
+
+.error-log {
+	color: red;
+	text-align: center;
+}
+
+.logo {
+	width: 516px;
+	height: 99px;
+	background: transparent url("../images/logo.png");
+	margin: 0 auto;
+}
+/* END GENERIC CLASSES */
+
+header.default-header {
+	top:0;
+	position: fixed;
+	width: 100%;
+	height: 9em;
+	background-color: red;
+	clear: both;
+}
+
+header.default-header .btn-settings {
+	width: 9em;
+	height: 9em;
+	float: right;
+	background-color:#2B858D;
+}
+
+section h1.main-title {
+	font-size: 4.33em;
+	text-align: center;
+	font-family: Lato-light;
+}
+
+section.view {
+	width: 100%;
+	position: relative;
+	display: inline-block;
+}
+
+section.view .content-view {
+	width: 86%;
+	margin-top: 6em;
+	padding: 5em 7% 0 7%;
+	float: left;
+	display: inline-block;
+}
+
+
+/* Pantallas de loteria, estos estilos se comparten en varias pantallas */
+.list-options-bet {
+	padding: 1em 0 0 0;
+}
+
+.item-bet-option {
+	width: 100%;
+	margin: 1em 0;
+	display: inline-block;
+	font-size: 3.5em;
+}
+
+.item-bet-option label {
+	margin-bottom: 1em;
+}
+
+.lottery {
+
+}
+
+nav.commands-nav {
+	/*float: left;*/
+	position: fixed;
+	bottom:0;
+}
+nav.commands-nav ul li {
+	width: 14em;
+	height: 14em;
+	background-color: black;
+	float: left;
+}
+
+.checkbox-list .item-checkbox {
+	width: 50%;
+	float: left;
+	margin-bottom: 2em;
+}
+
+.item-checkbox span {
+	font-size: 2em;
+}
+/***** fin estilos compartidos *****/
