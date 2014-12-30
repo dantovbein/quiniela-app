@@ -36,9 +36,9 @@ var app = {
         alert("deviceready");
         
         // Load the App's library
-        //var libs = new Libs("app");
+        var libs = new Libs("app");
         // Generate App
-        //var app = new App();
+        var app = new App();
         
         //app.receivedEvent('deviceready');
 
