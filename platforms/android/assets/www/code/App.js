@@ -18,7 +18,16 @@ App.prototype.initialize = function() {
 }
 
 App.prototype.configure = function() {
-	//this.getLotteriesData();
+	utils.setMainInstance(this);
+	this.createDataBase();
+}
+
+App.prototype.createDataBase = function() {
+	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
+	if(this.lotteryDataBase.isNew()) {
+		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","total_amount","date"]);
+		this.lotteryDataBase.commit();
+	}
 }
 
 App.prototype.getLotteriesData = function() {
@@ -77,9 +86,9 @@ App.prototype.getHome = function() {
 	home.initialize();
 
 	$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); });
-  	$(home.node).bind( "editBet", { context:this }, function(e) { e.data.context.editGame(); });
-  	$(home.node).bind( "removeBet", { context:this }, function(e) { e.data.context.removeGame(); });
-  	$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });
+  	//$(home.node).bind( "editBet", { context:this }, function(e) { e.data.context.editGame(); });
+  	//$(home.node).bind( "removeBet", { context:this }, function(e) { e.data.context.removeGame(); });
+  	//$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });
 }
 
 App.prototype.getSettings = function() {

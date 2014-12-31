@@ -86,6 +86,10 @@ ul {
 	background: transparent url("../images/logo.png");
 	margin: 0 auto;
 }
+
+.highlighted {
+	font-family: "Lato-Bold";
+}
 /* END GENERIC CLASSES */
 
 header.default-header {
@@ -124,6 +128,25 @@ section.view .content-view {
 	display: inline-block;
 }
 
+.item-content-view {
+	width: 100%;
+	float: left;
+	font-size: 3em;
+}
+
+.item-content-view h1 {
+	font-size: 1.5em;
+}
+
+.item-content-view nav.app-nav li {
+	width: 100%;
+	padding: .75em 0;
+	background-color: red;
+	text-align: center;
+	/*font-size: 3em;*/
+	margin-bottom: 1em;
+}
+
 
 /* Pantallas de loteria, estos estilos se comparten en varias pantallas */
 .list-options-bet {
@@ -145,12 +168,11 @@ section.view .content-view {
 
 }
 
-.lottery span {
+.lottery label {
 	font-size: 1.1em;
 }
 
 nav.commands-nav {
-	/*float: left;*/
 	position: fixed;
 	bottom:0;
 }
@@ -171,6 +193,6 @@ nav.commands-nav ul li {
 }
 
 .item-checkbox span {
-	font-size: 2em;
+	font-size: 1.5em;
 }
 /***** fin estilos compartidos *****/

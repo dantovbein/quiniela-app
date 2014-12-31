@@ -28,6 +28,12 @@ Borrar siempre la ultima partida
 
 */
 var utils = {
+	setMainInstance : function(instance) {
+		this.mainInstance = instance;
+	},
+	getMainInstance : function() {
+		return this.mainInstance;
+	},
 	getServices : function(){
 		var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
 		return {			
@@ -41,7 +47,7 @@ var utils = {
 		localStorage.setItem("password", data[0].password);
 		localStorage.setItem("full_name", data[0].fullName);
 		localStorage.setItem("code", data[0].code);
-		localStorage.setItem("last_connection", new Date());
+		localStorage.setItem("connected_since", new Date());
 	},
 	getUserData : function() {
 		return { 
@@ -79,6 +85,9 @@ var utils = {
 			}
 		});
 		return todayLotteryData;
+	},
+	saveBet : function(bet) {
+
 	},
 	getLotteryType : function(value) {
 		switch(value) {

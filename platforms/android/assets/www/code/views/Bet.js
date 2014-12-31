@@ -35,9 +35,6 @@ Bet.prototype.addHandlers = function() {
 	});
 
 	$($(this.node).find(".item-checkbox input")).change({ context : this }, function(e) {
-    	//if(this.checked) {
-        //Do stuff
-    	//}
     	var _this = e.data.context;
 		$(_this.node).find(".total-amount").html(_this.getTotalAmount());
 	});
@@ -96,11 +93,14 @@ Bet.prototype.saveBet = function(e) {
 
 	currentBet.betAmount = partialAmount;
 	currentBet.betTotalAmount = _this.getTotalAmount();
+	currentBet.date = new Date();
 
-	debugger;
-
-	//utils.checkConnection();
-	//_this.insertBet();
+	utils.getMainInstance().lotteryDataBase.insert("bets",{ bet_number : currentBet.betNumber,
+															bet_data : currentBet.bet,
+															bet_position : currentBet.betPosition,
+															total_amount : parseFloat(currentBet.betTotalAmount),
+															date : currentBet.date});
+	utils.getMainInstance().lotteryDataBase.commit();
 }
 
 Bet.prototype.getTotalAmount = function() {

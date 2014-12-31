@@ -5,10 +5,49 @@
     </header>-->
     <div class="content-view">
         <!--<h1 class="main-title">Configuración</h1>-->
-        <div class="user-data">
-            <span>Usuario:</span><span class="user-name">[0]</span>
+       <div class="item-content-view user-data">
+            <h1>Datos generales:</h1>
+            <ul>
+                <li><span>Usuario:</span><span class="user-name highlighted">[0]</span></li>
+                <li><span>Conectado desde:</span><span class="user-connection highlighted"></span></li>
+                <li><span>Expira:</span><span class="user-expire highlighted"></span></li>
+            </ul>
         </div>
-        <ul class="list-user-settings">
+        <div class="item-content-view">
+            <nav class="app-nav">
+                <ul>
+                    <li>
+                        <div class="btn btn-show-bets">
+                            <span>Ver jugadas</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn btn-sincronize">
+                            <span>Sincronizar</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="item-content-view critic-zone">
+            <h1>Zona critica:</h1>
+            <nav class="app-nav">
+                <ul>
+                    <li>
+                        <div class="btn btn-remove-data">
+                            <span>Eliminar datos del usuario</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn btn-block-user">
+                            <span>Bloquear aplicación</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!--<ul class="list-user-settings">
             <li class="item-user-settings">
                 <div class="btn btn-remove-data">
                     <span>Eliminar datos del usuario</span>
@@ -19,6 +58,6 @@
                     <span>Bloquear aplicación</span>
                 </div>
             </li>
-        </ul>
+        </ul>-->
     </div>
 </section>

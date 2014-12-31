@@ -18,7 +18,7 @@ Home.prototype.initialize = function(){
 		$( e.data.context.node ).trigger( "generateBet" );
 	} );
 
-	$(this.node).find(".edit-bet").click( { context:this }, function(e){
+	/*$(this.node).find(".edit-bet").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "editBet" );
 	} );
 
@@ -28,7 +28,7 @@ Home.prototype.initialize = function(){
 
 	$(this.node).find(".synchronize").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "synchronize" );
-	} );
+	} );*/
 
 	this.addHandlers();	
 }
