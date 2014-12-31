@@ -21,7 +21,7 @@ BetsList.prototype.initialize = function(){
 
 BetsList.prototype.getAllBets = function() {
 	var bets = utils.getMainInstance().lotteryDataBase.query("bets");
-	debugger;
+	//debugger;
 	for(var i=0;i<bets.length;i++) {
 		var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : bets[i] } );
 		itemBetsList.initialize();

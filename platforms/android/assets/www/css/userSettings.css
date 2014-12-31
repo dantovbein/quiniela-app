@@ -14,6 +14,11 @@ section.view.user-settings {
 	background-color: red;
 }
 
+.item-content-view.user-data ul li {
+	width: 100%;
+	margin-bottom: .2rem;
+}
+
 /*
 .list-user-settings {
 	padding: 1em 0 0 0;

@@ -50,6 +50,9 @@ var utils = {
 		localStorage.setItem("connected_since", new Date());
 		localStorage.setItem("expiration", this.getExpirationDate());
 	},
+	removeUserData : function() {
+		localStorage.clear();
+	},
 	getExpirationDate : function() {
 		var now = new Date();
 		return new Date(now.setDate(now.getDate() + 30));

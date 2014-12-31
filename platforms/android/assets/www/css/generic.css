@@ -42,18 +42,24 @@ input[type=checkbox] {
 
 select { 
 	/*background: transparent;*/
-   width: 100%;
+   	width: 100%;
 	padding: 0 0 0 2%;
 	height: 8rem;
-	font-size: 1.7rem;
-   line-height: 1;
-   border: 0;
-   border-radius: 0;
-   -webkit-appearance: none;
+	font-size: 4.5rem;
+   	line-height: 1;
+   	border: 0;
+   	border-radius: 0;
+   	-webkit-appearance: none;
 }
 
 ul { 
 	list-style: none;
+	display: inline-block;
+	width: 100%;
+}
+
+li {
+	float: left;
 }
 
 /* GENERIC CLASSES */
@@ -132,8 +138,8 @@ section.view {
 section.view header.header-view {
 	width: 100%;
 	display: inline-block;
-	width: 100%;
 	float: left;
+	padding: 2rem 0;
 }
 
 section.view .content-view {
@@ -148,19 +154,25 @@ section.view .content-view {
 	width: 100%;
 	float: left;
 	font-size: 3rem;
+	margin-bottom: 3rem;
 }
 
 .item-content-view h1 {
-	font-size: 4rem;
+	font-size: 3.5rem;
+	margin-bottom: 1rem;
 }
 
 .item-content-view nav.app-nav li {
 	width: 100%;
-	padding: .75rem 0;
+	padding: 1rem 0;
 	background-color: green;
 	text-align: center;
 	/*font-size: 3rem;*/
 	margin-bottom: 1rem;
+}
+
+.item-content-view nav.app-nav li:last-child {
+	margin-bottom: 0;
 }
 
 
@@ -182,6 +194,16 @@ section.view .content-view {
 
 .lottery {
 
+}
+
+.lottery header.header-lottery {
+	width: 100%;
+	display: inline-block;
+	padding: 1rem 0 2rem 0;
+}
+
+.lottery header.header-lottery span {
+	width: 100%;
 }
 
 .lottery label {

@@ -30,7 +30,7 @@ UserSettings.prototype.initialize = function(){
 UserSettings.prototype.addHandlers = function() {
 	View.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-remove-data").click( { context:this }, function(e){
-		localStorage.clear();
+		utils.removeUserData();
 		$( e.data.context.node ).trigger( "logout" );
 	} );
 	$(this.node).find(".btn-show-bets").click( { context:this }, function(e){
