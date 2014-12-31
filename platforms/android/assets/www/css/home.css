@@ -1,15 +1,15 @@
 section.view.home .content-view {
-	padding-top: 10em;
+	padding-top: 10rem;
 }
 
 .list-menu-home {
 	display: inline-block;
-	padding: 0 1.275em;
+	padding: 0 1.275rem;
 }
 
 .item-menu-home {
-	width: 25em;
-	margin:0 5.5em 5.5em 0;
+	width: 25rem;
+	margin:0 5.5rem 5.5rem 0;
 	text-align: center;
 	float: left;
 }
@@ -20,13 +20,13 @@ section.view.home .content-view {
 
 .btn-home {
 	width: 100%;
-	height: 25em;
+	height: 25rem;
 	margin: 0 auto;
 	background-color:#F1623D;
 }
 
 .item-menu-home span {
 	display: inline-block;
-	padding-top: .5em;
-	font-size:3.5em;
+	padding-top: .5rem;
+	font-size:3.5rem;
 }

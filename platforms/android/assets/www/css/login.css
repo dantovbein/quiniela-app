@@ -1,10 +1,10 @@
 section.view.login .content-view {
-	padding-top:10em;
+	padding-top:10rem;
 
 }
 
 section.view.login form {
-	padding:7.625em 0 2.625em 0;
+	padding:7.625rem 0 2.625rem 0;
 	display: inline-block;
 }
 
@@ -12,7 +12,7 @@ section.view.login form input {
 	width: 96%;
 	padding: 0 0 0 4%;
 	height: 11.56rem;
-	font-size: 6em;
+	font-size: 6rem;
 	margin-bottom: 4.25rem;
 	font-family: "Lato-Italic";
 }
@@ -22,35 +22,35 @@ section.view.login form input:last-child {
 }
 
 .logo-login {
-	margin-bottom: 4em;
+	margin-bottom: 4rem;
 }
 
 section.view.login .error-log {
-	height: 1em;
-	font-size: 4.25em;
+	height: 1rem;
+	font-size: 4.25rem;
 }
 
 .btn-sign-in { 
 	width: 100%;
 	background-color:#00ADEF;
-	margin-top:6.25em;
+	margin-top:6.25rem;
 	float: left;
-	padding: 1em 0;	
+	padding: 1rem 0;	
 }
 
 .btn-sign-in .description { 
-	font-size: 6em;
+	font-size: 6rem;
 	display: inline-block;
 	float: left;
 }
 
 .btn-sign-in .wrapper-icon {
-	margin: 2em 0 0 2em;
+	margin: 2rem 0 0 2rem;
 }
 
 .btn-sign-in .wrapper-icon .icon-sign-in {
-	width:6.375em;
-	height: 3.875em;
+	width:6.375rem;
+	height: 3.875rem;
 	background-position: -148px -642px;
-	line-height: 6.25em;
+	line-height: 6.25rem;
 }

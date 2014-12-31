@@ -14,6 +14,10 @@ Header.prototype.initialize = function(){
 }
 
 Header.prototype.addHandlers = function() {
+	$(this.node).find(".btn-home").click( { context:this }, function(e){
+		$( e.data.context.node ).trigger( "home" );
+	} );
+
 	$(this.node).find(".btn-settings").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "userSettings" );
 	} );

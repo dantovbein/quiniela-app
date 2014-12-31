@@ -48,11 +48,22 @@ var utils = {
 		localStorage.setItem("full_name", data[0].fullName);
 		localStorage.setItem("code", data[0].code);
 		localStorage.setItem("connected_since", new Date());
+		localStorage.setItem("expiration", this.getExpirationDate());
+	},
+	getExpirationDate : function() {
+		var now = new Date();
+		return new Date(now.setDate(now.getDate() + 30));
 	},
 	getUserData : function() {
 		return { 
+			idVendor : localStorage.getItem("id_vendor") ,
+			idPhone : localStorage.getItem("id_phone") ,
 			user : localStorage.getItem("user") ,
-			fullName: localStorage.getItem("full_name")
+			password : localStorage.getItem("password") ,
+			fullName : localStorage.getItem("full_name") ,
+			code : localStorage.getItem("code") ,
+			connectedSince : localStorage.getItem("connected_since") ,
+			expiration : localStorage.getItem("expiration")
 		}
 	},
 	checkConnection : function() {

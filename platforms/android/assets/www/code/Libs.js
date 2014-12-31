@@ -24,11 +24,13 @@ Libs.prototype.getFiles = function(_lib_) {
 				"code/App.js",
 				"code/snippets/Header.js",
 				"code/snippets/Lottery.js",
+				"code/snippets/ItemBetsList.js",				
 				"code/views/View.js",
 				"code/views/Login.js",
 				"code/views/Home.js",
 				"code/views/UserSettings.js",
-				"code/views/Bet.js"
+				"code/views/Bet.js",
+				"code/views/BetsList.js"
 			]
 		}
 	);

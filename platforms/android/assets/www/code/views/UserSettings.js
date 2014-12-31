@@ -11,7 +11,13 @@ UserSettings.prototype.constructor = UserSettings;
 
 UserSettings.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ utils.getUserData().fullName ] });
+	var since = new Date(utils.getUserData().connectedSince);
+	var expiration = new Date(utils.getUserData().expiration);
+
+
+	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ 	utils.getUserData().fullName,
+																		since.getDate() + "/" + (since.getMonth() + 1) + "/" + since.getFullYear(),
+																		expiration.getDate() + "/" + (expiration.getMonth() + 1) + "/" + expiration.getFullYear() ]});
 	this.node = $.parseHTML(snippet.getSnippet());
 	$(this.node).css({ "right" : -$(document).width() });
 	this.container.append(this.node);
@@ -27,9 +33,15 @@ UserSettings.prototype.addHandlers = function() {
 		localStorage.clear();
 		$( e.data.context.node ).trigger( "logout" );
 	} );
+	$(this.node).find(".btn-show-bets").click( { context:this }, function(e){
+		$( e.data.context.node ).trigger( "bets" );
+	} );
 	$(this.node).find(".btn-back").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "home" );
 	} );
+	$(this.node).click({ context:this }, function(e){
+		//e.data.context.show();
+	});
 }
 
 UserSettings.prototype.show = function() {

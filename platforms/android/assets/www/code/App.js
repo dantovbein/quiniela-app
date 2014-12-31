@@ -61,6 +61,7 @@ App.prototype.getHeader = function() {
 	var header = new Header( { container : $("body") } );
 	header.initialize();
 
+	$(header.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
 	$(header.node).bind( "userSettings", { context:this }, function(e) { e.data.context.getSettings(); });
 }
 
@@ -98,6 +99,7 @@ App.prototype.getSettings = function() {
 		this.userSettings = new UserSettings( { container : $("body") } );
 		this.userSettings.initialize();
 
+		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
 		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); });
 	} else {
 		//this.showSettings();
@@ -111,6 +113,12 @@ App.prototype.generateBet = function() {
 	bet.initialize();
 
 	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
+}
+
+App.prototype.getBets = function() {
+	this.removeContent();
+	var bets = new BetsList({ container : $("main") });
+	bets.initialize();
 }
 
 App.prototype.editGame = function() {
