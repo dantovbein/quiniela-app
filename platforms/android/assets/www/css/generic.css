@@ -71,6 +71,12 @@ li {
 	display: inline-block;
 }
 
+.btn-close {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
 .icon {
 	display: inline-block;
 	vertical-align: middle;
@@ -91,6 +97,22 @@ li {
 	height: 99px;
 	background: transparent url("../images/logo.png");
 	margin: 0 auto;
+}
+
+.popup {
+	position: fixed;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.overlay {
+	width: 100%;
+	min-height: 5rem;
+	background-color: rgba(0,0,0,.5);
+	position: fixed;
+	top: 0;
+	left: 0;
 }
 
 .highlighted {
@@ -233,4 +255,27 @@ nav.commands-nav ul li {
 .item-checkbox span {
 	font-size: 1.5rem;
 }
-/***** fin estilos compartidos *****/
+
+/* Start popup */
+
+.popup.popup-bet-options {
+	width: 70%;
+	padding: 2rem;
+	color: #fff;
+	background-color: black;
+	font-size: 3.5rem;
+	border:solid .1rem #404041;
+}
+
+.popup.popup-bet-options nav ul li {
+	width: 96%;
+	padding: 1rem 2%;
+	background-color: orange;
+	margin-bottom:1rem; 
+}
+.popup.popup-bet-options nav ul li:last-child {
+	margin-bottom: 0;
+}
+
+/* End popup */
+

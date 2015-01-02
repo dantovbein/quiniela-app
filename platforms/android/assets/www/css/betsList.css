@@ -1,3 +1,9 @@
+.view.bets-list .content-view {
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+
 ul.list-header {
 	font-size: 3rem;
 	font-family: "Lato-bold";
@@ -12,12 +18,12 @@ li.item-bets-list {
 	width: 96%;
 	padding: 1rem 2%;
 	border-bottom: solid .2rem #fff;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
-li.item-bets-list:hover {
+/*li.item-bets-list:hover {
 	background-color: #c2c2c2;
-}
+}*/
 
 ul.list-header li:nth-child(1), li.item-bets-list ul li:nth-child(1){
 	width: 24%;

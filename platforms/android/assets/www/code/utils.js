@@ -51,6 +51,7 @@ var utils = {
 		localStorage.setItem("expiration", this.getExpirationDate());
 	},
 	removeUserData : function() {
+		this.getMainInstance().lotteryDataBase.drop();
 		localStorage.clear();
 	},
 	getExpirationDate : function() {
@@ -100,8 +101,12 @@ var utils = {
 		});
 		return todayLotteryData;
 	},
-	saveBet : function(bet) {
-
+	getOverlay : function() {
+		$("body").append("<div class='overlay'></div>");
+		$(".overlay").css( { height : $(window).height() } );
+	},
+	removeOverlay : function() {
+		if($(".overlay").length > 0) $(".overlay").remove();
 	},
 	getLotteryType : function(value) {
 		switch(value) {

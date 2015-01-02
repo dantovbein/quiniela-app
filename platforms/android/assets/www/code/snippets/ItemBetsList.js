@@ -16,4 +16,12 @@ ItemBetsList.prototype.initialize = function(){
 }
 
 ItemBetsList.prototype.addHandlers = function() {
+	$(this.node).find(".btn-more-options").click( { context:this }, this.showMoreOptions  );
 }
+
+ItemBetsList.prototype.showMoreOptions = function(e) {
+	$( e.data.context.node ).trigger( { 
+										type : "showItemOptions",
+										item : e.data.context
+									} );
+} 

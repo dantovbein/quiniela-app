@@ -6,13 +6,11 @@ function App(config) {
 App.prototype.contstructor = App;
 
 App.prototype.initialize = function() {
-	//this.bindEvents();
-	
 	this.configure()
+
 	if(utils.getUserData().user == "" || utils.getUserData().user == null) {
 		this.getLogin();
 	} else {		
-		//this.getHeader();
 		this.getHome();
 	}
 }
@@ -20,6 +18,9 @@ App.prototype.initialize = function() {
 App.prototype.configure = function() {
 	utils.setMainInstance(this);
 	this.createDataBase();
+	//$(".popup").bind("close",this.removePopup );
+	//$(".popup").bind("close",this.removePopup );
+	document.addEventListener('remove-popup', this.removePopup, true);
 }
 
 App.prototype.createDataBase = function() {
@@ -66,7 +67,6 @@ App.prototype.getHeader = function() {
 }
 
 App.prototype.getLogin = function() {
-	
 	if($("header.default-header").length > 0) $("header.default-header").remove();
 	if($(".view.user-settings").length > 0) $(".view.user-settings").remove();
 	
@@ -79,7 +79,6 @@ App.prototype.getLogin = function() {
 }
 
 App.prototype.getHome = function() {
-	
 	if($("header.default-header").length == 0) this.getHeader();
 	this.removeContent();
 
@@ -134,6 +133,11 @@ App.prototype.removeGame = function() {
 App.prototype.synchronize = function() {
 	//this.removeContent();
 	alert("synchronize");
+}
+
+App.prototype.removePopup = function() {
+	utils.removeOverlay();
+	if($(".popup").length > 0 ) $(".popup").remove();
 }
 
 

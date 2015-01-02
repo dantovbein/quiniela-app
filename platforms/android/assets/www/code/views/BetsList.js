@@ -25,5 +25,13 @@ BetsList.prototype.getAllBets = function() {
 	for(var i=0;i<bets.length;i++) {
 		var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : bets[i] } );
 		itemBetsList.initialize();
+		$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions );
 	}
+}
+
+BetsList.prototype.showItemOptions = function(e) {
+	debugger;
+	utils.getOverlay();
+	var betOptions = new PopupBetOptions( { container:$("body"), data:e.item.betData } );
+	betOptions.initialize();
 }
