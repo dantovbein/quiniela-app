@@ -17,7 +17,7 @@ App.prototype.initialize = function() {
 
 App.prototype.configure = function() {
 	utils.setMainInstance(this);
-	this.createDataBase();
+	//this.createDataBase();
 	$(document).bind( "removePopup", { context:this }, this.removePopup );
 	$(document).bind( "betEditor", { context:this }, this.editBet );
 }
@@ -73,6 +73,9 @@ App.prototype.getHeader = function() {
 }
 
 App.prototype.getLogin = function() {
+	utils.removeUserData();
+	this.createDataBase();
+	
 	if($("header.default-header").length > 0) $("header.default-header").remove();
 	if($(".view.user-settings").length > 0) $(".view.user-settings").remove();
 	

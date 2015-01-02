@@ -51,8 +51,10 @@ var utils = {
 		localStorage.setItem("expiration", this.getExpirationDate());
 	},
 	removeUserData : function() {
-		this.getMainInstance().lotteryDataBase.drop();
-		localStorage.clear();
+		if(this.getMainInstance().lotteryDataBase) {
+			this.getMainInstance().lotteryDataBase.drop();
+			localStorage.clear();
+		}
 	},
 	getExpirationDate : function() {
 		var now = new Date();
