@@ -15,13 +15,13 @@ BetsList.prototype.initialize = function(){
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
 
-	//this.addHandlers();
 	this.getAllBets();
+
+	$(document).bind("removeBet", { context:this },this.removeBet);
 }
 
 BetsList.prototype.getAllBets = function() {
 	var bets = utils.getMainInstance().lotteryDataBase.query("bets");
-	//debugger;
 	for(var i=0;i<bets.length;i++) {
 		var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : bets[i] } );
 		itemBetsList.initialize();
@@ -30,8 +30,14 @@ BetsList.prototype.getAllBets = function() {
 }
 
 BetsList.prototype.showItemOptions = function(e) {
-	debugger;
 	utils.getOverlay();
 	var betOptions = new PopupBetOptions( { container:$("body"), data:e.item.betData } );
 	betOptions.initialize();
+}
+
+BetsList.prototype.removeBet = function(e) {
+	utils.getMainInstance().lotteryDataBase.deleteRows("bets", {ID: e.betData.ID});
+	utils.getMainInstance().lotteryDataBase.commit();
+
+	$(e.data.context.node).find(".bets-list-data .item-bets-list[data-bet='" + e.betData.ID + "']").remove();
 }

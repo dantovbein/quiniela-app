@@ -18,15 +18,14 @@ App.prototype.initialize = function() {
 App.prototype.configure = function() {
 	utils.setMainInstance(this);
 	this.createDataBase();
-	//$(".popup").bind("close",this.removePopup );
-	//$(".popup").bind("close",this.removePopup );
-	document.addEventListener('remove-popup', this.removePopup, true);
+	$(document).bind( "removePopup", { context:this }, this.removePopup );
+	$(document).bind( "betEditor", { context:this }, this.editBet );
 }
 
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","total_amount","date"]);
+		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","total_amount","date"]);
 		this.lotteryDataBase.commit();
 	}
 }
@@ -52,6 +51,13 @@ App.prototype.removeContent = function() {
 	if($("section.view").length > 0) {
 		$("section.view").remove();
 	}
+
+	utils.removeOverlay();
+	
+	if($(".popup").length > 0) {
+		$(".popup").remove();
+	}
+
 }
 
 //App.prototype.bindEvents = function() {
@@ -108,7 +114,7 @@ App.prototype.getSettings = function() {
 
 App.prototype.generateBet = function() {
 	this.removeContent();
-	var bet = new Bet({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData) ) });
+	var bet = new BetGenerator({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData) ) });
 	bet.initialize();
 
 	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
@@ -120,9 +126,17 @@ App.prototype.getBets = function() {
 	bets.initialize();
 }
 
-App.prototype.editGame = function() {
-	//this.removeContent();
-	alert("edit game");
+App.prototype.editBet = function(e) {
+	if(!utils.checkBetLimit(e.betData)) {
+		alert("No se puede editar la apuesta");
+		return false;
+	}
+
+	e.data.context.removeContent();
+	var bet = new BetEditor({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData)), betData : e.betData });
+	bet.initialize();
+
+	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
 }
 
 App.prototype.removeGame = function() {

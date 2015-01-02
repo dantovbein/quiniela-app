@@ -84,6 +84,16 @@ var utils = {
 
 	    alert('Connection type: ' + states[networkState]);
 	},
+	checkBetLimit : function(bet) {
+		// Max time 3 minutes
+		
+		var now = new Date();
+		var betTime = new Date(bet.date);
+    	var limit = new Date ( betTime );
+		limit.setMinutes ( betTime.getMinutes() + 5 );
+
+		return (now <= limit);
+	},
 	compareHours : function(sampleTime) {
 		var time1 = new Date();
 		var splitTime = sampleTime.split(":");

@@ -2,8 +2,9 @@ function Bet(config) {
 	View.call(this,config);
 	this.container = config.container;
 	this.todayslotteries = config.todayslotteries;
-
+	this.betData = [];
 	this.pathSnippet = "views/bet.html";
+	this.dataSnippet = [];
 }
 
 inheritPrototype(Bet, View);
@@ -12,7 +13,7 @@ Bet.prototype.constructor = Bet;
 
 Bet.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
+	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : this.dataSnippet });
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
 
@@ -27,8 +28,7 @@ Bet.prototype.addHandlers = function() {
 	$(this.node).find(".btn-cancel").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "home" );
 	} );
-	$(this.node).find(".btn-save").click( { context:this }, this.saveBet );
-
+	
 	$($(this.node).find("#partial-amount")).on("input", { context : this }, function(e){
 		var _this = e.data.context;
 		$(_this.node).find(".total-amount").html(_this.getTotalAmount());
@@ -38,6 +38,8 @@ Bet.prototype.addHandlers = function() {
     	var _this = e.data.context;
 		$(_this.node).find(".total-amount").html(_this.getTotalAmount());
 	});
+
+	$(this.node).find(".btn-save").click( { context:this }, this.saveBet );
 }
 
 Bet.prototype.saveBet = function(e) {
@@ -95,11 +97,22 @@ Bet.prototype.saveBet = function(e) {
 	currentBet.betTotalAmount = _this.getTotalAmount();
 	currentBet.date = new Date();
 
-	utils.getMainInstance().lotteryDataBase.insert("bets",{ bet_number : currentBet.betNumber,
+	/*utils.getMainInstance().lotteryDataBase.insert("bets",{ 
+															bet_number : currentBet.betNumber,
 															bet_data : currentBet.bet,
 															bet_position : currentBet.betPosition,
+															bet_amount : currentBet.betAmount,
 															total_amount : parseFloat(currentBet.betTotalAmount),
-															date : currentBet.date});
+															date : currentBet.date});*/
+	var id = (_this.betData.ID != undefined) ? _this.betData.ID : -1;
+	//debugger;
+	utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { bet_number : currentBet.betNumber,
+																				bet_data : currentBet.bet,
+																				bet_position : currentBet.betPosition,
+																				bet_amount : currentBet.betAmount,
+																				total_amount : parseFloat(currentBet.betTotalAmount),
+																				date : currentBet.date});
+
 	utils.getMainInstance().lotteryDataBase.commit();
 }
 
@@ -112,37 +125,6 @@ Bet.prototype.getTotalAmount = function() {
 	}
 	return 	$(this.node).find("#partial-amount").val() * totalChecked;
 }
-
-Bet.prototype.insertBet = function() {
-	/*var online = navigator.onLine;
-	if(online) {
-		alert("Conexion");
-	} else {
-		alert("No hay conexion a Internet, los datos se guardarán de forma local");
-	}*/
-	$.ajax({
-			async : false,
-			type : "POST",
-			data : { user : user, password : password },			
-			url : utils.getServices().insertBet,
-			success : function(_result_) {
-				var result = JSON.parse(_result_);
-				
-				if(result[0].idVendor == null) {
-					errorElement.text("Datos incorrectos");
-				} else {
-					utils.saveUserData(result);
-					errorElement.text("");
-					$( _this.node ).trigger( "home" );
-				}
-				
-			},
-			error : function(error) {
-				errorElement.text("error",error);
-			}
-		});
-}
-
 
 Bet.prototype.generateTodaysLotteries = function() {
 	this.todayslotteries.lotteries.forEach(function(d){

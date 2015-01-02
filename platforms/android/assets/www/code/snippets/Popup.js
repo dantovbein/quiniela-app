@@ -19,6 +19,5 @@ Popup.prototype.addHandlers  = function() {
 }
 
 Popup.prototype.close = function(e) {
-	var _event = new Event('remove-popup');
-	document.dispatchEvent(_event);
+	$(document).trigger("removePopup");
 }
