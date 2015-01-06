@@ -35,14 +35,16 @@ var utils = {
 		return this.mainInstance;
 	},
 	getServices : function(){
-		var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
+		var url = "";
+		//var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
+		//var url = "http://yoviajoriveras.com/";
 		return {			
 			login : url + "service/manager/login.php"
 		};
 	},
 	saveUserData : function(data) {
 		localStorage.setItem("id_vendor", data[0].idVendor);
-		localStorage.setItem("id_phone", data[0].idPhone);
+		localStorage.setItem("id_device", data[0].idDevice);
 		localStorage.setItem("user", data[0].user);
 		localStorage.setItem("password", data[0].password);
 		localStorage.setItem("full_name", data[0].fullName);
@@ -63,7 +65,7 @@ var utils = {
 	getUserData : function() {
 		return { 
 			idVendor : localStorage.getItem("id_vendor") ,
-			idPhone : localStorage.getItem("id_phone") ,
+			idDevice : localStorage.getItem("id_device") ,
 			user : localStorage.getItem("user") ,
 			password : localStorage.getItem("password") ,
 			fullName : localStorage.getItem("full_name") ,

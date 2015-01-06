@@ -16,6 +16,7 @@ PopupBetOptions.prototype.initialize = function() {
 PopupBetOptions.prototype.addHandlers  = function() {
 	Popup.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-edit").click( { context:this }, this.onClickEdit );
+	$(this.node).find(".btn-sincronize").click( { context:this }, this.onClickSincronize );
 	$(this.node).find(".btn-remove").click( { context:this }, function(e){
 		var _this = e.data.context;
 		$(document).trigger({ 	type : "removeBet",
@@ -25,5 +26,10 @@ PopupBetOptions.prototype.addHandlers  = function() {
 
 PopupBetOptions.prototype.onClickEdit = function(e) {
 	$(document).trigger( { 	type : "betEditor",
+							betData : e.data.context.betData } );
+}
+
+PopupBetOptions.prototype.onClickSincronize = function(e) {
+	$(document).trigger( { 	type : "sincronizeBet",
 							betData : e.data.context.betData } );
 }

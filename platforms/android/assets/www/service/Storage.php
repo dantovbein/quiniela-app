@@ -10,6 +10,11 @@ class Storage {
 	public $server = "deaene.com.ar";
 	public $password = "arcomdeaene";
 	public $dataBase = "deaene_com_ar";
+
+	/*public $host = "192.186.248.103";
+	public $server = "yoviajoriveras.com";
+	public $password = "Daiana1974";
+	public $dataBase = "quiniela";*/
 	
 	private $sql;
 
@@ -37,7 +42,7 @@ class Storage {
 
 		$dataQuery = array();
 		$obj->idVendor = $row['id_vendor'];
-		$obj->idPhone = $row['id_phone'];
+		$obj->idDevice = $row['id_device'];
 		$obj->user = $row['user'];
 		$obj->password = $row['password'];
 		$obj->fullName = $row['full_name'];
@@ -48,13 +53,23 @@ class Storage {
 		$this->close();	
 	}
 
-	public function insertBet() {
+	public function sincronizeBet() {
+		$this->connect();
+		//$query = "INSERT INTO bets (bet_number,lottery_type,lottery_name,bet_order,amount_per_bet,total_amount) VALUES "
+
+
+
+
+
+		$this->close();
+	}
+	/*public function insertBet() {
 		$this->connect();
 		$lotteryType = "23";
 		$query = 'INSERT INTO bets (lottery_type) VALUES (' . $lotteryType . ');';
 		$result = mysql_query($query) or die('Error en la consulta -> ' .  $query);
 		echo mysql_insert_id();
 		$this->close();
-	}
+	}*/
 }
 ?>

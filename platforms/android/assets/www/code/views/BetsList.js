@@ -18,6 +18,7 @@ BetsList.prototype.initialize = function(){
 	this.getAllBets();
 
 	$(document).bind("removeBet", { context:this },this.removeBet);
+	$(document).bind("sincronizeBet", { context:this },this.sincronizeBet);
 }
 
 BetsList.prototype.getAllBets = function() {
@@ -38,6 +39,9 @@ BetsList.prototype.showItemOptions = function(e) {
 BetsList.prototype.removeBet = function(e) {
 	utils.getMainInstance().lotteryDataBase.deleteRows("bets", {ID: e.betData.ID});
 	utils.getMainInstance().lotteryDataBase.commit();
-
 	$(e.data.context.node).find(".bets-list-data .item-bets-list[data-bet='" + e.betData.ID + "']").remove();
+}
+
+BetsList.prototype.sincronizeBet = function(e){
+	debugger;
 }

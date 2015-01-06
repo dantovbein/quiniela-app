@@ -17,7 +17,6 @@ App.prototype.initialize = function() {
 
 App.prototype.configure = function() {
 	utils.setMainInstance(this);
-	//this.createDataBase();
 	$(document).bind( "removePopup", { context:this }, this.removePopup );
 	$(document).bind( "betEditor", { context:this }, this.editBet );
 }
@@ -51,13 +50,12 @@ App.prototype.removeContent = function() {
 	if($("section.view").length > 0) {
 		$("section.view").remove();
 	}
-
+	
 	utils.removeOverlay();
 	
 	if($(".popup").length > 0) {
 		$(".popup").remove();
 	}
-
 }
 
 //App.prototype.bindEvents = function() {
