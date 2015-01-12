@@ -2,6 +2,7 @@ function PopupBetOptions(config) {
 	Popup.call(this,config);
 	this.betData = this.config.data;
 	this.pathSnippet = "snippets/popupBetOptions.html";
+	this._parent = this.config._parent;
 }
 
 inheritPrototype(PopupBetOptions,Popup);
@@ -34,8 +35,9 @@ PopupBetOptions.prototype.onClickEdit = function(e) {
 
 PopupBetOptions.prototype.onClickSincronize = function(e) {
 	e.data.context.destroy();
-	$(document).trigger({ 	type : "sincronizeBet",
-							betId : e.data.context.betData.ID } );
+	/*$(document).trigger({ 	type : "sincronizeBet",
+							betId : e.data.context.betData.ID } );*/
+	e.data.context._parent.uploadBet(e.data.context.betData.ID);
 }
 
 PopupBetOptions.prototype.destroy = function() {
