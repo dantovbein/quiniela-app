@@ -69,12 +69,12 @@ BetsList.prototype.uploadBet = function() {
 			idVendor:utils.getUserData().idVendor,
 			betCreated:this.dataToSend.date 
 		},
-		url : "service/manager/uploadBet.php",
+		url : utils.getServices().uploadBet,
 		success : function(r){
-			debugger;
 			if(isNaN(r)==false){
 				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
 				utils.getMainInstance().lotteryDataBase.commit();
+				alert("Se sincronizo correctamente la apuesta");
 			} else {
 				alert("No se agrego la apuesta");
 			}

@@ -38,8 +38,9 @@ var utils = {
 		//var url = "";
 		var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
 		//var url = "http://yoviajoriveras.com/";
-		return {			
-			login : url + "service/manager/login.php"
+		return {	
+			login : url + "service/manager/login.php",
+			uploadBet : url + "service/manager/uploadBet.php"
 		};
 	},
 	saveUserData : function(data) {
