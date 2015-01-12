@@ -217,15 +217,18 @@ var utils = {
 							"lotteryNames" : [ 1,2,3 ]
 						},{
 							"lotteryType" : 2,
-							"expirate" : "14:30",
+							//"expirate" : "14:30",
+							"expirate" : "23:00",
 							"lotteryNames" : [ 1,2,3,5 ]
 						},{
 							"lotteryType" : 3,
-							"expirate" : "17:30",
+							//"expirate" : "17:30",
+							"expirate" : "23:15",
 							"lotteryNames" : [ 1,2,3 ]
 						},{
 							"lotteryType" : 4,
-							"expirate" : "21:00",
+							//"expirate" : "21:00",
+							"expirate" : "23:30",
 							"lotteryNames" : [ 1,2,3,4,6 ]
 						} 
 					] 

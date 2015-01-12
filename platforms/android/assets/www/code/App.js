@@ -16,6 +16,7 @@ App.prototype.initialize = function() {
 }
 
 App.prototype.configure = function() {
+	this.createDataBase();
 	utils.setMainInstance(this);
 	$(document).bind( "removePopup", { context:this }, this.removePopup );
 	$(document).bind( "betEditor", { context:this }, this.editBet );
@@ -26,10 +27,12 @@ App.prototype.createDataBase = function() {
 	if(this.lotteryDataBase.isNew()) {
 		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","total_amount","date"]);
 		this.lotteryDataBase.commit();
+	} else {
+		// Existe la base de datos
 	}
 }
 
-App.prototype.getLotteriesData = function() {
+/*App.prototype.getLotteriesData = function() {
 	var self = this;
 	$.ajax({
 		async : false,
@@ -44,7 +47,7 @@ App.prototype.getLotteriesData = function() {
 			alert("error");
 		}
 	})
-}
+}*/
 
 App.prototype.removeContent = function() {
 	if($("section.view").length > 0) {
