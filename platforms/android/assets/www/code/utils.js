@@ -40,7 +40,8 @@ var utils = {
 		//var url = "http://yoviajoriveras.com/";
 		return {	
 			login : url + "service/manager/login.php",
-			uploadBet : url + "service/manager/uploadBet.php"
+			uploadBet : url + "service/manager/uploadBet.php",
+			unlock : url + "service/manager/unlock.php"
 		};
 	},
 	saveUserData : function(data) {
@@ -52,6 +53,7 @@ var utils = {
 		localStorage.setItem("code", data[0].code);
 		localStorage.setItem("connected_since", new Date());
 		localStorage.setItem("expiration", this.getExpirationDate());
+		localStorage.setItem("is_locked", 0);
 	},
 	removeUserData : function() {
 		if(this.getMainInstance().lotteryDataBase) {
@@ -72,7 +74,8 @@ var utils = {
 			fullName : localStorage.getItem("full_name") ,
 			code : localStorage.getItem("code") ,
 			connectedSince : localStorage.getItem("connected_since") ,
-			expiration : localStorage.getItem("expiration")
+			expiration : localStorage.getItem("expiration"),
+			isLocked : localStorage.getItem("is_locked")
 		}
 	},
 	checkConnection : function() {

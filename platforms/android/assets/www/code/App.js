@@ -20,6 +20,10 @@ App.prototype.configure = function() {
 	utils.setMainInstance(this);
 	$(document).bind( "removePopup", { context:this }, this.removePopup,false );
 	$(document).bind( "betEditor", { context:this }, this.editBet,false );
+	$(document).bind( "blockUser", { context:this }, function(e){
+		localStorage.setItem("is_locked", 1);
+		e.data.context.getLockView();
+	},false );
 }
 
 App.prototype.createDataBase = function() {
@@ -32,23 +36,6 @@ App.prototype.createDataBase = function() {
 	}
 }
 
-/*App.prototype.getLotteriesData = function() {
-	var self = this;
-	$.ajax({
-		async : false,
-		//url : "data/lotteries.json",
-		url : "http://deaene.com.ar/apps/Quiniela/mobile/data/lotteries.json",
-		context : this,
-		success : function(result) {
-			//alert(result.days[0].day);
-			this.lotteryData = result;
-		},
-		error : function(error) {
-			alert("error");
-		}
-	})
-}*/
-
 App.prototype.removeContent = function() {
 	if($("section.view").length > 0) {
 		$("section.view").remove();
@@ -60,10 +47,6 @@ App.prototype.removeContent = function() {
 		$(".popup").remove();
 	}
 }
-
-//App.prototype.bindEvents = function() {
-	//document.addEventListener('getHome', this.getHome, true);
-//}
 
 App.prototype.getHeader = function() {
 	var header = new Header( { container : $("body") } );
@@ -89,21 +72,51 @@ App.prototype.getLogin = function() {
 }
 
 App.prototype.getHome = function() {
-	if($("header.default-header").length == 0) this.getHeader();
-	this.removeContent();
+	if(this.isLocked()){
+		this.getLockView();
+		return false;
+	} else {
+		if($("header.default-header").length == 0) this.getHeader();
+		this.removeContent();
 
-	var home = new Home( { container : $("main") } );
-	home.initialize();
-
-	$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
-  	//$(home.node).bind( "editBet", { context:this }, function(e) { e.data.context.editGame(); });
-  	//$(home.node).bind( "removeBet", { context:this }, function(e) { e.data.context.removeGame(); });
-  	//$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });
+		var home = new Home( { container : $("main") } );
+		home.initialize();
+		$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
+	  	//$(home.node).bind( "editBet", { context:this }, function(e) { e.data.context.editGame(); });
+	  	//$(home.node).bind( "removeBet", { context:this }, function(e) { e.data.context.removeGame(); });
+	  	//$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });			
+	}	
 }
 
-App.prototype.getSettings = function() {
-	//this.removeContent();
+App.prototype.getLockView = function() {
+	if($("header.default-header").length > 0) $("header.default-header").remove();
+	this.removeContent();
+	var lockView = new LockView( { container : $("main") } );
+	lockView.initialize();
+	$(lockView.node).bind( "home", { context:this }, function(e) { 
+		e.data.context.unlockApp(); 
+	},false);
+}
 
+App.prototype.isLocked = function() {
+	var today = new Date();
+	var expiration = new Date(utils.getUserData().expiration);
+	if(parseInt(utils.getUserData().isLocked) == 1){
+		return true;
+	}else if (today > expiration) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+App.prototype.unlockApp = function() {
+	localStorage.setItem("is_locked", 0);
+	this.getHome();
+}
+
+
+App.prototype.getSettings = function() {
 	if($(".view.user-settings").length == 0) {
 		this.userSettings = new UserSettings( { container : $("body") } );
 		this.userSettings.initialize();
@@ -111,7 +124,6 @@ App.prototype.getSettings = function() {
 		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); },false);
 		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); },false);
 	} else {
-		//this.showSettings();
 		this.userSettings.show();
 	}
 }

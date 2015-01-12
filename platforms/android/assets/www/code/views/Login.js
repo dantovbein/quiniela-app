@@ -13,7 +13,6 @@ Login.prototype.initialize = function(){
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
-
 	this.addHandlers();	
 }
 

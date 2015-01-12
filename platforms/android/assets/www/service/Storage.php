@@ -53,6 +53,26 @@ class Storage {
 		$this->close();	
 	}
 
+	public function unlock($data) {
+		$this->connect();
+
+		$user = $data['user'];
+		$unlockCode = $data['unlockCode'];
+
+		$query = 'SELECT * FROM vendors WHERE id_vendor="' . $user . '" AND vendor_unlock_code="' . $unlockCode . '"';
+		
+		$result = mysql_query($query);
+		$row = mysql_fetch_assoc($result);
+
+		$dataQuery = array();
+		$obj->idVendor = $row['id_vendor'];
+		array_push($dataQuery, $obj);
+		
+		echo json_encode($dataQuery);
+		$this->close();	
+	}
+
+
 	public function uploadBet($data) {
 		$this->connect();
 		

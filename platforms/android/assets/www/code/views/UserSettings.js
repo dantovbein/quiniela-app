@@ -39,9 +39,9 @@ UserSettings.prototype.addHandlers = function() {
 	$(this.node).find(".btn-back").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "home" );
 	} );
-	$(this.node).click({ context:this }, function(e){
-		//e.data.context.show();
-	});
+	$(this.node).find(".btn-block-user").click( { context:this }, function(e){
+		$( e.data.context.node ).trigger( "blockUser" );
+	} );
 }
 
 UserSettings.prototype.show = function() {
