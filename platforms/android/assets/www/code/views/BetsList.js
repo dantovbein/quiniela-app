@@ -1,7 +1,6 @@
 function BetsList(config) {
 	View.call(this,config);
-	this.container = config.container;
-	
+	this.container = config.container;	
 	this.pathSnippet = "views/betsList.html";
 }
 
@@ -17,17 +16,18 @@ BetsList.prototype.initialize = function(){
 
 	this.getAllBets();
 
-	$(document).bind("removeBet", { context:this },this.removeBet);
-	$(document).bind("sincronizeBet", { context:this },this.sincronizeBet);
+	$(document).bind("removeBet", { context:this },this.removeBet,false);
+	$(document).bind("sincronizeBet", { context:this },this.sincronizeBet,false);
 }
 
 BetsList.prototype.getAllBets = function() {
-	var bets = utils.getMainInstance().lotteryDataBase.query("bets");
-	for(var i=0;i<bets.length;i++) {
-		var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : bets[i] } );
+	$(this.node).find(".bets-list-data").empty();
+	var betsData = utils.getMainInstance().lotteryDataBase.query("bets");
+	betsData.forEach(function(b){
+		var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
 		itemBetsList.initialize();
-		$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions );
-	}
+		$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
+	},this);
 }
 
 BetsList.prototype.showItemOptions = function(e) {
@@ -42,26 +42,46 @@ BetsList.prototype.removeBet = function(e) {
 	$(e.data.context.node).find(".bets-list-data .item-bets-list[data-bet='" + e.betData.ID + "']").remove();
 }
 
+BetsList.prototype.removeBet = function(e) {
+	utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:e.betId});
+	e.data.context.getAllBets();
+}
+
 BetsList.prototype.sincronizeBet = function(e){
-	debugger;
+	e.data.context.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:e.betId})[0];
+	e.data.context.betLocalId = e.betId;
+	e.data.context.uploadBet();	
+}
+
+BetsList.prototype.uploadBet = function() {
 	$.ajax({
-		context : e.data.context,
+		context : this,
 		async : false,
 		type : "POST",
-		data : { betNumber:e.betData.bet_number,
-				 betData:e.betData.bet_data,
-				 betPosition:e.betData.bet_position,
-				 betAmount:e.betData.bet_amount,
-				 betTotalAmount:e.betData.bet_total_amount,
-				 idDevice:utils.getUserData().idDevice,
-				 idVendor:utils.getUserData().idVendor,
-				 betCreated:e.betData.date },
+		data : {
+			idLocal:this.betId,
+			betNumber:this.dataToSend.bet_number,
+			betData:this.dataToSend.bet_data,
+			betPosition:this.dataToSend.bet_position,
+			betAmount:this.dataToSend.bet_amount,
+			betTotalAmount:this.dataToSend.bet_total_amount,
+			idDevice:utils.getUserData().idDevice,
+			idVendor:utils.getUserData().idVendor,
+			betCreated:this.dataToSend.date 
+		},
 		url : "service/manager/uploadBet.php",
 		success : function(r){
 			debugger;
+			if(isNaN(r)==false){
+				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
+				utils.getMainInstance().lotteryDataBase.commit();
+			} else {
+				alert("No se agrego la apuesta");
+			}
+			this.getAllBets();
 		},
 		error : function(error) {
 			debugger;
 		}
-	})
+	});
 }

@@ -17,19 +17,28 @@ PopupBetOptions.prototype.addHandlers  = function() {
 	Popup.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-edit").click( { context:this }, this.onClickEdit );
 	$(this.node).find(".btn-sincronize").click( { context:this }, this.onClickSincronize );
-	$(this.node).find(".btn-remove").click( { context:this }, function(e){
-		var _this = e.data.context;
-		$(document).trigger({ 	type : "removeBet",
-								betData : _this.betData });
-	});
+	$(this.node).find(".btn-remove").click( { context:this }, this.onClickRemove );
+}
+
+PopupBetOptions.prototype.onClickRemove = function(e) {
+	e.data.context.destroy();
+	$(document).trigger({ 	type : "removeBet",
+							betId : e.data.context.betData.ID });
 }
 
 PopupBetOptions.prototype.onClickEdit = function(e) {
-	$(document).trigger( { 	type : "betEditor",
+	e.data.context.destroy();
+	$(document).trigger({ 	type : "betEditor",
 							betData : e.data.context.betData } );
 }
 
 PopupBetOptions.prototype.onClickSincronize = function(e) {
-	$(document).trigger( { 	type : "sincronizeBet",
-							betData : e.data.context.betData } );
+	e.data.context.destroy();
+	$(document).trigger({ 	type : "sincronizeBet",
+							betId : e.data.context.betData.ID } );
+}
+
+PopupBetOptions.prototype.destroy = function() {
+	$(this.node).remove();
+	utils.removeOverlay();
 }

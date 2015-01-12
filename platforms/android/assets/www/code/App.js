@@ -18,8 +18,8 @@ App.prototype.initialize = function() {
 App.prototype.configure = function() {
 	this.createDataBase();
 	utils.setMainInstance(this);
-	$(document).bind( "removePopup", { context:this }, this.removePopup );
-	$(document).bind( "betEditor", { context:this }, this.editBet );
+	$(document).bind( "removePopup", { context:this }, this.removePopup,false );
+	$(document).bind( "betEditor", { context:this }, this.editBet,false );
 }
 
 App.prototype.createDataBase = function() {
@@ -69,8 +69,8 @@ App.prototype.getHeader = function() {
 	var header = new Header( { container : $("body") } );
 	header.initialize();
 
-	$(header.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
-	$(header.node).bind( "userSettings", { context:this }, function(e) { e.data.context.getSettings(); });
+	$(header.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); }, false);
+	$(header.node).bind( "userSettings", { context:this }, function(e) { e.data.context.getSettings(); },false);
 }
 
 App.prototype.getLogin = function() {
@@ -85,7 +85,7 @@ App.prototype.getLogin = function() {
 	var login = new Login( { container : $("main") } );
 	login.initialize();
 	
-	$(login.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });  	
+	$(login.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); },false);  	
 }
 
 App.prototype.getHome = function() {
@@ -95,7 +95,7 @@ App.prototype.getHome = function() {
 	var home = new Home( { container : $("main") } );
 	home.initialize();
 
-	$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); });
+	$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
   	//$(home.node).bind( "editBet", { context:this }, function(e) { e.data.context.editGame(); });
   	//$(home.node).bind( "removeBet", { context:this }, function(e) { e.data.context.removeGame(); });
   	//$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });
@@ -108,8 +108,8 @@ App.prototype.getSettings = function() {
 		this.userSettings = new UserSettings( { container : $("body") } );
 		this.userSettings.initialize();
 
-		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
-		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); });
+		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); },false);
+		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); },false);
 	} else {
 		//this.showSettings();
 		this.userSettings.show();
@@ -140,7 +140,7 @@ App.prototype.editBet = function(e) {
 	var bet = new BetEditor({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData)), betData : e.betData });
 	bet.initialize();
 
-	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
+	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); },false);
 }
 
 App.prototype.removeGame = function() {
