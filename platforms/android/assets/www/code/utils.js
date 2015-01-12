@@ -35,8 +35,8 @@ var utils = {
 		return this.mainInstance;
 	},
 	getServices : function(){
-		var url = "";
-		//var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
+		//var url = "";
+		var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
 		//var url = "http://yoviajoriveras.com/";
 		return {			
 			login : url + "service/manager/login.php"
