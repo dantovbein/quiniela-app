@@ -23,8 +23,10 @@ PopupBetOptions.prototype.addHandlers  = function() {
 
 PopupBetOptions.prototype.onClickRemove = function(e) {
 	e.data.context.destroy();
-	$(document).trigger({ 	type : "removeBet",
-							betId : e.data.context.betData.ID });
+	/*$(document).trigger({ 	type : "removeBet",
+							betId : e.data.context.betData.ID });*/
+	e.data.context._parent.removeBet(e.data.context.betData);
+	
 }
 
 PopupBetOptions.prototype.onClickEdit = function(e) {
@@ -39,6 +41,8 @@ PopupBetOptions.prototype.onClickSincronize = function(e) {
 							betId : e.data.context.betData.ID } );*/
 	e.data.context._parent.uploadBet(e.data.context.betData.ID);
 }
+
+
 
 PopupBetOptions.prototype.destroy = function() {
 	$(this.node).remove();

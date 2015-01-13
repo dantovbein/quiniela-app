@@ -74,9 +74,8 @@ class Storage {
 
 
 	public function uploadBet($data) {
-		$this->connect();
-		
-		$query =  'INSERT INTO bets (bet_number,bet_position,id_device,id_vendor,bet_amount,bet_total_amount,bet_time_created,bet_time_canceled) VALUES (' . "'" . $data['betNumber'] . "','" . $data['betPosition'] . "','" . $data['idDevice'] . "','" . $data['idVendor'] . "','" . $data['betAmount'] . "','" . $data['betTotalAmount'] . "','" . $data['betCreated'] . "','" . $data['betCanceled'] . "'" . ')';
+		$this->connect();		
+		$query =  'INSERT INTO bets (bet_number,bet_position,id_device,id_vendor,bet_amount,bet_total_amount,bet_time_created,bet_time_canceled,is_active) VALUES (' . "'" . $data['betNumber'] . "','" . $data['betPosition'] . "','" . $data['idDevice'] . "','" . $data['idVendor'] . "','" . $data['betAmount'] . "','" . $data['betTotalAmount'] . "','" . $data['betCreated'] . "','" . $data['betCanceled'] . "'" . $data['isActive'] . "'" . ')';
 		mysql_query($query) or die('Error en la consulta -> ' .  $query);
 		$insertID = mysql_insert_id();
 
@@ -88,24 +87,5 @@ class Storage {
     	echo $insertID;
     	$this->close();
 	}
-
-	public function sincronizeBet() {
-		$this->connect();
-		//$query = "INSERT INTO bets (bet_number,lottery_type,lottery_name,bet_order,amount_per_bet,total_amount) VALUES "
-
-
-
-
-
-		$this->close();
-	}
-	/*public function insertBet() {
-		$this->connect();
-		$lotteryType = "23";
-		$query = 'INSERT INTO bets (lottery_type) VALUES (' . $lotteryType . ');';
-		$result = mysql_query($query) or die('Error en la consulta -> ' .  $query);
-		echo mysql_insert_id();
-		$this->close();
-	}*/
 }
 ?>

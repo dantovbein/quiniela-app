@@ -24,9 +24,11 @@ BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
 	var betsData = utils.getMainInstance().lotteryDataBase.query("bets");
 	betsData.forEach(function(b){
-		var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
-		itemBetsList.initialize();
-		$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
+		if(b.is_active==1) {
+			var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
+			itemBetsList.initialize();
+			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
+		}
 	},this);
 }
 
@@ -36,64 +38,27 @@ BetsList.prototype.showItemOptions = function(e) {
 	betOptions.initialize();
 }
 
-BetsList.prototype.removeBet = function(e) {
-	utils.getMainInstance().lotteryDataBase.deleteRows("bets", {ID: e.betData.ID});
+BetsList.prototype.removeBet = function(bet) {
+	utils.getMainInstance().lotteryDataBase.update("bets",{ID: bet.ID},function(row){
+		var canDelete = utils.checkBetLimit(row);
+		if(canDelete) {
+			row.is_active = 0,
+			row.is_editable = 0
+		} else {
+			row.is_active = 1;
+			alert("No se puede remover la apuesta");
+		}
+		return row;
+	});
 	utils.getMainInstance().lotteryDataBase.commit();
-	$(e.data.context.node).find(".bets-list-data .item-bets-list[data-bet='" + e.betData.ID + "']").remove();
+	this.getAllBets();
 }
 
-BetsList.prototype.removeBet = function(e) {
-	utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:e.betId});
-	e.data.context.getAllBets();
-}
 
 BetsList.prototype.sincronizeBet = function(e){
-	e.data.context.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:e.betId})[0];
-	e.data.context.betLocalId = e.betId;
-	//e.data.context.uploadBet();	
+//	e.data.context.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:e.betId})[0];
+//	e.data.context.betLocalId = e.betId;
 }
-
-/*BetsList.prototype.uploadBet = function() {
-	if(this.dataToSend==undefined) {
-		console.log("data undefined");
-		return false;
-	}
-
-	$.ajax({
-		context : this,
-		async : false,
-		type : "POST",
-		data : {
-			idLocal:this.betId,
-			betNumber:this.dataToSend.bet_number,
-			betData:this.dataToSend.bet_data,
-			betPosition:this.dataToSend.bet_position,
-			betAmount:this.dataToSend.bet_amount,
-			betTotalAmount:this.dataToSend.bet_total_amount,
-			idDevice:utils.getUserData().idDevice,
-			idVendor:utils.getUserData().idVendor,
-			betCreated:this.dataToSend.date 
-		},
-		url : utils.getServices().uploadBet,
-		success : function(r){
-			debugger;
-			if(isNaN(r)==false){
-				debugger;
-				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
-				utils.getMainInstance().lotteryDataBase.commit();
-				alert("Se sincronizo correctamente la apuesta");
-				this.getAllBets();
-			} else {
-				alert("No se agrego la apuesta");
-			}
-			
-		},
-		error : function(error) {
-			debugger;
-		}
-	});
-}
-*/
 
 BetsList.prototype.uploadBet = function(id) {
 	this.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0];
@@ -111,7 +76,8 @@ BetsList.prototype.uploadBet = function(id) {
 			betTotalAmount:this.dataToSend.bet_total_amount,
 			idDevice:utils.getUserData().idDevice,
 			idVendor:utils.getUserData().idVendor,
-			betCreated:this.dataToSend.date 
+			betCreated:this.dataToSend.date,
+			isActive:this.dataToSend.is_active
 		},
 		url : utils.getServices().uploadBet,
 		success : function(r){
@@ -123,7 +89,6 @@ BetsList.prototype.uploadBet = function(id) {
 			} else {
 				alert("No se agrego la apuesta");
 			}
-			
 		},
 		error : function(error) {
 			debugger;

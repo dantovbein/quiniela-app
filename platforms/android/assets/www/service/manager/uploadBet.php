@@ -10,6 +10,7 @@
 	if(isset($_POST['idDevice'])) { $idDevice = $_POST['idDevice']; }
 	if(isset($_POST['idVendor'])) { $idVendor = $_POST['idVendor']; }
 	if(isset($_POST['betCreated'])) { $betCreated = $_POST['betCreated']; }
+	if(isset($_POST['isActive'])) { $isActive = $_POST['isActive']; }
 
 	
 	//$betData = '{"data":{"bets":{"2":{"ID":2,"bet_number":"0019","bet_data":[{"lotteryTypeId":4,"lotteryType":"Nocturna","lotteryNameId":1,"lotteryName":"Nacional"}],"bet_position":"1","bet_amount":"454","total_amount":454,"date":"2015-01-05T23:42:35.921Z"}}}}';
@@ -66,7 +67,8 @@
 	    "betTotalAmount" => $betTotalAmount,
 	    "idDevice" => $idDevice,
 	    "idVendor" => $idVendor,
-	    "betCreated" => $betCreated//,
+	    "betCreated" => $betCreated,
+	    "isActive" => $isActive//,
 	    //"betCanceled" => $betCanceled
 	);
 

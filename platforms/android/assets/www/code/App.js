@@ -24,12 +24,40 @@ App.prototype.configure = function() {
 		localStorage.setItem("is_locked", 1);
 		e.data.context.getLockView();
 	},false );
+
+	this.delay = 1000 * (utils.getLimitMinute() * 60);
+	//this.delay = 1000 * 10;
+	this.startTimer();
+}
+
+App.prototype.startTimer = function() {
+   var timer = setTimeout(this.onCompleteTimer,this.delay,{context:this});
+}
+
+App.prototype.onCompleteTimer = function(data) {
+	data.context.checkBets();
+	data.context.synchronize();
+	data.context.startTimer();
+}
+
+App.prototype.checkBets = function() {
+	console.log("reviso si hay jugadas");
+	var betsData = this.lotteryDataBase.query("bets");
+	betsData.forEach(function(b){
+		//console.log(utils.checkBetLimit(b));
+		this.lotteryDataBase.update("bets", {ID: b.ID},function(row){
+			//row.is_active = (utils.checkBetLimit(b)) ? 1 : 0,
+			row.is_editable = (utils.checkBetLimit(b)) ? 1 : 0
+			return row;
+		});
+	},this);
+	this.lotteryDataBase.commit();
 }
 
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","total_amount","date"]);
+		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","total_amount","date","is_active","is_editable"]);
 		this.lotteryDataBase.commit();
 	} else {
 		// Existe la base de datos
@@ -133,7 +161,7 @@ App.prototype.generateBet = function() {
 	var bet = new BetGenerator({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData) ) });
 	bet.initialize();
 
-	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); });
+	$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
 }
 
 App.prototype.getBets = function() {
@@ -142,17 +170,22 @@ App.prototype.getBets = function() {
 	bets.initialize();
 }
 
+
 App.prototype.editBet = function(e) {
 	if(!utils.checkBetLimit(e.betData)) {
 		alert("No se puede editar la apuesta");
 		return false;
 	}
-
 	e.data.context.removeContent();
 	var bet = new BetEditor({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData)), betData : e.betData });
 	bet.initialize();
 
-	$(bet.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); },false);
+	$(bet.node).bind( "bets", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
+}
+
+App.prototype.removePopup = function() {
+	utils.removeOverlay();
+	if($(".popup").length > 0 ) $(".popup").remove();
 }
 
 App.prototype.removeGame = function() {
@@ -161,13 +194,48 @@ App.prototype.removeGame = function() {
 }
 
 App.prototype.synchronize = function() {
-	//this.removeContent();
-	alert("synchronize");
+	var betsData = utils.getMainInstance().lotteryDataBase.query("bets");
+	betsData.forEach(function(b){
+		if(b.is_editable==0) {
+			this.uploadBet(b);
+		}
+	},this);
 }
 
-App.prototype.removePopup = function() {
-	utils.removeOverlay();
-	if($(".popup").length > 0 ) $(".popup").remove();
+App.prototype.uploadBet = function(bet) {
+	this.dataToSend = bet;
+	this.betLocalId = bet.ID;
+	$.ajax({
+		context : this,
+		async : false,
+		type : "POST",
+		data : {
+			idLocal:this.betLocalId,
+			betNumber:this.dataToSend.bet_number,
+			betData:this.dataToSend.bet_data,
+			betPosition:this.dataToSend.bet_position,
+			betAmount:this.dataToSend.bet_amount,
+			betTotalAmount:this.dataToSend.bet_total_amount,
+			idDevice:utils.getUserData().idDevice,
+			idVendor:utils.getUserData().idVendor,
+			betCreated:this.dataToSend.date,
+			isActive:this.dataToSend.is_active
+		},
+		url : utils.getServices().uploadBet,
+		success : function(r){
+			if(isNaN(r)==false){
+				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
+				utils.getMainInstance().lotteryDataBase.commit();
+				//alert("Se sincronizo correctamente la apuesta");
+			} else {
+				//alert("No se agrego la apuesta");
+			}
+		},
+		error : function(error) {
+			debugger;
+		}
+	});
 }
+
 
 

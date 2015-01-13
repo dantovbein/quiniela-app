@@ -1,32 +1,3 @@
-/* 
-
-Days: 
-1 Mon 
-2 Tue
-3 Wed
-4 Thu
-5 Fri
-6 Sat
-? Sun 
-
-lottery_type
-1	Primera
-2	Matutina
-3	Vespertina
-4	Nocturna
-
-lottery_name
-1	Nacional
-2	Provincia
-3	Santa Fe	
-4	Tombola
-5	Tombola (Uruguay)
-6	Cordoba
-7	Santiago
-
-Borrar siempre la ultima partida
-
-*/
 var utils = {
 	setMainInstance : function(instance) {
 		this.mainInstance = instance;
@@ -92,14 +63,15 @@ var utils = {
 
 	    alert('Connection type: ' + states[networkState]);
 	},
+	getLimitMinute : function(){
+		return .1;
+	},
 	checkBetLimit : function(bet) {
-		// Max time 3 minutes
-		
+		var minutes = this.getLimitMinute();
 		var now = new Date();
 		var betTime = new Date(bet.date);
     	var limit = new Date ( betTime );
-		limit.setMinutes ( betTime.getMinutes() + 5 );
-
+		limit.setMinutes ( betTime.getMinutes() + minutes );
 		return (now <= limit);
 	},
 	compareHours : function(sampleTime) {
@@ -187,7 +159,8 @@ var utils = {
 							"lotteryNames" : [ 1,2,3 ]
 						},{
 							"lotteryType" : 4,
-							"expirate" : "21:00",
+							//"expirate" : "21:00",
+							"expirate" : "22:00",
 							"lotteryNames" : [ 1,2,3,5 ]
 						} 
 					] 
@@ -305,3 +278,33 @@ var utils = {
 		return lotteryData;
 	}
 }
+
+/* 
+
+Days: 
+1 Mon 
+2 Tue
+3 Wed
+4 Thu
+5 Fri
+6 Sat
+? Sun 
+
+lottery_type
+1	Primera
+2	Matutina
+3	Vespertina
+4	Nocturna
+
+lottery_name
+1	Nacional
+2	Provincia
+3	Santa Fe	
+4	Tombola
+5	Tombola (Uruguay)
+6	Cordoba
+7	Santiago
+
+Borrar siempre la ultima partida
+
+*/

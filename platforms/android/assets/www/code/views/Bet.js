@@ -97,23 +97,18 @@ Bet.prototype.saveBet = function(e) {
 	currentBet.betTotalAmount = _this.getTotalAmount();
 	currentBet.date = new Date();
 
-	/*utils.getMainInstance().lotteryDataBase.insert("bets",{ 
-															bet_number : currentBet.betNumber,
-															bet_data : currentBet.bet,
-															bet_position : currentBet.betPosition,
-															bet_amount : currentBet.betAmount,
-															total_amount : parseFloat(currentBet.betTotalAmount),
-															date : currentBet.date});*/
 	var id = (_this.betData.ID != undefined) ? _this.betData.ID : -1;
-	//debugger;
 	utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { bet_number : currentBet.betNumber,
 																				bet_data : currentBet.bet,
 																				bet_position : currentBet.betPosition,
 																				bet_amount : currentBet.betAmount,
 																				total_amount : parseFloat(currentBet.betTotalAmount),
-																				date : currentBet.date});
+																				date : currentBet.date,
+																				is_active : 1,
+																				is_editable : 1});
 
 	utils.getMainInstance().lotteryDataBase.commit();
+	$( _this.node ).trigger( { type : "bets" } );
 }
 
 Bet.prototype.getTotalAmount = function() {
