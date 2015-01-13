@@ -95,7 +95,7 @@ Bet.prototype.saveBet = function(e) {
 
 	currentBet.betAmount = partialAmount;
 	currentBet.betTotalAmount = _this.getTotalAmount();
-	currentBet.date = new Date();
+	currentBet.betCreated = new Date();
 
 	var id = (_this.betData.ID != undefined) ? _this.betData.ID : -1;
 	utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { bet_number : currentBet.betNumber,
@@ -103,7 +103,7 @@ Bet.prototype.saveBet = function(e) {
 																				bet_position : currentBet.betPosition,
 																				bet_amount : currentBet.betAmount,
 																				total_amount : parseFloat(currentBet.betTotalAmount),
-																				date : currentBet.date,
+																				bet_created : currentBet.betCreated,
 																				is_active : 1,
 																				is_editable : 1});
 

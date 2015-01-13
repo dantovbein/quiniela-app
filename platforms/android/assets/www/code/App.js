@@ -36,28 +36,26 @@ App.prototype.startTimer = function() {
 
 App.prototype.onCompleteTimer = function(data) {
 	data.context.checkBets();
-	data.context.synchronize();
 	data.context.startTimer();
 }
 
 App.prototype.checkBets = function() {
-	console.log("reviso si hay jugadas");
 	var betsData = this.lotteryDataBase.query("bets");
+	console.log("Chequear jugadas:",betsData.length);
 	betsData.forEach(function(b){
-		//console.log(utils.checkBetLimit(b));
 		this.lotteryDataBase.update("bets", {ID: b.ID},function(row){
-			//row.is_active = (utils.checkBetLimit(b)) ? 1 : 0,
 			row.is_editable = (utils.checkBetLimit(b)) ? 1 : 0
 			return row;
 		});
 	},this);
 	this.lotteryDataBase.commit();
+	this.synchronize();
 }
 
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","total_amount","date","is_active","is_editable"]);
+		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","total_amount","bet_created","bet_canceled","is_active","is_editable"]);
 		this.lotteryDataBase.commit();
 	} else {
 		// Existe la base de datos
@@ -166,8 +164,8 @@ App.prototype.generateBet = function() {
 
 App.prototype.getBets = function() {
 	this.removeContent();
-	var bets = new BetsList({ container : $("main") });
-	bets.initialize();
+	this.bets = new BetsList({ container : $("main") });
+	this.bets.initialize();
 }
 
 
@@ -218,7 +216,8 @@ App.prototype.uploadBet = function(bet) {
 			betTotalAmount:this.dataToSend.bet_total_amount,
 			idDevice:utils.getUserData().idDevice,
 			idVendor:utils.getUserData().idVendor,
-			betCreated:this.dataToSend.date,
+			betCreated:this.dataToSend.bet_created,
+			betCanceled:this.dataToSend.bet_canceled,
 			isActive:this.dataToSend.is_active
 		},
 		url : utils.getServices().uploadBet,
@@ -226,10 +225,14 @@ App.prototype.uploadBet = function(bet) {
 			if(isNaN(r)==false){
 				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
 				utils.getMainInstance().lotteryDataBase.commit();
-				//alert("Se sincronizo correctamente la apuesta");
+				if(this.bets) {
+					this.bets.getAllBets();
+				}
+				console.log("Se sincronizo automaticamente la apuesta");
 			} else {
-				//alert("No se agrego la apuesta");
+				console.log("No se pudo sincronizar automaticamente la apuesta");
 			}
+			
 		},
 		error : function(error) {
 			debugger;

@@ -69,9 +69,9 @@ var utils = {
 	checkBetLimit : function(bet) {
 		var minutes = this.getLimitMinute();
 		var now = new Date();
-		var betTime = new Date(bet.date);
+		var betTime = new Date(bet.bet_created);
     	var limit = new Date ( betTime );
-		limit.setMinutes ( betTime.getMinutes() + minutes );
+    	limit.setTime( betTime.getTime() + (minutes * 60000));
 		return (now <= limit);
 	},
 	compareHours : function(sampleTime) {

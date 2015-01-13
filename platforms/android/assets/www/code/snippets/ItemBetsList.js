@@ -7,7 +7,7 @@ function ItemBetsList(config) {
 ItemBetsList.prototype.constructor = ItemBetsList;
 
 ItemBetsList.prototype.initialize = function(){
-	var hour = new Date(this.betData.date);
+	var hour = new Date(this.betData.bet_created);
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ this.betData.ID,this.betData.bet_number,this.betData.bet_position,this.betData.total_amount,hour.getHours() + ":" + hour.getMinutes() ] });
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);

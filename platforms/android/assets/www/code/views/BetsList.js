@@ -43,7 +43,8 @@ BetsList.prototype.removeBet = function(bet) {
 		var canDelete = utils.checkBetLimit(row);
 		if(canDelete) {
 			row.is_active = 0,
-			row.is_editable = 0
+			row.is_editable = 0,
+			row.bet_canceled = new Date()
 		} else {
 			row.is_active = 1;
 			alert("No se puede remover la apuesta");
@@ -77,7 +78,8 @@ BetsList.prototype.uploadBet = function(id) {
 			betTotalAmount:this.dataToSend.bet_total_amount,
 			idDevice:utils.getUserData().idDevice,
 			idVendor:utils.getUserData().idVendor,
-			betCreated:this.dataToSend.date,
+			betCreated:this.dataToSend.bet_created,
+			betCanceled:this.dataToSend.bet_canceled,
 			isActive:this.dataToSend.is_active
 		},
 		url : utils.getServices().uploadBet,
