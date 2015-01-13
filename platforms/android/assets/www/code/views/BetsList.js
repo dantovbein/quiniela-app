@@ -63,6 +63,7 @@ BetsList.prototype.sincronizeBet = function(e){
 BetsList.prototype.uploadBet = function(id) {
 	this.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0];
 	this.betLocalId = id;
+	debugger;
 	$.ajax({
 		context : this,
 		async : false,
@@ -81,6 +82,7 @@ BetsList.prototype.uploadBet = function(id) {
 		},
 		url : utils.getServices().uploadBet,
 		success : function(r){
+			debugger;
 			if(isNaN(r)==false){
 				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
 				utils.getMainInstance().lotteryDataBase.commit();

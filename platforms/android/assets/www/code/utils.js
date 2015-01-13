@@ -64,7 +64,7 @@ var utils = {
 	    alert('Connection type: ' + states[networkState]);
 	},
 	getLimitMinute : function(){
-		return .1;
+		return 3;
 	},
 	checkBetLimit : function(bet) {
 		var minutes = this.getLimitMinute();
@@ -159,8 +159,7 @@ var utils = {
 							"lotteryNames" : [ 1,2,3 ]
 						},{
 							"lotteryType" : 4,
-							//"expirate" : "21:00",
-							"expirate" : "22:00",
+							"expirate" : "21:00",
 							"lotteryNames" : [ 1,2,3,5 ]
 						} 
 					] 
