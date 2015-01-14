@@ -8,7 +8,7 @@ section.view.home .content-view {
 }
 
 .item-menu-home {
-	width: 26rem;
+	width: 26.5rem;
 	margin: 0 1.8rem 5rem 1.8rem;
 	text-align: center;
 	float: left;
@@ -20,7 +20,7 @@ section.view.home .content-view {
 
 .btn-home {
 	width: 100%;
-	height: 26rem;
+	height: 26.5rem;
 	position: relative;
 	background-color:#F1623D;
 }

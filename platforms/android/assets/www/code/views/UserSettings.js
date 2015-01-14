@@ -16,8 +16,8 @@ UserSettings.prototype.initialize = function(){
 
 
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ 	utils.getUserData().fullName,
-																		since.getDate() + "/" + (since.getMonth() + 1) + "/" + since.getFullYear(),
-																		expiration.getDate() + "/" + (expiration.getMonth() + 1) + "/" + expiration.getFullYear() ]});
+																		utils.addZero(since.getDate()) + "/" + utils.addZero((since.getMonth() + 1)) + "/" + since.getFullYear(),
+																		utils.addZero(expiration.getDate()) + "/" + utils.addZero((expiration.getMonth() + 1)) + "/" + expiration.getFullYear() ]});
 	this.node = $.parseHTML(snippet.getSnippet());
 	$(this.node).css({ "right" : -$(document).width() });
 	this.container.append(this.node);

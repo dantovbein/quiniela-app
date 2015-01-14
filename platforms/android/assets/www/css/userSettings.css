@@ -2,7 +2,7 @@ section.view.user-settings {
 	color:#fff;
 	width: 80%;
 	min-height: 111rem;
-	background-color: #000;
+	background-color: #2B858D;
 	top: 9rem;
 	clear: both;
 	position: fixed;
@@ -11,7 +11,7 @@ section.view.user-settings {
 }
 
 .item-content-view.critic-zone nav.app-nav li {
-	background-color: red;
+	background-color: rgb(255, 32, 32);
 }
 
 .item-content-view.user-data ul li {

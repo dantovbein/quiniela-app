@@ -44,7 +44,7 @@ ul.list-header li:nth-child(4), li.item-bets-list ul li:nth-child(4){
 }
 
 ul.list-header li:nth-child(5), li.item-bets-list ul li:nth-child(5){
-	width: 4%;
+	width: 6%;
 }
 
 .item-bets-list:nth-child(even) {

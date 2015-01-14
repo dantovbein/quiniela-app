@@ -17,7 +17,7 @@ PopupBetOptions.prototype.initialize = function() {
 PopupBetOptions.prototype.addHandlers  = function() {
 	Popup.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-edit").click( { context:this }, this.onClickEdit );
-	$(this.node).find(".btn-sincronize").click( { context:this }, this.onClickSincronize );
+	$(this.node).find(".btn-synchronize").click( { context:this }, this.onClickSincronize );
 	$(this.node).find(".btn-remove").click( { context:this }, this.onClickRemove );
 }
 

@@ -20,9 +20,10 @@ input {
 	width: 98%;
 	padding: 0 0 0 2%;
 	height: 8rem;
-	border: solid 2px #000;
+	border: solid 2px #616161;
 	font-size: 4.5rem;
 	border-radius: 1.5rem;
+	background-color: transparent;
 }
 
 input[type=checkbox] {
@@ -128,7 +129,7 @@ li {
 .overlay {
 	width: 100%;
 	min-height: 5rem;
-	background-color: rgba(0,0,0,.5);
+	background-color: rgba(255,255,255,.75);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -184,7 +185,7 @@ section.view .content-view {
 .item-content-view nav.app-nav li {
 	width: 100%;
 	padding: 1rem 0;
-	background-color:#2B858D;
+	background-color:#004056;
 	text-align: center;
 	/*font-size: 3rem;*/
 	margin-bottom: 1.25rem;
@@ -229,24 +230,7 @@ section.view.login .error-log,section.view.lock-view .error-log {
 
 /* Start popup */
 
-.popup.popup-bet-options {
-	width: 70%;
-	padding: 2rem;
-	color: #fff;
-	background-color: black;
-	font-size: 3.5rem;
-	border:solid .1rem #404041;
-}
 
-.popup.popup-bet-options nav ul li {
-	width: 96%;
-	padding: 1rem 2%;
-	background-color: orange;
-	margin-bottom:1rem; 
-}
-.popup.popup-bet-options nav ul li:last-child {
-	margin-bottom: 0;
-}
 
 /* End popup */
 

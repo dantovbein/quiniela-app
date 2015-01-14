@@ -1,0 +1,40 @@
+.popup.popup-bet-options {
+	width: 70%;
+	padding: 3rem 2rem;
+	color: #fff;
+	background-color: black;
+	font-size: 3.5rem;
+	border:solid .1rem #404041;
+}
+
+.popup.popup-bet-options h1{
+	text-align: center;
+}
+
+.popup.popup-bet-options nav ul li {
+	width: 96%;
+	padding: 1rem 2%;
+	background-color: orange;
+	margin-bottom:2rem; 
+}
+.popup.popup-bet-options nav ul li:last-child {
+	margin-bottom: 0;
+}
+
+.popup.popup-bet-options .btn .icon {
+	width: 15.5rem;
+	height: 15.5rem;
+	background-color: green;
+}
+
+.popup.popup-bet-options .btn .icon-edit {
+	background-position: -578px -190px;
+}
+
+.popup.popup-bet-options .btn .icon-synchroize {
+	background-position: -578px -190px;
+}
+
+.popup.popup-bet-options .btn .icon-remove {
+	background-position: -578px -190px;
+}

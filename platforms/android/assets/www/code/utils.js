@@ -15,6 +15,9 @@ var utils = {
 			unlock : url + "service/manager/unlock.php"
 		};
 	},
+	addZero : function(value) {
+		return (value < 10) ? "0" + parseFloat(value) : parseFloat(value);
+	},
 	saveUserData : function(data) {
 		localStorage.setItem("id_vendor", data[0].idVendor);
 		localStorage.setItem("id_device", data[0].idDevice);
