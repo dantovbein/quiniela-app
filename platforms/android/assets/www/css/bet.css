@@ -5,21 +5,22 @@ section.view.bet {
 .wrapper-container-lotteries .lottery .header-lottery .lottery-desc{
 	width: 100%;
 	display: inline-block;
+	padding: .5rem;
 }
 
 .list-lotteries .item-checkbox {
-	margin: 0 5rem 2.5rem 0;
+	margin: 0 5rem 1rem 0;
 }
 
 nav.commands-nav ul li .icon {
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 }
 
 .icon-save {
-	background-position: -709px -48px;
+	background-position: -581px -29px;
 }
 
 .icon-cancel {
-	background-position: -709px -48px;
+	background-position: -709px -29px;
 }
