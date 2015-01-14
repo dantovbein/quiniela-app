@@ -9,6 +9,7 @@ ul.list-header {
 	font-family: "Lato-bold";
 	width: 96%;
 	padding: 0 2% 1.5rem 2%;
+	text-align: center;
 }
 
 ul.bets-list-data {
@@ -16,8 +17,9 @@ ul.bets-list-data {
 }
 li.item-bets-list {
 	width: 96%;
-	padding: 1rem 2%;
+	padding: 1.5rem 2% 1rem 2%;
 	border-bottom: solid .2rem #fff;
+	text-align: center;
 	/*cursor: pointer;*/
 }
 
@@ -26,7 +28,7 @@ li.item-bets-list {
 }*/
 
 ul.list-header li:nth-child(1), li.item-bets-list ul li:nth-child(1){
-	width: 24%;
+	width: 20%;
 }
 
 ul.list-header li:nth-child(2), li.item-bets-list ul li:nth-child(2){
@@ -43,4 +45,18 @@ ul.list-header li:nth-child(4), li.item-bets-list ul li:nth-child(4){
 
 ul.list-header li:nth-child(5), li.item-bets-list ul li:nth-child(5){
 	width: 4%;
+}
+
+.item-bets-list:nth-child(even) {
+	background-color: #E2E2E2;
+}
+.btn-more-options {
+	height:3rem;
+}
+
+.icon-more-options {
+	width: 14px;
+	height: 44px;
+	background-position: -350px -35px;
+
 }

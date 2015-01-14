@@ -1,0 +1,13 @@
+section.view.lock-view {
+	background-color:#004056;
+	margin-top: 0;
+	color: #fff;
+}
+
+section.view.lock-view .content-view {
+	padding-top:16rem;
+}
+
+section.view.lock-view  .main-title {
+	padding-bottom: 5rem;
+}

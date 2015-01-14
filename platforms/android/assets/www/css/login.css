@@ -1,6 +1,11 @@
-section.view.login .content-view {
-	padding-top:10rem;
+section.view.login {
+	background-color:#004056;
+	margin-top: 0;
+	color: #fff;
+}
 
+section.view.login .content-view {
+	padding-top:16rem;
 }
 
 section.view.login form {
@@ -21,21 +26,15 @@ section.view.login form input:last-child {
 	margin-bottom: 0;
 }
 
-.logo-login {
-	margin-bottom: 4rem;
-}
 
-section.view.login .error-log {
-	height: 1rem;
-	font-size: 4.25rem;
-}
 
 .btn-sign-in { 
 	width: 100%;
 	background-color:#00ADEF;
 	margin-top:6.25rem;
 	float: left;
-	padding: 1rem 0;	
+	padding: 1.5rem 0;
+	border-radius: 1rem;	
 }
 
 .btn-sign-in .description { 

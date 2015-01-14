@@ -217,60 +217,15 @@ section.view .content-view {
 }
 
 
-.lottery {
-	background-color: #EDEDED;
-	padding: 2rem 2rem 0 2rem;
-	border-radius: 1rem;
-	margin-bottom: 2rem;
+.logo-login {
+	margin-bottom: 4rem;
 }
 
-.lottery header.header-lottery {
-	width: 100%;
-	display: inline-block;
-	padding: 1rem 0 5rem 0;
-	font-size: 4rem;
+section.view.login .error-log,section.view.lock-view .error-log {
+	height: 1rem;
+	font-size: 4.25rem;
 }
 
-.lottery header.header-lottery span {
-	width: 100%;
-}
-
-.lottery label {
-	font-size: 4.5rem;
-}
-
-.wrapper-container-lotteries .lottery:last-child{
-	margin-bottom: 0rem;
-}
-
-nav.commands-nav {
-	text-align: center;
-}
-
-nav.commands-nav ul {
-	width: auto;
-}
-
-nav.commands-nav ul li {
-	width: 14rem;
-	height: 14rem;
-	float: left;
-	color:#033D5C;
-}
-
-.checkbox-list .item-checkbox {
-	width: 50%;
-	float: left;
-	margin-bottom: 2rem;
-}
-
-.item-checkbox {
-	width: 100%;
-}
-
-.item-checkbox span {
-	font-size: 1.5rem;
-}
 
 /* Start popup */
 

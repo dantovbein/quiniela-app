@@ -12,6 +12,7 @@ Login.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
 	this.node = $.parseHTML(snippet.getSnippet());
+	$(this.node).css({ height : $(document).height() })
 	this.container.append(this.node);
 	this.addHandlers();	
 }

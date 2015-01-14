@@ -1,4 +1,4 @@
-.view.wait {
+section.view.wait {
 	background-color:#004056;
 	width:100%;
 	min-height:925px;
@@ -10,7 +10,7 @@
 }
 
 .logo-wait {
-	width: 57rem;
-	height: 18rem;
+	width: 60rem;
+	height: 20rem;
 	background-position: -19px -254px;
 }

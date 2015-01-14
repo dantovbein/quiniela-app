@@ -8,13 +8,82 @@ section.view.bet {
 	padding: .5rem;
 }
 
+.lottery {
+	background-color: #DFDFDF;
+	padding: 2rem 2rem 0 2rem;
+	border-radius: 1rem;
+	margin-bottom: 2rem;
+}
+
+.lottery header.header-lottery {
+	width: 100%;
+	display: inline-block;
+	padding: 1rem 0 5rem 0;
+	font-size: 4rem;
+}
+
+.lottery header.header-lottery span {
+	width: 100%;
+}
+
+.lottery label {
+	font-size: 4.5rem;
+}
+
+.wrapper-container-lotteries .lottery:last-child{
+	margin-bottom: 0rem;
+}
+
+nav.commands-nav {
+	text-align: center;
+}
+
+nav.commands-nav .commands-list {
+	width: auto;
+}
+
+nav.commands-nav .commands-list li {
+	margin: 0 2rem;
+}
+nav.commands-nav .commands-list li .btn {
+	width: 11.2rem;
+	height: 15rem;
+	float: left;
+	color:#033D5C;
+}
+
+nav.commands-nav .commands-list li .btn span {
+	margin-top: 12.3rem;
+	display: inline-block;
+}
+
+nav.commands-nav .commands-lis li .btn .icon {
+	width: 12rem;
+	height: 12rem;
+}
+
+
+.checkbox-list .item-checkbox {
+	width: 50%;
+	float: left;
+	margin-bottom: 2rem;
+}
+
+.item-checkbox {
+	width: 100%;
+}
+
+.item-checkbox span {
+	font-size: 1.5rem;
+}
+
+
 .list-lotteries .item-checkbox {
 	margin: 0 5rem 1rem 0;
 }
 
-nav.commands-nav ul li .icon {
-	width: 12rem;
-	height: 12rem;
+.item-bet-option:last-child {
+	margin-bottom: .5rem;
 }
 
 .icon-save {
