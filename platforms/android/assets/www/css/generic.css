@@ -22,8 +22,8 @@ input {
 	height: 8rem;
 	border: solid 2px #616161;
 	font-size: 4.5rem;
-	border-radius: 1.5rem;
-	background-color: transparent;
+	/*border-radius: 1.5rem;*/
+	background-color: #fff;
 }
 
 input[type=checkbox] {
@@ -73,6 +73,11 @@ ul {
 
 li {
 	float: left;
+}
+
+.item-bet-option input {
+	background-color: #fff;
+	border-radius: 1.5rem;
 }
 
 /* GENERIC CLASSES */

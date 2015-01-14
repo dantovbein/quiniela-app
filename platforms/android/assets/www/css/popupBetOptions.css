@@ -1,40 +1,66 @@
 .popup.popup-bet-options {
 	width: 70%;
-	padding: 3rem 2rem;
+	padding: 4rem 2rem 3rem 2rem;
 	color: #fff;
-	background-color: black;
+	background-color: #004056;
 	font-size: 3.5rem;
 	border:solid .1rem #404041;
+	position: absolute;
+	text-align: center;
+	border-radius: 2rem;
+
 }
 
 .popup.popup-bet-options h1{
 	text-align: center;
+	font-size: 14rem;
+	color: #F1623D;
+	font-family: "Lato-Bold";
+	background-color: #fff;
+	padding: 0 4rem;
+	display: inline-block;
+	border-radius: 3rem;
+	margin-bottom: 8rem;
 }
 
 .popup.popup-bet-options nav ul li {
 	width: 96%;
-	padding: 1rem 2%;
-	background-color: orange;
-	margin-bottom:2rem; 
+	padding: 0 2%;
 }
 .popup.popup-bet-options nav ul li:last-child {
 	margin-bottom: 0;
 }
 
 .popup.popup-bet-options .btn .icon {
-	width: 15.5rem;
-	height: 15.5rem;
-	background-color: green;
+	width: 19rem;
+	height: 19rem;
+	position: relative;
+	float: left;
+	transform:scale(.75,.75);
+}
+
+.popup.popup-bet-options .btn span {
+	float: left;
+line-height: 19rem;
+font-size: 7rem
+}
+
+.popup.popup-bet-options .btn-close span {
+	line-height: 100%;
+	font-size: 4rem;
+	background-color: red;
+	padding: 1rem 1.5rem;
+	border-radius: 3rem;
 }
 
 .popup.popup-bet-options .btn .icon-edit {
-	background-position: -578px -190px;
+	background-position: -25px -432px;
 }
 
-.popup.popup-bet-options .btn .icon-synchroize {
-	background-position: -578px -190px;
+.popup.popup-bet-options .btn-synchronize .icon-synchronize {
+	background-position: -429px -432px;
 }
 
-.popup.popup-bet-options .btn .icon-remove {
-	background-position: -578px -190px;
+.popup.popup-bet-options .btn-remove .icon-remove {
+	background-position: -227px -432px;
 }
