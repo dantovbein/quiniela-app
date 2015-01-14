@@ -131,7 +131,7 @@ li {
 	margin: auto;
 }
 
-.overlay {
+.overlay,.app-message  {
 	width: 100%;
 	min-height: 5rem;
 	background-color: rgba(255,255,255,.75);
@@ -140,8 +140,32 @@ li {
 	left: 0;
 }
 
+.app-message .app-message-desc {
+	position: absolute;
+	display: inline-block;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	font-size: 3.5rem;
+	color: #272727;
+	width: 100%;
+	text-align: center;
+	height: 4rem;
+}
+
 .highlighted {
 	font-family: "Lato-Bold";
+}
+
+.no-bets {
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+	padding: 10rem 0;
+	font-family: "Lato-Bold";
+	font-size: 3.2rem;
 }
 /* END GENERIC CLASSES */
 

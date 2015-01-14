@@ -35,14 +35,15 @@ Login.prototype.signIn = function(e) {
 		errorElement.text("Error en la contrasena");
 		return false;
 	} else {
+		utils.showMessage("Conectando con el servidor.");
 		$.ajax({
 			async : false,
 			type : "POST",
 			data : { user : user, password : password },			
 			url : utils.getServices().login,
 			success : function(_result_) {
-				var result = JSON.parse(_result_);
-				
+				utils.removeMessage();
+				var result = JSON.parse(_result_);				
 				if(result[0].idVendor == null) {
 					errorElement.text("Datos incorrectos");
 				} else {

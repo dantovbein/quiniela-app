@@ -29,6 +29,14 @@ var utils = {
 		localStorage.setItem("expiration", this.getExpirationDate());
 		localStorage.setItem("is_locked", 0);
 	},
+	showMessage : function(text) {
+		$("body").append("<div class='app-message'><span class='app-message-desc'>" + text + "</span></div>");
+		$(".app-message").width($(document).width());
+		$(".app-message").height($(document).height());
+	},
+	removeMessage : function(){
+		if($(".app-message").length > 0) $(".app-message").remove();
+	},
 	removeUserData : function() {
 		if(this.getMainInstance().lotteryDataBase) {
 			this.getMainInstance().lotteryDataBase.drop();

@@ -1,6 +1,8 @@
 function App(config) {
 	this.config = config;
 	this.initialize();
+	this.totalToSychronize = 0;
+	this.totalSychronized = 0;
 } 
 
 App.prototype.contstructor = App;
@@ -108,9 +110,8 @@ App.prototype.getHome = function() {
 		var home = new Home( { container : $("main") } );
 		home.initialize();
 		$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
-	  	//$(home.node).bind( "editBet", { context:this }, function(e) { e.data.context.editGame(); });
-	  	//$(home.node).bind( "removeBet", { context:this }, function(e) { e.data.context.removeGame(); });
-	  	//$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });			
+	  	$(home.node).bind( "showBets", { context:this }, function(e) { e.data.context.getBets(); });
+	  	$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });			
 	}	
 }
 
@@ -149,6 +150,7 @@ App.prototype.getSettings = function() {
 
 		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); },false);
 		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); },false);
+		$(this.userSettings.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); },false);
 	} else {
 		this.userSettings.show();
 	}
@@ -192,12 +194,20 @@ App.prototype.removeGame = function() {
 }
 
 App.prototype.synchronize = function() {
+	if(this.userSettings) this.userSettings.hide();
+	this.totalToSychronize = 0;
+	this.totalSychronized = 0;
+
 	var betsData = utils.getMainInstance().lotteryDataBase.query("bets");
 	betsData.forEach(function(b){
 		if(b.is_editable==0) {
+			this.totalToScronize++;
 			this.uploadBet(b);
 		}
 	},this);
+	if(this.totalToScronize > 0) {
+		utils.showMessage("Sincronizando las apuestas con el servidor");
+	}
 }
 
 App.prototype.uploadBet = function(bet) {
@@ -231,6 +241,10 @@ App.prototype.uploadBet = function(bet) {
 				console.log("Se sincronizo automaticamente la apuesta");
 			} else {
 				console.log("No se pudo sincronizar automaticamente la apuesta");
+			}
+			this.totalSychronized++;
+			if(this.totalSychronized == this.totalToSychronize){
+				utils.removeMessage();
 			}
 			
 		},

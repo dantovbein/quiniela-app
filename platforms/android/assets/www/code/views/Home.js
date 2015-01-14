@@ -18,17 +18,13 @@ Home.prototype.initialize = function(){
 		$( e.data.context.node ).trigger( "generateBet" );
 	} );
 
-	/*$(this.node).find(".edit-bet").click( { context:this }, function(e){
-		$( e.data.context.node ).trigger( "editBet" );
-	} );
-
-	$(this.node).find(".remove-bet").click( { context:this }, function(e){
-		$( e.data.context.node ).trigger( "removeBet" );
+	$(this.node).find(".show-bets").click( { context:this }, function(e){
+		$( e.data.context.node ).trigger( "showBets" );
 	} );
 
 	$(this.node).find(".synchronize").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "synchronize" );
-	} );*/
+	} );
 
 	this.addHandlers();	
 }

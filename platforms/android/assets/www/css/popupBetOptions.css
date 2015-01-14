@@ -1,5 +1,5 @@
 .popup.popup-bet-options {
-	width: 70%;
+	width: 80%;
 	padding: 4rem 2rem 3rem 2rem;
 	color: #fff;
 	background-color: #004056;
@@ -7,20 +7,20 @@
 	border:solid .1rem #404041;
 	position: absolute;
 	text-align: center;
-	border-radius: 2rem;
+	/*border-radius: 2rem;*/
 
 }
 
 .popup.popup-bet-options h1{
 	text-align: center;
-	font-size: 14rem;
+	font-size: 8rem;
 	color: #F1623D;
 	font-family: "Lato-Bold";
 	background-color: #fff;
-	padding: 0 4rem;
+	padding: 0 4rem 0 4rem;
 	display: inline-block;
 	border-radius: 3rem;
-	margin-bottom: 8rem;
+	margin-bottom: 3rem;
 }
 
 .popup.popup-bet-options nav ul li {
@@ -46,11 +46,9 @@ font-size: 7rem
 }
 
 .popup.popup-bet-options .btn-close span {
+	font-size: 2.8rem;
 	line-height: 100%;
-	font-size: 4rem;
-	background-color: red;
-	padding: 1rem 1.5rem;
-	border-radius: 3rem;
+	padding: 1rem;
 }
 
 .popup.popup-bet-options .btn .icon-edit {

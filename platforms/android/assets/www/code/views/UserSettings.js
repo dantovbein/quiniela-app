@@ -42,6 +42,12 @@ UserSettings.prototype.addHandlers = function() {
 	$(this.node).find(".btn-block-user").click( { context:this }, function(e){
 		$( e.data.context.node ).trigger( "blockUser" );
 	} );
+
+	$(this.node).find(".btn-synchronize").click( { context:this }, function(e){
+		$( e.data.context.node ).trigger( "synchronize" );
+	} );
+
+	
 }
 
 UserSettings.prototype.show = function() {

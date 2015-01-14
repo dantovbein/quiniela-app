@@ -31,6 +31,7 @@ LockView.prototype.signIn = function(e) {
 		errorElement.text("Debe escribirse un código");
 		return false;
 	} else {
+		utils.showMessage("Conectando con el servidor.");
 		$.ajax({
 			context : _this,
 			async : false,
@@ -38,6 +39,7 @@ LockView.prototype.signIn = function(e) {
 			data : { user : utils.getUserData().idVendor ,unlockCode : unlockCode },			
 			url : utils.getServices().unlock,
 			success : function(_result_) {
+				utils.removeMessage();
 				var result = JSON.parse(_result_);
 				if((result[0].idVendor == utils.getUserData().idVendor)) {
 					$(this.node).trigger( "home" );

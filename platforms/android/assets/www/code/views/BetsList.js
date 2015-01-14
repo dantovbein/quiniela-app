@@ -30,6 +30,9 @@ BetsList.prototype.getAllBets = function() {
 			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
 		}
 	},this);
+	if(betsData.length == 0){
+		$(this.node).find(".bets-list-data").append("<li class='no-bets'>No hay apuestas cargadas o ya han sido sincronizadas</li>");
+	}
 }
 
 BetsList.prototype.showItemOptions = function(e) {
@@ -62,9 +65,9 @@ BetsList.prototype.sincronizeBet = function(e){
 }
 
 BetsList.prototype.uploadBet = function(id) {
+	utils.showMessage("Sincronizando jugada al servidor.");
 	this.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0];
 	this.betLocalId = id;
-	debugger;
 	$.ajax({
 		context : this,
 		async : false,
@@ -84,7 +87,6 @@ BetsList.prototype.uploadBet = function(id) {
 		},
 		url : utils.getServices().uploadBet,
 		success : function(r){
-			debugger;
 			if(isNaN(r)==false){
 				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
 				utils.getMainInstance().lotteryDataBase.commit();
@@ -93,6 +95,7 @@ BetsList.prototype.uploadBet = function(id) {
 			} else {
 				alert("No se agrego la apuesta");
 			}
+			utils.removeMessage();
 		},
 		error : function(error) {
 			debugger;
