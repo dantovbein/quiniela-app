@@ -6,7 +6,7 @@
         <ul class="list-options-bet">
             <li class="item-bet-option">
                 <label>Número:</label>
-                <input id="bet-number" type="text" pattern="[0-9]*" /> 
+                <input id="bet-number" type="number" /> 
             </li>
             <li id="container-lotteries" class="item-bet-option">
                 <label>Loterias disponibles:</label>
@@ -23,20 +23,24 @@
             </li>
             <li class="item-bet-option">
                 <label>Importe por jugada:</label>
-                <input id="partial-amount" type="text" pattern="[0-9]*"/>
+                <input id="partial-amount" type="number" />
             </li>
-             <li class="item-bet-option">
+             <li class="item-bet-option item-total-amount">
                 <span>Importe total: $<span class="total-amount">0</span></span>
             </li>
         </ul>
         <nav class="commands-nav">
             <ul class="commands-list">
                 <li>
-                    <div class="btn btn-cancel">CANCELAR
+                    <div class="btn btn-cancel">
+                        <div class="icon icon-cancel"></div>
+                        <span>CANCELAR</span>
                     </div>
                 </li>
                 <li>
-                    <div class="btn btn-save">GUARDAR
+                    <div class="btn btn-save">
+                        <div class="icon icon-save"></div>
+                        <span>GUARDAR</span>                        
                     </div>
                 </li>
             </ul>

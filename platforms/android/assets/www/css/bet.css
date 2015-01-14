@@ -1,5 +1,5 @@
 section.view.bet {
-	padding-bottom: 30rem;
+	padding-bottom: 1rem;
 }
 
 .wrapper-container-lotteries .lottery .header-lottery .lottery-desc{
@@ -9,4 +9,17 @@ section.view.bet {
 
 .list-lotteries .item-checkbox {
 	margin: 0 5rem 2.5rem 0;
+}
+
+nav.commands-nav ul li .icon {
+	width: 10rem;
+	height: 10rem;
+}
+
+.icon-save {
+	background-position: -709px -48px;
+}
+
+.icon-cancel {
+	background-position: -709px -48px;
 }
