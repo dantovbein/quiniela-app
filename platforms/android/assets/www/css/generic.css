@@ -20,22 +20,14 @@ input {
 	width: 98%;
 	padding: 0 0 0 2%;
 	height: 8rem;
+	border: solid 2px #d5d5d5;
 	font-size: 4.5rem;
+	border-radius: 1.5rem;
 }
 
 input[type=checkbox] {
-  	/*padding-left:1rem;
-    padding-right:1rem;
-    border-radius:.5rem;
-    border: double 2px #00F;
-    background-color:#0b0095;
-    color:#FFF;
-    white-space: nowrap;
-    overflow:hidden;
-    width:3rem;
-    height:3rem;*/
-    display: none;
-    
+  	display: none;
+  	float: left;    
 }
 input[type=checkbox] + label span {
 	display: inline-block;
@@ -44,10 +36,17 @@ input[type=checkbox] + label span {
 	background: url("../images/assets.svg") left top no-repeat;
 	background-position: -582px -34px;
 	margin: 0 20px 0 0;
+	float: left;
 }
 
 input[type=checkbox]:checked + label span{
 	background-position: -654px -34px;
+}
+
+input[type=checkbox] + label p{
+	float: left;
+	padding: 0;
+	margin: 0;
 }
 
 select { 
@@ -60,6 +59,9 @@ select {
    	border: 0;
    	border-radius: 0;
    	-webkit-appearance: none;
+   	background: #F1623D;
+	color: #fff;
+	border-radius: 1.5rem;
 }
 
 ul { 
@@ -217,6 +219,7 @@ section.view .content-view {
 	width: 100%;
 	display: inline-block;
 	padding: 1rem 0 2rem 0;
+	font-size: 5rem;
 }
 
 .lottery header.header-lottery span {
@@ -282,6 +285,12 @@ nav.commands-nav ul li {
 
 	.icon {
 		transform: scale(.75,.75);
+	}
+}
+
+@media only screen and (orientation : portrait) {
+	.item-menu-home:nth-child(even) {
+		margin-right: 6rem;
 	}
 }
 
