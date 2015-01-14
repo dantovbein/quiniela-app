@@ -24,21 +24,30 @@ input {
 }
 
 input[type=checkbox] {
-   padding-left:1rem;
+  	/*padding-left:1rem;
     padding-right:1rem;
     border-radius:.5rem;
-
-    /*-webkit-appearance:button;*/
-
     border: double 2px #00F;
-
     background-color:#0b0095;
     color:#FFF;
     white-space: nowrap;
     overflow:hidden;
-
     width:3rem;
-    height:3rem;
+    height:3rem;*/
+    display: none;
+    
+}
+input[type=checkbox] + label span {
+	display: inline-block;
+	width: 56px;
+	height: 46px;
+	background: url("../images/assets.svg") left top no-repeat;
+	background-position: -582px -34px;
+	margin: 0 20px 0 0;
+}
+
+input[type=checkbox]:checked + label span{
+	background-position: -654px -34px;
 }
 
 select { 

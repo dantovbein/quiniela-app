@@ -1,0 +1,16 @@
+.view.wait {
+	background-color:#004056;
+	width:100%;
+	min-height:400px;
+	margin:0;
+	padding:0;
+	display:inline-block;
+	position:relative;
+	float:left;
+}
+
+.logo-wait {
+	width: 55rem;
+	height: 16rem;
+	background-position: -19px -254px;
+}

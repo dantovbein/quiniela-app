@@ -118,7 +118,6 @@ Bet.prototype.getTotalAmount = function() {
 			totalChecked++;
 		}
 	}
-	debugger;
 	return 	parseFloat($(this.node).find("#partial-amount").val() * totalChecked).toFixed(2);
 }
 

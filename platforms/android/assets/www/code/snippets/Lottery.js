@@ -16,7 +16,8 @@ Lottery.prototype.initialize = function() {
 
 Lottery.prototype.getLotteries = function() {
 	this.lotteryData.lotteryNames.forEach(function(l){
-		var itemLottery = new Snippet( { "path" : "snippets/itemCheckboxLotteryName.html", "data" : [ l,l,utils.getLotteryName(l) ] });
+		var idCheckbox = "-"+l+"-"+this.lotteryData.lotteryType;
+		var itemLottery = new Snippet( { "path" : "snippets/itemCheckboxLotteryName.html", "data" : [ l,l,utils.getLotteryName(l),idCheckbox,idCheckbox ] });
 		$(this.node).find(".list-lotteries").append($.parseHTML(itemLottery.getSnippet()));
 	},this);
 }
