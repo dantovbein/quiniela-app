@@ -63,6 +63,9 @@ var utils = {
 
 	    alert('Connection type: ' + states[networkState]);
 	},
+	getDecimalNumber : function(value) {
+		return (value < 10) ? "0" + parseFloat(value) : parseFloat(value);
+	},
 	getLimitMinute : function(){
 		return 3;
 	},

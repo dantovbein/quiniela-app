@@ -102,7 +102,7 @@ Bet.prototype.saveBet = function(e) {
 																				bet_data : currentBet.bet,
 																				bet_position : currentBet.betPosition,
 																				bet_amount : currentBet.betAmount,
-																				total_amount : parseFloat(currentBet.betTotalAmount),
+																				bet_total_amount : currentBet.betTotalAmount,
 																				bet_created : currentBet.betCreated,
 																				is_active : 1,
 																				is_editable : 1});
@@ -118,7 +118,8 @@ Bet.prototype.getTotalAmount = function() {
 			totalChecked++;
 		}
 	}
-	return 	$(this.node).find("#partial-amount").val() * totalChecked;
+	debugger;
+	return 	parseFloat($(this.node).find("#partial-amount").val() * totalChecked).toFixed(2);
 }
 
 Bet.prototype.generateTodaysLotteries = function() {

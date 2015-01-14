@@ -1,0 +1,37 @@
+header.default-header {
+	top:0;
+	position: fixed;
+	width: 100%;
+	height: 9rem;
+	background-color: #004056;
+	clear: both;
+}
+
+header.default-header .btn-settings, header.default-header .btn-home {
+	width: 9rem;
+	height: 9rem;
+	
+	background-color:#2B858D;
+}
+
+header.default-header .btn .icon {
+	width: 7rem;
+	height: 7rem;
+}
+
+.icon-settings {
+	background-position: -19px -20px;
+}
+
+.icon-home {
+	background-position: -101px -22px;
+}
+
+header.default-header .btn-home {
+	float: left;
+}
+
+header.default-header .btn-settings {
+	float: right;
+}
+
