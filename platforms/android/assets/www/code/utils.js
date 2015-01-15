@@ -7,8 +7,8 @@ var utils = {
 	},
 	getServices : function(){
 		//var url = "";
-		var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
-		//var url = "http://yoviajoriveras.com/";
+		//var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
+		var url = "http://yoviajoriveras.com/mobile/";
 		return {	
 			login : url + "service/manager/login.php",
 			uploadBet : url + "service/manager/uploadBet.php",
