@@ -5,16 +5,11 @@ class Storage {
 	public $server = "root";
 	public $password = "";
 	public $dataBase = "quiniela";*/
-	
-	public $host = "190.210.186.144";
-	public $server = "deaene.com.ar";
-	public $password = "arcomdeaene";
-	public $dataBase = "deaene_com_ar";
 
-	/*public $host = "192.186.248.103";
-	public $server = "yoviajoriveras.com";
-	public $password = "Daiana1974";
-	public $dataBase = "quiniela";*/
+	public $host = "192.186.248.103";
+	public $server = "yoviajoriveras";
+	public $password = "Lucho1974";
+	public $dataBase = "quiniela";
 	
 	private $sql;
 
