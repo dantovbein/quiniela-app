@@ -23,4 +23,11 @@ BetEditor.prototype.showData = function() {
 	}
 	$(this.node).find("#partial-amount").val(this.betData.bet_amount);
 	$(this.node).find(".total-amount").html(this.getTotalAmount());
+
+	$(this.node).find("#item-checkbox-component-tapadita").prop('checked', (this.betData.is_tapadita) ? 1 : 0 );
 }
+/*
+BetEditor.prototype.saveBet = function(e){
+	Bet.prototype.saveBet.call(this,e);
+	$( e.data.context.node ).trigger( { type : "bets" } );
+}*/

@@ -83,7 +83,8 @@ BetsList.prototype.uploadBet = function(id) {
 			idVendor:utils.getUserData().idVendor,
 			betCreated:this.dataToSend.bet_created,
 			betCanceled:this.dataToSend.bet_canceled,
-			isActive:this.dataToSend.is_active
+			isActive:this.dataToSend.is_active,
+			isTapadita:this.dataToSend.is_tapadita
 		},
 		url : utils.getServices().uploadBet,
 		success : function(r){

@@ -12,6 +12,7 @@
 	if(isset($_POST['betCreated'])) { $betCreated = $_POST['betCreated']; }
 	if(isset($_POST['betCanceled'])) { $betCanceled = $_POST['betCanceled']; }
 	if(isset($_POST['isActive'])) { $isActive = $_POST['isActive']; }
+	if(isset($_POST['isTapadita'])) { $isTapadita = $_POST['isTapadita']; }
 
 	$data = array(
 	    "betNumber" => $betNumber,
@@ -23,7 +24,8 @@
 	    "idVendor" => $idVendor,
 	    "betCreated" => $betCreated,
 	    "betCanceled" => $betCanceled,
-	    "isActive" => $isActive	    
+	    "isActive" => $isActive,
+	    "isTapadita" => $isTapadita	    
 	);
 
 	$storage = new Storage();

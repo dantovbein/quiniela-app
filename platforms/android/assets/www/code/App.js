@@ -57,7 +57,7 @@ App.prototype.checkBets = function() {
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","bet_total_amount","bet_created","bet_canceled","is_active","is_editable"]);
+		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","is_tapadita"]);
 		this.lotteryDataBase.commit();
 	} else {
 		// Existe la base de datos
@@ -70,6 +70,7 @@ App.prototype.removeContent = function() {
 	}
 	
 	utils.removeOverlay();
+	utils.removeMessage();
 	
 	if($(".popup").length > 0) {
 		$(".popup").remove();
@@ -183,7 +184,7 @@ App.prototype.editBet = function(e) {
 	var bet = new BetEditor({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData)), betData : e.betData });
 	bet.initialize();
 
-	$(bet.node).bind( "bets", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
+	$(bet.node).bind( "newBet", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
 }
 
 App.prototype.removePopup = function() {
@@ -231,7 +232,8 @@ App.prototype.uploadBet = function(bet) {
 			idVendor:utils.getUserData().idVendor,
 			betCreated:this.dataToSend.bet_created,
 			betCanceled:this.dataToSend.bet_canceled,
-			isActive:this.dataToSend.is_active
+			isActive:this.dataToSend.is_active,
+			isTapadita:this.dataToSend.is_tapadita
 		},
 		url : utils.getServices().uploadBet,
 		success : function(r){

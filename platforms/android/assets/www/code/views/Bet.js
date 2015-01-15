@@ -44,7 +44,6 @@ Bet.prototype.addHandlers = function() {
 	});
 
 	$(this.node).find(".btn-save").click( { context:this }, this.saveBet );
-	//$(this.node).find(".btn-new-").click( { context:this }, this.newBet );
 }
 
 Bet.prototype.newBet = function(e) {
@@ -55,7 +54,8 @@ Bet.prototype.saveBet = function(e) {
 	var _this = e.data.context;
 	var betNumber = $(_this.node).find("#bet-number").val();
 	var partialAmount = $(_this.node).find("#partial-amount").val();
-
+	var isTapadita = ($(_this.node).find("#item-checkbox-component-tapadita").is(":checked")) ? 1 : 0;
+	
 	var currentBet = {};	
 	
 	if( betNumber == "") {
@@ -105,6 +105,7 @@ Bet.prototype.saveBet = function(e) {
 	currentBet.betAmount = partialAmount;
 	currentBet.betTotalAmount = _this.getTotalAmount();
 	currentBet.betCreated = new Date();
+	currentBet.isTapadita = isTapadita;
 
 	var id = (_this.betData.ID != undefined) ? _this.betData.ID : -1;
 	utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { bet_number : currentBet.betNumber,
@@ -114,18 +115,20 @@ Bet.prototype.saveBet = function(e) {
 																				bet_total_amount : currentBet.betTotalAmount,
 																				bet_created : currentBet.betCreated,
 																				is_active : 1,
-																				is_editable : 1});
+																				is_editable : 1,
+																				is_tapadita : isTapadita });
 
 	utils.getMainInstance().lotteryDataBase.commit();
 	//$( _this.node ).trigger( { type : "bets" } );
-	$( _this.node ).trigger( { type : "newBet" } );
 	utils.showMessage("Partida guardada");
+	$( _this.node ).trigger( { type : "newBet" } );
+	
 }
 
 Bet.prototype.getTotalAmount = function() {
 	var totalChecked = 0;
-	for(var i=0; i<$(this.node).find(".item-checkbox input").length;i++){
-		if($($(this.node).find(".item-checkbox input")[i]).is(":checked")) {
+	for(var i=0; i<$(this.node).find(".wrapper-container-lotteries .item-checkbox input").length;i++){
+		if($($(this.node).find(".wrapper-container-lotteries .item-checkbox input")[i]).is(":checked")) {
 			totalChecked++;
 		}
 	}
