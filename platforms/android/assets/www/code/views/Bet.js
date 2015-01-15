@@ -17,6 +17,10 @@ Bet.prototype.initialize = function(){
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
 
+	$('html,body').animate({ scrollTop: 0 }, 'slow',function(){
+		utils.removeMessage();
+	}); 
+
 	this.generateTodaysLotteries();
 
 	this.addHandlers();
@@ -40,6 +44,11 @@ Bet.prototype.addHandlers = function() {
 	});
 
 	$(this.node).find(".btn-save").click( { context:this }, this.saveBet );
+	//$(this.node).find(".btn-new-").click( { context:this }, this.newBet );
+}
+
+Bet.prototype.newBet = function(e) {
+
 }
 
 Bet.prototype.saveBet = function(e) {
@@ -108,7 +117,9 @@ Bet.prototype.saveBet = function(e) {
 																				is_editable : 1});
 
 	utils.getMainInstance().lotteryDataBase.commit();
-	$( _this.node ).trigger( { type : "bets" } );
+	//$( _this.node ).trigger( { type : "bets" } );
+	$( _this.node ).trigger( { type : "newBet" } );
+	utils.showMessage("Partida guardada");
 }
 
 Bet.prototype.getTotalAmount = function() {

@@ -161,7 +161,8 @@ App.prototype.generateBet = function() {
 	var bet = new BetGenerator({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData) ) });
 	bet.initialize();
 
-	$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
+	//$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
+	$(bet.node).bind( "newBet", { context:this }, function(e) { e.data.context.generateBet(); });
 	$(bet.node).bind( "cancel", { context:this }, function(e) { e.data.context.getHome(); });
 
 }
