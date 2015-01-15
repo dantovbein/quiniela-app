@@ -162,6 +162,8 @@ App.prototype.generateBet = function() {
 	bet.initialize();
 
 	$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
+	$(bet.node).bind( "cancel", { context:this }, function(e) { e.data.context.getHome(); });
+
 }
 
 App.prototype.getBets = function() {

@@ -26,7 +26,7 @@ Bet.prototype.addHandlers = function() {
 	View.prototype.addHandlers.call(this);
 	
 	$(this.node).find(".btn-cancel").click( { context:this }, function(e){
-		$( e.data.context.node ).trigger( "home" );
+		$( e.data.context.node ).trigger( "cancel" );
 	} );
 	
 	$($(this.node).find("#partial-amount")).on("input", { context : this }, function(e){
