@@ -274,7 +274,7 @@ var utils = {
 							"lotteryNames" : [ 1,2,3,5 ]
 						},{
 							"lotteryType" : 3,
-							"expirate" : "18:00",
+							"expirate" : "17:00",
 							"lotteryNames" : [ 1,2,3 ]
 						},{
 							"lotteryType" : 4,
