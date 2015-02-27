@@ -19,7 +19,9 @@ App.prototype.initialize = function() {
 App.prototype.configure = function() {
 	this.totalToSychronize = 0;
 	this.totalSychronized = 0;
+	alert("App configure 1");
 	this.createDataBase();
+	alert("App configure 2");
 	Utils.setMainInstance(this);
 	$(document).bind( "removePopup", { context:this }, this.removePopup,false );
 	$(document).bind( "appTemporaryUnlocked", { context:this }, function(e){
