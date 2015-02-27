@@ -1,4 +1,5 @@
 function Libs(_lib_) {
+	alert("Libs");
 	var self = this;
 	this.lib = _lib_;
 	

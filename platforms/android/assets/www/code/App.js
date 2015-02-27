@@ -1,4 +1,5 @@
 function App(config) {
+	alert("App");
 	this.config = config;
 	this.initialize();
 } 
