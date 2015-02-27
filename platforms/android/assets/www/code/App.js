@@ -149,11 +149,15 @@ App.prototype.getLogin = function() {
 	
 	if($("header.default-header").length > 0) $("header.default-header").remove();
 	if($(".view.user-settings").length > 0) $(".view.user-settings").remove();
+	alert("llega 1");
 	
 	this.removeContent();
+	alert("llega 2");
 
 	var login = new Login( { container : $("main") } );
 	login.initialize();
+
+	alert("llega 3");
 	
 	$(login.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); },false);  	
 }
