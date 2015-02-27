@@ -6,6 +6,7 @@ function App(config) {
 App.prototype.contstructor = App;
 
 App.prototype.initialize = function() {
+	alert("App initialize");
 	this.configure()
 	if(Utils.getUserData().user == "" || Utils.getUserData().user == null) {
 		this.getLogin();
@@ -41,11 +42,12 @@ App.prototype.configure = function() {
 	if(parseInt(localStorage.getItem("is_temporary_locked"))==0){
 		this.startTimerLockApp();
 	}
-	
 
 	$(document).click( {context:this}, function(e){
     	e.data.context.currentResetTimer = 0;
   	});
+
+  	alert("App configure");
 }
 
 App.prototype.startTimerLockApp = function(){
