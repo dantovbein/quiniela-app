@@ -53,6 +53,7 @@ Libs.prototype.loadFiles = function(files) {
 	files.forEach(function(f){
 		index = f.lastIndexOf(".",f.length);
 		extension = f.slice(index + 1,f.length);
+		alert(extension);
 		switch(extension)
 		{
 			case "css":

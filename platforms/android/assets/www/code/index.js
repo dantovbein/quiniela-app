@@ -38,11 +38,10 @@ var app = {
         
         // Load the App's library
         var libs = new Libs("app");
+        alert("libs");
         // Generate App
         var app = new App();
-        
         //app.receivedEvent('deviceready');
-
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
