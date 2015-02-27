@@ -73,10 +73,12 @@ Libs.prototype.loadFiles = function(files) {
 					url : f,
 					dataType : "script",
 					success : function(result) {
-						console.log("Se cargo: " + f);
+						//console.log("Se cargo: " + f);
+						alert("Se cargo: " + f);
 					},
 					error : function(error) {
-						console.log("No se pudo cargar " + f);
+						//console.log("No se pudo cargar " + f);
+						alert("No se pudo cargar " + f);
 					}
 				});
 
