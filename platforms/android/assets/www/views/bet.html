@@ -8,26 +8,44 @@
                 <label>Número:</label>
                 <input id="bet-number" type="number" /> 
             </li>
-             <li class="item-bet-option">
+            <li id="container-lotteries" class="item-bet-option">
+                <label>Loterias disponibles:</label>
+                <div class="wrapper-container-lotteries"></div>
+            </li>
+            <li class="item-bet-option">
                 <label>Importe por jugada:</label>
                 <input id="partial-amount" type="number" />
             </li>
              <li class="item-bet-option">
                 <label>Posición:</label>
                 <select id="bet-position">
+                    <option></option>
                     <option>1</option>
                     <option>5</option>
                     <option>10</option>
                     <option>20</option>
                 </select>
             </li>
-            <li id="container-lotteries" class="item-bet-option">
-                <label>Loterias disponibles:</label>
-                <div class="wrapper-container-lotteries"></div>
-            </li>
-            <li class="item-checkbox item-tapadita">
-                <input id="item-checkbox-component-tapadita" type="checkbox" name="" value="">
-                <label for="item-checkbox-component-tapadita"><span></span><p>Tapadita:</p></label>
+            <li class="item-bet-option item-redoblona">
+               <!-- <input id="item-checkbox-component-redoblona" type="checkbox" name="" value="">-->
+               <!-- <label for="item-checkbox-component-redoblona"><span></span><p>Redoblona:</p></label>-->
+                <h1 class="main-title">Jugada de Redoblona</h1>
+                <ul class="sublist-item-bet-option">
+                    <li class="item-bet-option">
+                        <label>Número Redoblona:</label>
+                        <input id="bet-number-redoblona" type="number" /> 
+                    </li>
+                    <li class="item-bet-option">
+                        <label>Posición Redoblona:</label>
+                        <select id="bet-position-redoblona">
+                            <option></option>
+                            <option>1</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                        </select>
+                    </li>
+                </ul>
             </li>          
             <li class="item-bet-option item-total-amount">
                 <span>Importe total: $<span class="total-amount">0</span></span>

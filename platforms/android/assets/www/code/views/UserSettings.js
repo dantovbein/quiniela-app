@@ -11,13 +11,13 @@ UserSettings.prototype.constructor = UserSettings;
 
 UserSettings.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
-	var since = new Date(utils.getUserData().connectedSince);
-	var expiration = new Date(utils.getUserData().expiration);
+	var since = new Date(Utils.getUserData().connectedSince);
+	var expiration = new Date(Utils.getUserData().expiration);
 
 
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ 	utils.getUserData().fullName,
-																		utils.addZero(since.getDate()) + "/" + utils.addZero((since.getMonth() + 1)) + "/" + since.getFullYear(),
-																		utils.addZero(expiration.getDate()) + "/" + utils.addZero((expiration.getMonth() + 1)) + "/" + expiration.getFullYear() ]});
+	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ 	Utils.getUserData().fullName,
+																		Utils.addZero(since.getDate()) + "/" + Utils.addZero((since.getMonth() + 1)) + "/" + since.getFullYear(),
+																		Utils.addZero(expiration.getDate()) + "/" + Utils.addZero((expiration.getMonth() + 1)) + "/" + expiration.getFullYear() ]});
 	this.node = $.parseHTML(snippet.getSnippet());
 	$(this.node).css({ "right" : -$(document).width() });
 	this.container.append(this.node);
@@ -30,7 +30,7 @@ UserSettings.prototype.initialize = function(){
 UserSettings.prototype.addHandlers = function() {
 	View.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-remove-data").click( { context:this }, function(e){
-		//utils.removeUserData();
+		//Utils.removeUserData();
 		$( e.data.context.node ).trigger( "logout" );
 	} );
 	$(this.node).find(".btn-show-bets").click( { context:this }, function(e){

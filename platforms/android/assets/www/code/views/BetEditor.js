@@ -22,12 +22,7 @@ BetEditor.prototype.showData = function() {
 		checkbox.prop('checked', true);
 	}
 	$(this.node).find("#partial-amount").val(this.betData.bet_amount);
+	$(this.node).find("#bet-number-redoblona").val(this.betData.bet_number_redoblona);
+	$(this.node).find("select#bet-position-redoblona").val(this.betData.bet_position_redoblona);
 	$(this.node).find(".total-amount").html(this.getTotalAmount());
-
-	$(this.node).find("#item-checkbox-component-tapadita").prop('checked', (this.betData.is_tapadita) ? 1 : 0 );
 }
-/*
-BetEditor.prototype.saveBet = function(e){
-	Bet.prototype.saveBet.call(this,e);
-	$( e.data.context.node ).trigger( { type : "bets" } );
-}*/

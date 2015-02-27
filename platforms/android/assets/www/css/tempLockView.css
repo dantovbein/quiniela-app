@@ -1,0 +1,16 @@
+section.view.temp-lock-view {
+	background-color:rgba(0,0,0,.9);
+	left: 0;
+	margin-top: 0;
+	top: 0;
+	color: #fff;
+	position: absolute;
+}
+
+section.view.temp-lock-view .content-view {
+	padding-top:16rem;
+}
+
+section.view.temp-lock-view  .main-title {
+	padding-bottom: 5rem;
+}

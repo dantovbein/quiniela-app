@@ -35,19 +35,19 @@ Login.prototype.signIn = function(e) {
 		errorElement.text("Error en la contrasena");
 		return false;
 	} else {
-		utils.showMessage("Conectando con el servidor.");
+		Utils.showMessage("Conectando con el servidor.");
 		$.ajax({
 			async : false,
 			type : "POST",
 			data : { user : user, password : password },			
-			url : utils.getServices().login,
+			url : Utils.getServices().login,
 			success : function(_result_) {
-				utils.removeMessage();
+				Utils.removeMessage();
 				var result = JSON.parse(_result_);				
 				if(result[0].idVendor == null) {
 					errorElement.text("Datos incorrectos");
 				} else {
-					utils.saveUserData(result);
+					Utils.saveUserData(result);
 					errorElement.text("");
 					$( _this.node ).trigger( "home" );
 				}

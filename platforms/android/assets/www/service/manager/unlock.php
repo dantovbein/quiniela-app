@@ -4,11 +4,11 @@ header('Access-Control-Allow-Origin: *');
 require_once "../Storage.php";
 
 if(isset($_POST['user'])) { $user = $_POST['user']; }
-if(isset($_POST['unlockCode'])) { $unlockCode = $_POST['unlockCode']; }
+if(isset($_POST['unlockAppCode'])) { $unlockAppCode = $_POST['unlockAppCode']; }
 
 $data = array(
     "user" => $user,
-    "unlockCode" => $unlockCode
+    "unlockAppCode" => $unlockAppCode
 );
 
 $storage = new Storage();

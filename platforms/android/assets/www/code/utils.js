@@ -1,4 +1,4 @@
-var utils = {
+var Utils = {
 	setMainInstance : function(instance) {
 		this.mainInstance = instance;
 	},
@@ -8,11 +8,12 @@ var utils = {
 	getServices : function(){
 		//var url = "";
 		//var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
-		var url = "http://yoviajoriveras.com/mobile/";
+		var url = "http://yoviajoriveras.com/app/";
 		return {	
 			login : url + "service/manager/login.php",
 			uploadBet : url + "service/manager/uploadBet.php",
-			unlock : url + "service/manager/unlock.php"
+			unlock : url + "service/manager/unlock.php",
+			checkIfVendorIsActive : url + "service/manager/checkIfVendorIsActive.php"
 		};
 	},
 	addZero : function(value) {
@@ -24,10 +25,12 @@ var utils = {
 		localStorage.setItem("user", data[0].user);
 		localStorage.setItem("password", data[0].password);
 		localStorage.setItem("full_name", data[0].fullName);
-		localStorage.setItem("code", data[0].code);
+		localStorage.setItem("unlock_app_code", data[0].unlockAppCode);
+		localStorage.setItem("unlock_code", data[0].unlockCode);
 		localStorage.setItem("connected_since", new Date());
 		localStorage.setItem("expiration", this.getExpirationDate());
 		localStorage.setItem("is_locked", 0);
+		localStorage.setItem("is_temporary_locked", 0);
 	},
 	showMessage : function(text) {
 		$("body").append("<div class='app-message'><span class='app-message-desc'>" + text + "</span></div>");
@@ -91,7 +94,7 @@ var utils = {
 	compareHours : function(sampleTime) {
 		var time1 = new Date();
 		var splitTime = sampleTime.split(":");
-		time1.setHours(splitTime[0],splitTime[1],0);
+		time1.setHours(splitTime[0],splitTime[1]-10,0);
 		var now = new Date();
 		return (now <= time1);
 	},
@@ -105,6 +108,9 @@ var utils = {
 		});
 		return todayLotteryData;
 	},
+	checkNewDay : function(){
+		debugger;
+	},
 	getOverlay : function() {
 		$("body").append("<div class='overlay'></div>");
 		$(".overlay").css( { height : $(window).height() } );
@@ -116,41 +122,30 @@ var utils = {
 		switch(value) {
 			case 1 :
 				return "Primera";
-				break;
 			case 2 :
 				return "Matutina";
-				break;
 			case 3 :
 				return "Vespertina";
-				break;
 			case 4 :
 				return "Nocturna";
-				break;
 		}
 	},
 	getLotteryName : function(value) {
 		switch(value) {
 			case 1 :
 				return "Nacional";
-				break;
 			case 2 :
 				return "Provincia";
-				break;
 			case 3 :
 				return "Santa Fe";
-				break;
 			case 4 :
 				return "Tombola";
-				break;
 			case 5 :
 				return "Tombola (Uruguay)";
-				break;
 			case 6 :
 				return "Cordoba";
-				break;
 			case 7 :
 				return "Santiago";
-				break;
 		}
 	},
 	getLotteriesData : function() {
@@ -274,7 +269,7 @@ var utils = {
 							"lotteryNames" : [ 1,2,3,5 ]
 						},{
 							"lotteryType" : 3,
-							"expirate" : "17:00",
+							"expirate" : "178:00",
 							"lotteryNames" : [ 1,2,3 ]
 						},{
 							"lotteryType" : 4,
@@ -282,6 +277,9 @@ var utils = {
 							"lotteryNames" : [ 1,2,3,5,7 ]
 						} 
 					] 
+				},{ 	
+					"day" : 7,
+					"lotteries" : []
 				}
 			]
 		};

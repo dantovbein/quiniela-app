@@ -41,7 +41,8 @@ class Storage {
 		$obj->user = $row['vendor_user_name'];
 		$obj->password = $row['vendor_password'];
 		$obj->fullName = $row['vendor_full_name'];
-		$obj->code = $row['vendor_unlock_code'];
+		$obj->unlockAppCode = $row['vendor_unlock_app_code'];
+		$obj->unlockCode = $row['vendor_unlock_code'];
 		array_push($dataQuery, $obj);
 		
 		echo json_encode($dataQuery);
@@ -51,10 +52,7 @@ class Storage {
 	public function unlock($data) {
 		$this->connect();
 
-		$user = $data['user'];
-		$unlockCode = $data['unlockCode'];
-
-		$query = 'SELECT * FROM vendors WHERE id_vendor="' . $user . '" AND vendor_unlock_code="' . $unlockCode . '"';
+		$query = 'SELECT * FROM vendors WHERE id_vendor="' . $data['user'] . '" AND vendor_unlock_app_code="' . $data['unlockAppCode'] . '"';
 		
 		$result = mysql_query($query);
 		$row = mysql_fetch_assoc($result);
@@ -70,7 +68,7 @@ class Storage {
 
 	public function uploadBet($data) {
 		$this->connect();		
-		$query =  'INSERT INTO bets (bet_number,bet_position,id_device,id_vendor,bet_amount,bet_total_amount,bet_time_created,bet_time_canceled,is_active,is_tapadita) VALUES (' . "'" . $data['betNumber'] . "','" . $data['betPosition'] . "','" . $data['idDevice'] . "','" . $data['idVendor'] . "','" . $data['betAmount'] . "','" . $data['betTotalAmount'] . "','" . $data['betCreated'] . "','" . $data['betCanceled'] . "','" . $data['isActive'] . "','" . $data['isTapadita'] . "'" . ')';
+		$query =  'INSERT INTO bets (bet_number,bet_position,id_device,id_vendor,bet_amount,bet_total_amount,bet_time_created,bet_time_canceled,bet_is_active,bet_number_redoblona,bet_position_redoblona) VALUES (' . "'" . $data['betNumber'] . "','" . $data['betPosition'] . "','" . $data['idDevice'] . "','" . $data['idVendor'] . "','" . $data['betAmount'] . "','" . $data['betTotalAmount'] . "','" . $data['betCreated'] . "','" . $data['betCanceled'] . "','" . $data['isActive'] . "','" . $data['betNumberRedoblona'] . "','" . $data['betPositionRedoblona'] . "'" . ')';
 		mysql_query($query) or die('Error en la consulta -> ' .  $query);
 		$insertID = mysql_insert_id();
 
@@ -82,5 +80,22 @@ class Storage {
     	echo $insertID;
     	$this->close();
 	}
+
+	public function checkIfVendorIsActive($data){
+		$this->connect();		
+		$query =  'SELECT vendor_is_active FROM vendors WHERE id_vendor="' . $data['idVendor'] . '"';
+
+		$result = mysql_query($query);
+		$row = mysql_fetch_assoc($result);
+
+		$dataQuery = array();
+		$obj = new stdClass();
+		$obj->isActive = $row['vendor_is_active'];
+		array_push($dataQuery, $obj);
+
+		echo json_encode($dataQuery);
+		$this->close();
+	}
 }
+
 ?>

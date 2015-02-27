@@ -1,16 +1,13 @@
 function App(config) {
 	this.config = config;
 	this.initialize();
-	this.totalToSychronize = 0;
-	this.totalSychronized = 0;
 } 
 
 App.prototype.contstructor = App;
 
 App.prototype.initialize = function() {
 	this.configure()
-
-	if(utils.getUserData().user == "" || utils.getUserData().user == null) {
+	if(Utils.getUserData().user == "" || Utils.getUserData().user == null) {
 		this.getLogin();
 	} else {		
 		this.getHome();
@@ -18,18 +15,79 @@ App.prototype.initialize = function() {
 }
 
 App.prototype.configure = function() {
+	this.totalToSychronize = 0;
+	this.totalSychronized = 0;
 	this.createDataBase();
-	utils.setMainInstance(this);
+	Utils.setMainInstance(this);
 	$(document).bind( "removePopup", { context:this }, this.removePopup,false );
+	$(document).bind( "appTemporaryUnlocked", { context:this }, function(e){
+		localStorage.setItem("is_temporary_locked","0");
+		e.data.context.startTimerLockApp();
+	},false );
 	$(document).bind( "betEditor", { context:this }, this.editBet,false );
 	$(document).bind( "blockUser", { context:this }, function(e){
 		localStorage.setItem("is_locked", 1);
 		e.data.context.getLockView();
 	},false );
+	$(document).bind("resetBetView", { context:this }, function(e){
+		e.data.context.getHome();
+	},false );
 
-	this.delay = 1000 * (utils.getLimitMinute() * 60);
-	//this.delay = 1000 * 10;
+	this.delay = 1000 * (Utils.getLimitMinute() * 60);
 	this.startTimer();
+
+	this.currentResetTimer = 0;
+	
+	if(parseInt(localStorage.getItem("is_temporary_locked"))==0){
+		this.startTimerLockApp();
+	}
+	
+
+	$(document).click( {context:this}, function(e){
+    	e.data.context.currentResetTimer = 0;
+  	});
+}
+
+App.prototype.startTimerLockApp = function(){
+	this.timerLockApp = setTimeout(this.onCompleteTimerLockApp,1000,{context:this}); // 60 * 1000 = 1 minuto
+}
+
+App.prototype.onCompleteTimerLockApp = function(e){
+	e.context.currentResetTimer++;
+	console.log("AppTimer",e.context.currentResetTimer);
+	if(e.context.currentResetTimer == 60 * 10 ){ // 10 = 10 minutos
+		console.log("Bloquear app");
+		e.context.showTempLockView();
+	}else {
+		e.context.startTimerLockApp();
+	}
+}
+
+App.prototype.showTempLockView = function() {
+	localStorage.setItem("is_temporary_locked","1");
+	var tempLockView = new TempLockView( { container : $("body") } );
+	tempLockView.initialize();
+}
+
+App.prototype.checkIfVendorIsActive = function(){
+	this.tempVendorStatus;
+	$.ajax({
+		context : this,
+		async : false,
+		type : "POST",
+		data : {
+			idVendor : Utils.getUserData().idVendor		
+		},
+		url : Utils.getServices().checkIfVendorIsActive,
+		success : function(r){
+			var result = JSON.parse(r);
+			this.tempVendorStatus = result[0].isActive;
+		},
+		error : function(error) {
+			debugger;
+		}
+	});
+	return this.tempVendorStatus;
 }
 
 App.prototype.startTimer = function() {
@@ -46,7 +104,7 @@ App.prototype.checkBets = function() {
 	console.log("Chequear jugadas:",betsData.length);
 	betsData.forEach(function(b){
 		this.lotteryDataBase.update("bets", {ID: b.ID},function(row){
-			row.is_editable = (utils.checkBetLimit(b)) ? 1 : 0
+			row.is_editable = (Utils.checkBetLimit(b)) ? 1 : 0
 			return row;
 		});
 	},this);
@@ -57,7 +115,7 @@ App.prototype.checkBets = function() {
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","is_tapadita"]);
+		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","bet_number_redoblona","bet_position_redoblona","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","bet_sent"]);
 		this.lotteryDataBase.commit();
 	} else {
 		// Existe la base de datos
@@ -69,8 +127,8 @@ App.prototype.removeContent = function() {
 		$("section.view").remove();
 	}
 	
-	utils.removeOverlay();
-	utils.removeMessage();
+	Utils.removeOverlay();
+	Utils.removeMessage();
 	
 	if($(".popup").length > 0) {
 		$(".popup").remove();
@@ -86,7 +144,7 @@ App.prototype.getHeader = function() {
 }
 
 App.prototype.getLogin = function() {
-	utils.removeUserData();
+	Utils.removeUserData();
 	this.createDataBase();
 	
 	if($("header.default-header").length > 0) $("header.default-header").remove();
@@ -101,6 +159,19 @@ App.prototype.getLogin = function() {
 }
 
 App.prototype.getHome = function() {
+
+	if(this.checkIfVendorIsActive()==null){
+		alert("Usuario eliminado permanentemente o problemas con la conexión");
+		this.getLogin();
+		return false
+	}
+
+	if(this.checkIfVendorIsActive()=="0") {
+		alert("Usuario bloqueado temporalmente");
+		this.getLogin();
+		return false;
+	}
+
 	if(this.isLocked()){
 		this.getLockView();
 		return false;
@@ -113,7 +184,12 @@ App.prototype.getHome = function() {
 		$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
 	  	$(home.node).bind( "showBets", { context:this }, function(e) { e.data.context.getBets(); });
 	  	$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });			
-	}	
+	}
+
+	if(parseInt(localStorage.getItem("is_temporary_locked"))==1){
+		console.log("Usuario temporalmente bloqueado");
+		this.showTempLockView();
+	}
 }
 
 App.prototype.getLockView = function() {
@@ -128,8 +204,8 @@ App.prototype.getLockView = function() {
 
 App.prototype.isLocked = function() {
 	var today = new Date();
-	var expiration = new Date(utils.getUserData().expiration);
-	if(parseInt(utils.getUserData().isLocked) == 1){
+	var expiration = new Date(Utils.getUserData().expiration);
+	if(parseInt(Utils.getUserData().isLocked) == 1){
 		return true;
 	}else if (today > expiration) {
 		return true;
@@ -159,12 +235,12 @@ App.prototype.getSettings = function() {
 
 App.prototype.generateBet = function() {
 	this.removeContent();
-	var bet = new BetGenerator({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData) ) });
-	bet.initialize();
+	this.bet = new BetGenerator({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
+	this.bet.initialize();
 
 	//$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
-	$(bet.node).bind( "newBet", { context:this }, function(e) { e.data.context.generateBet(); });
-	$(bet.node).bind( "cancel", { context:this }, function(e) { e.data.context.getHome(); });
+	$(this.bet.node).bind( "newBet", { context:this }, function(e) { e.data.context.generateBet(); });
+	$(this.bet.node).bind( "cancel", { context:this }, function(e) { e.data.context.getHome(); });
 
 }
 
@@ -176,19 +252,19 @@ App.prototype.getBets = function() {
 
 
 App.prototype.editBet = function(e) {
-	if(!utils.checkBetLimit(e.betData)) {
+	if(!Utils.checkBetLimit(e.betData)) {
 		alert("No se puede editar la apuesta");
 		return false;
 	}
 	e.data.context.removeContent();
-	var bet = new BetEditor({ container : $("main"), todayslotteries : utils.getTodayLotteries(utils.getLotteriesData(this.lotteryData)), betData : e.betData });
-	bet.initialize();
+	this.bet = new BetEditor({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData)), betData : e.betData });
+	this.bet.initialize();
 
-	$(bet.node).bind( "newBet", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
+	$(this.bet.node).bind( "newBet", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
 }
 
 App.prototype.removePopup = function() {
-	utils.removeOverlay();
+	Utils.removeOverlay();
 	if($(".popup").length > 0 ) $(".popup").remove();
 }
 
@@ -198,65 +274,89 @@ App.prototype.removeGame = function() {
 }
 
 App.prototype.synchronize = function() {
-	if(this.userSettings) this.userSettings.hide();
+	if(this.userSettings)
+		this.userSettings.hide();
+
 	this.totalToSychronize = 0;
 	this.totalSychronized = 0;
 
-	var betsData = utils.getMainInstance().lotteryDataBase.query("bets");
+	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+
 	betsData.forEach(function(b){
+		debugger;
+	
 		if(b.is_editable==0) {
 			this.totalToScronize++;
+		} 
+		if(b.bet_sent == 0) {
 			this.uploadBet(b);
-		}
+		}		
 	},this);
 	if(this.totalToScronize > 0) {
-		utils.showMessage("Sincronizando las apuestas con el servidor");
+		Utils.showMessage("Sincronizando las apuestas con el servidor");
 	}
 }
 
 App.prototype.uploadBet = function(bet) {
+	debugger;
+	
 	this.dataToSend = bet;
 	this.betLocalId = bet.ID;
-	$.ajax({
-		context : this,
-		async : false,
-		type : "POST",
-		data : {
-			idLocal:this.betLocalId,
-			betNumber:this.dataToSend.bet_number,
-			betData:this.dataToSend.bet_data,
-			betPosition:this.dataToSend.bet_position,
-			betAmount:this.dataToSend.bet_amount,
-			betTotalAmount:this.dataToSend.bet_total_amount,
-			idDevice:utils.getUserData().idDevice,
-			idVendor:utils.getUserData().idVendor,
-			betCreated:this.dataToSend.bet_created,
-			betCanceled:this.dataToSend.bet_canceled,
-			isActive:this.dataToSend.is_active,
-			isTapadita:this.dataToSend.is_tapadita
-		},
-		url : utils.getServices().uploadBet,
-		success : function(r){
-			if(isNaN(r)==false){
-				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
-				utils.getMainInstance().lotteryDataBase.commit();
-				if(this.bets) {
-					this.bets.getAllBets();
+
+	if(Utils.getMainInstance().lotteryDataBase.query("bets",{ID:this.betLocalId})[0].bet_sent == 1) {
+		console.log("La jugada ya se sincronizó previamente");
+	}else {
+		$.ajax({
+			context : this,
+			async : false,
+			type : "POST",
+			data : {
+				idLocal:this.betLocalId,
+				betNumber:this.dataToSend.bet_number,
+				betPosition:this.dataToSend.bet_position,
+				betAmount:this.dataToSend.bet_amount,
+				betNumberRedoblona:this.dataToSend.bet_number_redoblona,
+				betPositionRedoblona:this.dataToSend.bet_position_redoblona,
+				betData:this.dataToSend.bet_data,
+				betTotalAmount:this.dataToSend.bet_total_amount,
+				idDevice:Utils.getUserData().idDevice,
+				idVendor:Utils.getUserData().idVendor,
+				betCreated:this.dataToSend.bet_created,
+				betCanceled:this.dataToSend.bet_canceled,
+				isActive:this.dataToSend.is_active
+				
+			},
+			url : Utils.getServices().uploadBet,
+			success : function(r){
+				debugger;
+	
+				if(isNaN(r)==false){
+					//Utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
+					//Utils.getMainInstance().lotteryDataBase.commit();
+					Utils.getMainInstance().lotteryDataBase.update("bets",{ID: this.betLocalId},function(row){
+						row.bet_sent = 1;
+						return row;
+					});
+					Utils.getMainInstance().lotteryDataBase.commit();
+
+					if(this.bets) {
+						this.bets.getAllBets();
+					}
+					console.log("Se sincronizo automaticamente la apuesta");
+				} else {
+					debugger;
+					console.log("No se pudo sincronizar automaticamente la apuesta");
 				}
-				console.log("Se sincronizo automaticamente la apuesta");
-			} else {
-				console.log("No se pudo sincronizar automaticamente la apuesta");
+				this.totalSychronized++;
+				if(this.totalSychronized == this.totalToSychronize){
+					Utils.removeMessage();
+				}				
+			},
+			error : function(error) {
+				debugger;
 			}
-			this.totalSychronized++;
-			if(this.totalSychronized == this.totalToSychronize){
-				utils.removeMessage();
-			}
-			
-		},
-		error : function(error) {
-			debugger;
-		}
-	});
+		});
+	}
 }
 
 

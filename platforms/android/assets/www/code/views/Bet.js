@@ -18,12 +18,31 @@ Bet.prototype.initialize = function(){
 	this.container.append(this.node);
 
 	$('html,body').animate({ scrollTop: 0 }, 'slow',function(){
-		utils.removeMessage();
+		Utils.removeMessage();
 	}); 
 
 	this.generateTodaysLotteries();
 
 	this.addHandlers();
+
+	this.betTimer = 0;
+	this.startTimer();
+}
+
+Bet.prototype.startTimer = function() {
+   var timer = setTimeout(this.onCompleteTimer,1000,{context:this});
+}
+
+Bet.prototype.onCompleteTimer = function(e){
+	e.context.betTimer++;
+	console.log("betTimer",e.context.betTimer);
+	if(e.context.betTimer == (3 * 10) ){
+		//e.context.showTempLockView();
+		console.log("Reset Bet");
+		$(document).trigger({ type:"resetBetView" });
+	}else {
+		e.context.startTimer();
+	}
 }
 
 Bet.prototype.addHandlers = function() {
@@ -54,7 +73,9 @@ Bet.prototype.saveBet = function(e) {
 	var _this = e.data.context;
 	var betNumber = $(_this.node).find("#bet-number").val();
 	var partialAmount = $(_this.node).find("#partial-amount").val();
-	var isTapadita = ($(_this.node).find("#item-checkbox-component-tapadita").is(":checked")) ? 1 : 0;
+	var betPosition = $(_this.node).find("select#bet-position").val();
+	var betNumberRedoblona = $(_this.node).find("#bet-number-redoblona").val();
+	var betPositionRedoblona = $(_this.node).find("select#bet-position-redoblona").val();
 	
 	var currentBet = {};	
 	
@@ -68,9 +89,8 @@ Bet.prototype.saveBet = function(e) {
 		alert("El número apostado debe ser un número real");
 		return false;
 	}
-
 	currentBet.betNumber = betNumber;
-
+	
 	currentBet.bet = Array();
 	for(var i=0; i<$(_this.node).find(".lottery").length; i++) {
 		var itemLottery = $($(_this.node).find(".lottery")[i]);
@@ -80,9 +100,9 @@ Bet.prototype.saveBet = function(e) {
 			if(itemCheckbox.is(":checked")) {
 				currentBet.bet.push({ 
 					lotteryTypeId : parseInt(itemLottery.data("type")),
-					lotteryType : utils.getLotteryType(itemLottery.data("type")),
+					lotteryType : Utils.getLotteryType(itemLottery.data("type")),
 					lotteryNameId : parseInt(itemCheckbox.val()),
-					lotteryName : utils.getLotteryName( parseInt(itemCheckbox.val()) )
+					lotteryName : Utils.getLotteryName( parseInt(itemCheckbox.val()) )
 				});
 			}
 		}
@@ -92,8 +112,6 @@ Bet.prototype.saveBet = function(e) {
 		return false;
 	}
 
-	currentBet.betPosition = $(_this.node).find("select#bet-position").val();
-	
 	if( partialAmount == "") {
 		alert("No se seteo el monto apostado por cada Loteria");
 		return false;
@@ -102,25 +120,50 @@ Bet.prototype.saveBet = function(e) {
 		return false;
 	}
 
+	if(betPosition == "") {	
+		alert("Se tiene que seleccionar al menos una posición para la apuesta");
+		return false;
+	}
+	
+	if(betNumberRedoblona != "") {
+		if ( betNumberRedoblona.length > 4) {
+			alert("El número apostado para la Redoblona no debe ser superior a 4 digitos");
+			return false;
+		} else if ( isNaN(betNumberRedoblona) ) {
+			alert("El número apostado para la Redoblona debe ser un número real");
+			return false;
+		}
+		if(betPositionRedoblona == "") {	
+			alert("Se tiene que seleccionar al menos una posición para la apuesta de la Redoblona");
+			return false;
+		}
+	}
+
+	if(betPosition == "") {	
+		alert("Se tiene que seleccionar al menos una posición para la apuesta");
+		return false;
+	}
+
 	currentBet.betAmount = partialAmount;
+	currentBet.betPosition = betPosition;
 	currentBet.betTotalAmount = _this.getTotalAmount();
 	currentBet.betCreated = new Date();
-	currentBet.isTapadita = isTapadita;
 
 	var id = (_this.betData.ID != undefined) ? _this.betData.ID : -1;
-	utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { bet_number : currentBet.betNumber,
+	Utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { 	bet_number : currentBet.betNumber,
 																				bet_data : currentBet.bet,
 																				bet_position : currentBet.betPosition,
 																				bet_amount : currentBet.betAmount,
 																				bet_total_amount : currentBet.betTotalAmount,
 																				bet_created : currentBet.betCreated,
+																				bet_number_redoblona : betNumberRedoblona,
+																				bet_position_redoblona : betPositionRedoblona,
 																				is_active : 1,
 																				is_editable : 1,
-																				is_tapadita : isTapadita });
+																				bet_sent : 0 });
 
-	utils.getMainInstance().lotteryDataBase.commit();
-	//$( _this.node ).trigger( { type : "bets" } );
-	utils.showMessage("Partida guardada");
+	Utils.getMainInstance().lotteryDataBase.commit();
+	Utils.showMessage("Partida guardada");
 	$( _this.node ).trigger( { type : "newBet" } );
 	
 }
@@ -137,9 +180,13 @@ Bet.prototype.getTotalAmount = function() {
 
 Bet.prototype.generateTodaysLotteries = function() {
 	this.todayslotteries.lotteries.forEach(function(d){
-		if(utils.compareHours(d.expirate)) {
+		if(Utils.compareHours(d.expirate)) {
 			var lottery = new Lottery( { container : $(this.node).find("#container-lotteries .wrapper-container-lotteries"), lotteryData : d } );
 			lottery.initialize();
 		}		
 	},this);
+}
+
+Bet.prototype.destroy = function() {
+	debugger;
 }

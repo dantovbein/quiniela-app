@@ -83,13 +83,24 @@ nav.commands-nav .commands-lis li .btn .icon {
 	margin: 0 5rem 1rem 0;
 }
 
-.item-tapadita {
+
+
+.item-bet-option:last-child {
+	margin: 2rem 0;
+}
+
+.item-bet-option.item-redoblona {
 	margin: 1.5rem 0 3rem 0;
 }
 
-.item-bet-option:last-child {
-	margin-bottom: .5rem;
+.item-bet-option.item-redoblona .main-title {
+	margin: 1.5rem 0 3rem 0;
 }
+
+/*
+.item-redoblona {
+	
+}*/
 
 .icon-save {
 	background-position: -581px -29px;

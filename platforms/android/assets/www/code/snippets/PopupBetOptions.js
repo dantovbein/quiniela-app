@@ -46,5 +46,5 @@ PopupBetOptions.prototype.onClickSincronize = function(e) {
 
 PopupBetOptions.prototype.destroy = function() {
 	$(this.node).remove();
-	utils.removeOverlay();
+	Utils.removeOverlay();
 }

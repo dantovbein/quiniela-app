@@ -17,10 +17,10 @@ Libs.prototype.getFiles = function(_lib_) {
 		{
 			"name"	: "app",
 			"libs"	: [
-				"code/Monkeyman/core/oop.js",
-				"code/Monkeyman/core/Snippet.js",
-				"code/Monkeyman/core/Utils.js",
-				"code/utils.js",
+				"code/monkeyman/core/oop.js",
+				"code/monkeyman/core/Snippet.js",
+				"code/monkeyman/core/Utilities.js",
+				"code/Utils.js",
 				"code/App.js",
 				"code/snippets/Header.js",
 				"code/snippets/Lottery.js",
@@ -35,7 +35,8 @@ Libs.prototype.getFiles = function(_lib_) {
 				"code/views/BetGenerator.js",
 				"code/views/BetEditor.js",
 				"code/views/BetsList.js",
-				"code/views/LockView.js"
+				"code/views/LockView.js",
+				"code/views/TempLockView.js"
 			]
 		}
 	);

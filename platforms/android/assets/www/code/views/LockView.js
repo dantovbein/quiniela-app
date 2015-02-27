@@ -24,24 +24,25 @@ LockView.prototype.addHandlers = function() {
 
 LockView.prototype.signIn = function(e) {
 	var _this = e.data.context;
-	var unlockCode = $(_this.node).find("#input-unlock-code").val();
+	var unlockAppCode = $(_this.node).find("#input-unlock-code").val();
 	var errorElement = $(_this.node).find(".error-log");
 	
-	if( unlockCode == "" ) {
+	if( unlockAppCode == "" ) {
 		errorElement.text("Debe escribirse un código");
 		return false;
 	} else {
-		utils.showMessage("Conectando con el servidor.");
+		Utils.showMessage("Conectando con el servidor.");
 		$.ajax({
 			context : _this,
 			async : false,
 			type : "POST",
-			data : { user : utils.getUserData().idVendor ,unlockCode : unlockCode },			
-			url : utils.getServices().unlock,
+			data : { user : Utils.getUserData().idVendor ,unlockAppCode : unlockAppCode },			
+			url : Utils.getServices().unlock,
 			success : function(_result_) {
-				utils.removeMessage();
+				debugger;
+				Utils.removeMessage();
 				var result = JSON.parse(_result_);
-				if((result[0].idVendor == utils.getUserData().idVendor)) {
+				if((result[0].idVendor == Utils.getUserData().idVendor)) {
 					$(this.node).trigger( "home" );
 				}else{
 					alert("Error en el código.");

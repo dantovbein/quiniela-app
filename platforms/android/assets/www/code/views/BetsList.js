@@ -14,15 +14,29 @@ BetsList.prototype.initialize = function(){
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
 
+	
+	
+	var today = new Date();
+	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+	if(betsData.length > 0) {
+		var lastBetDate = new Date(Date.parse(betsData[betsData.length-1].bet_created));
+		if(lastBetDate.getDate() < today.getDate()){
+			// Remover apuestas
+			Utils.getMainInstance().lotteryDataBase.deleteRows("bets");
+			Utils.getMainInstance().lotteryDataBase.commit();
+			alert("Se removieron todas las apuetas del dia anterior");
+		}
+	}
+
 	this.getAllBets();
 
 	$(document).bind("removeBet", { context:this },this.removeBet,false);
-	$(document).bind("sincronizeBet", { context:this },this.sincronizeBet,false);
+	//$(document).bind("sincronizeBet", { context:this },this.sincronizeBet,false);
 }
 
 BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
-	var betsData = utils.getMainInstance().lotteryDataBase.query("bets");
+	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
 	betsData.forEach(function(b){
 		if(b.is_active==1) {
 			var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
@@ -36,14 +50,14 @@ BetsList.prototype.getAllBets = function() {
 }
 
 BetsList.prototype.showItemOptions = function(e) {
-	utils.getOverlay();
+	Utils.getOverlay();
 	var betOptions = new PopupBetOptions( { container:$("body"), _parent:e.data.context, data:e.item.betData } );
 	betOptions.initialize();
 }
 
 BetsList.prototype.removeBet = function(bet) {
-	utils.getMainInstance().lotteryDataBase.update("bets",{ID: bet.ID},function(row){
-		var canDelete = utils.checkBetLimit(row);
+	Utils.getMainInstance().lotteryDataBase.update("bets",{ID: bet.ID},function(row){
+		var canDelete = Utils.checkBetLimit(row);
 		if(canDelete) {
 			row.is_active = 0,
 			row.is_editable = 0,
@@ -54,52 +68,65 @@ BetsList.prototype.removeBet = function(bet) {
 		}
 		return row;
 	});
-	utils.getMainInstance().lotteryDataBase.commit();
+	Utils.getMainInstance().lotteryDataBase.commit();
 	this.getAllBets();
 }
 
 
-BetsList.prototype.sincronizeBet = function(e){
-//	e.data.context.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:e.betId})[0];
+//BetsList.prototype.sincronizeBet = function(e){
+//	e.data.context.dataToSend = Utils.getMainInstance().lotteryDataBase.query("bets",{ID:e.betId})[0];
 //	e.data.context.betLocalId = e.betId;
-}
+//}
 
 BetsList.prototype.uploadBet = function(id) {
-	utils.showMessage("Sincronizando jugada al servidor.");
-	this.dataToSend = utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0];
-	this.betLocalId = id;
-	$.ajax({
-		context : this,
-		async : false,
-		type : "POST",
-		data : {
-			idLocal:this.betId,
-			betNumber:this.dataToSend.bet_number,
-			betData:this.dataToSend.bet_data,
-			betPosition:this.dataToSend.bet_position,
-			betAmount:this.dataToSend.bet_amount,
-			betTotalAmount:this.dataToSend.bet_total_amount,
-			idDevice:utils.getUserData().idDevice,
-			idVendor:utils.getUserData().idVendor,
-			betCreated:this.dataToSend.bet_created,
-			betCanceled:this.dataToSend.bet_canceled,
-			isActive:this.dataToSend.is_active,
-			isTapadita:this.dataToSend.is_tapadita
-		},
-		url : utils.getServices().uploadBet,
-		success : function(r){
-			if(isNaN(r)==false){
-				utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
-				utils.getMainInstance().lotteryDataBase.commit();
-				alert("Se sincronizo correctamente la apuesta");
-				this.getAllBets();
-			} else {
-				alert("No se agrego la apuesta");
+	if(Utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0].bet_sent == 1) {
+		alert("La jugada ya se sincronizó previamente");
+	} else {
+		Utils.showMessage("Sincronizando jugada al servidor.");
+		this.dataToSend = Utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0];
+		this.betLocalId = id;
+		$.ajax({
+			context : this,
+			async : false,
+			type : "POST",
+			data : {
+				idLocal:this.betId,
+				betNumber:this.dataToSend.bet_number,
+				betData:this.dataToSend.bet_data,
+				betPosition:this.dataToSend.bet_position,
+				betAmount:this.dataToSend.bet_amount,
+				betTotalAmount:this.dataToSend.bet_total_amount,
+				idDevice:Utils.getUserData().idDevice,
+				idVendor:Utils.getUserData().idVendor,
+				betCreated:this.dataToSend.bet_created,
+				betCanceled:this.dataToSend.bet_canceled,
+				isActive:this.dataToSend.is_active,
+				betNumberRedoblona:this.dataToSend.bet_number_redoblona,
+				betPositionRedoblona:this.dataToSend.bet_position_redoblona,
+			},
+			url : Utils.getServices().uploadBet,
+			success : function(r){
+				if(isNaN(r)==false){
+					//Utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
+					//Utils.getMainInstance().lotteryDataBase.commit();
+					alert("Se sincronizo correctamente la apuesta");
+					
+					Utils.getMainInstance().lotteryDataBase.update("bets",{ID: this.betLocalId},function(row){
+						row.bet_sent = 1;
+						return row;
+					});
+					Utils.getMainInstance().lotteryDataBase.commit();
+					
+					this.getAllBets();
+				} else {
+					debugger;
+					alert("No se agrego la apuesta");
+				}
+				Utils.removeMessage();
+			},
+			error : function(error) {
+				debugger;
 			}
-			utils.removeMessage();
-		},
-		error : function(error) {
-			debugger;
-		}
-	});
+		});
+	}
 }
