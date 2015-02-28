@@ -14,7 +14,7 @@ BetsList.prototype.initialize = function(){
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
 
-	
+
 	
 	var today = new Date();
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
@@ -79,6 +79,19 @@ BetsList.prototype.removeBet = function(bet) {
 //}
 
 BetsList.prototype.uploadBet = function(id) {
+	var vendorStatus = Utils.getMainInstance().checkIfVendorIsActive();
+	if(vendorStatus==null){
+		alert("Usuario eliminado permanentemente o problemas con la conexión");
+		Utils.getMainInstance().getLogin();
+		return false
+	}
+
+	if(vendorStatus=="0") {
+		alert("Usuario bloqueado temporalmente");
+		Utils.getMainInstance().getLogin();
+		return false;
+	}
+
 	if(Utils.getMainInstance().lotteryDataBase.query("bets",{ID:id})[0].bet_sent == 1) {
 		alert("La jugada ya se sincronizó previamente");
 	} else {

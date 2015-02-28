@@ -25,18 +25,18 @@ Bet.prototype.initialize = function(){
 
 	this.addHandlers();
 
-	this.betTimer = 0;
+	this.betTime = 0;
 	this.startTimer();
 }
 
 Bet.prototype.startTimer = function() {
-   var timer = setTimeout(this.onCompleteTimer,1000,{context:this});
+   this.betTimer = setTimeout(this.onCompleteTimer,1000,{context:this});
 }
 
 Bet.prototype.onCompleteTimer = function(e){
-	e.context.betTimer++;
-	console.log("betTimer",e.context.betTimer);
-	if(e.context.betTimer == (3 * 10) ){
+	e.context.betTime++;
+	console.log("betTime",e.context.betTime);
+	if(e.context.betTime == Globals.TIME_RESET_BET_VIEW ){
 		//e.context.showTempLockView();
 		console.log("Reset Bet");
 		$(document).trigger({ type:"resetBetView" });
@@ -188,5 +188,5 @@ Bet.prototype.generateTodaysLotteries = function() {
 }
 
 Bet.prototype.destroy = function() {
-	debugger;
+	clearTimeout(this.betTimer);
 }
