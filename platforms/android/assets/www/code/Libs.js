@@ -20,7 +20,7 @@ Libs.prototype.getFiles = function(_lib_) {
 				"code/monkeyman/core/oop.js",
 				"code/monkeyman/core/Snippet.js",
 				"code/monkeyman/core/Utilities.js",
-				//"code/Utils.js",
+				"code/Utils.js",
 				"code/App.js",
 				"code/snippets/Header.js",
 				"code/snippets/Lottery.js",
