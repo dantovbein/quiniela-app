@@ -139,6 +139,8 @@ BetsList.prototype.uploadBet = function(id) {
 			},
 			error : function(error) {
 				debugger;
+				alert("Problemas con el servidor o sin conexión a la red");
+				Utils.removeMessage();
 			}
 		});
 	}

@@ -281,8 +281,8 @@
 </g>
 <text transform="matrix(1 0 0 1 223.5312 302.1377)" fill="#FAF39F" font-family="'Lato-Light'" font-size="51.8956">SISTEMA </text>
 <text transform="matrix(1 0 0 1 223.5312 351.5615)" fill="#FAF39F" font-family="'Lato-Light'" font-size="51.8956">DE </text>
-<text transform="matrix(1 0 0 1 223.5312 400.9863)" fill="#FAF39F" font-family="'Lato-Light'" font-size="51.8956">CONTROL</text>
-<text transform="matrix(1 0 0 1 101.7285 199.5938)" fill="#FAF39F" font-family="'Lato-Light'" font-size="38.0997">SISTEMA DE CONTROL</text>
+<text transform="matrix(1 0 0 1 223.5312 400.9863)" fill="#FAF39F" font-family="'Lato-Light'" font-size="51.8956">CARGA</text>
+<text transform="matrix(1 0 0 1 101.7285 199.5938)" fill="#FAF39F" font-family="'Lato-Light'" font-size="38.0997">SISTEMA DE CARGA</text>
 <g>
 	<path fill="#FFFFFF" d="M148.506,1230.014c0,16.142-13.087,29.227-29.227,29.227c-16.142,0-29.229-13.085-29.229-29.227
 		s13.087-29.228,29.229-29.228C135.418,1200.786,148.506,1213.872,148.506,1230.014z"/>
@@ -327,7 +327,7 @@
 		</g>
 	</g>
 </g>
-<text transform="matrix(1 0 0 1 179.1216 1256.2402)" fill="#FAF39F" font-family="'Lato-Light'" font-size="50">SISTEMA DE CONTROL</text>
+<text transform="matrix(1 0 0 1 179.1216 1256.2402)" fill="#FAF39F" font-family="'Lato-Light'" font-size="50">SISTEMA DE CARGA</text>
 <g>
 	<g>
 		<circle fill="#FFFFFF" cx="56.81" cy="714.724" r="20.718"/>
@@ -372,6 +372,6 @@
 			</g>
 		</g>
 	</g>
-	<text transform="matrix(1 0 0 1 101.7285 732.3179)" fill="#FFFFFF" font-family="'Lato-Light'" font-size="38.0997">SISTEMA DE CONTROL</text>
+	<text transform="matrix(1 0 0 1 101.7285 732.3179)" fill="#FFFFFF" font-family="'Lato-Light'" font-size="38.0997">SISTEMA DE CARGA</text>
 </g>
 </svg>

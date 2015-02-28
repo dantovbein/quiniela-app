@@ -50,7 +50,9 @@ LockView.prototype.signIn = function(e) {
 				}				
 			},
 			error : function(error) {
-				errorElement.text("error",error);
+				//errorElement.text("error",error);
+				alert("Problemas con el servidor o sin conexión a la red");
+				Utils.removeMessage();
 			}
 		});
 	}	

@@ -167,7 +167,7 @@ App.prototype.getLogin = function() {
 App.prototype.getHome = function() {
 
 	var vendorStatus = this.checkIfVendorIsActive();
-	
+
 	if(vendorStatus==null){
 		alert("Usuario eliminado permanentemente o problemas con la conexión");
 		this.getLogin();
@@ -367,6 +367,8 @@ App.prototype.uploadBet = function(bet) {
 			},
 			error : function(error) {
 				debugger;
+				console.log("Problemas con el servidor o sin conexión a la red");
+			//	Utils.removeMessage();
 			}
 		});
 	}
