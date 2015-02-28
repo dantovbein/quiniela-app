@@ -12,7 +12,6 @@ function Libs(_lib_) {
 Libs.prototype.constructor = Libs;
 
 Libs.prototype.getFiles = function(_lib_) {
-	alert("getFiles");
 	var self = this;
 	this.libraries = new Array(
 		{
@@ -21,7 +20,7 @@ Libs.prototype.getFiles = function(_lib_) {
 				"code/monkeyman/core/oop.js",
 				"code/monkeyman/core/Snippet.js",
 				"code/monkeyman/core/Utilities.js",
-				"code/Utils.js",
+				//"code/Utils.js",
 				"code/App.js",
 				"code/snippets/Header.js",
 				"code/snippets/Lottery.js",
@@ -54,7 +53,6 @@ Libs.prototype.loadFiles = function(files) {
 	files.forEach(function(f){
 		index = f.lastIndexOf(".",f.length);
 		extension = f.slice(index + 1,f.length);
-		alert(extension);
 		switch(extension)
 		{
 			case "css":
