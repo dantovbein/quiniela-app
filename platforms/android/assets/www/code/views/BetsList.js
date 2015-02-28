@@ -36,15 +36,19 @@ BetsList.prototype.initialize = function(){
 
 BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
+	debugger;
+	var hasBets = false;
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
 	betsData.forEach(function(b){
 		if(b.is_active==1) {
+			hasBets = true;
 			var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
 			itemBetsList.initialize();
 			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
 		}
 	},this);
-	if(betsData.length == 0){
+	//if(betsData.length == 0){
+	if(!hasBets){
 		$(this.node).find(".bets-list-data").append("<li class='no-bets'>No hay apuestas cargadas o ya han sido sincronizadas</li>");
 	}
 }
@@ -59,9 +63,13 @@ BetsList.prototype.removeBet = function(bet) {
 	Utils.getMainInstance().lotteryDataBase.update("bets",{ID: bet.ID},function(row){
 		var canDelete = Utils.checkBetLimit(row);
 		if(canDelete) {
-			row.is_active = 0,
-			row.is_editable = 0,
-			row.bet_canceled = new Date()
+			if(row.bet_sent == 1){
+				alert("La apuesta no puede ser removida porque ya fué sincronizada");
+			} else {
+				row.is_active = 0,
+				row.is_editable = 0,
+				row.bet_canceled = new Date();
+			}
 		} else {
 			row.is_active = 1;
 			alert("No se puede remover la apuesta");
