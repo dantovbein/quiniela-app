@@ -12,6 +12,7 @@ function Libs(_lib_) {
 Libs.prototype.constructor = Libs;
 
 Libs.prototype.getFiles = function(_lib_) {
+	alert("getFiles");
 	var self = this;
 	this.libraries = new Array(
 		{
@@ -40,6 +41,7 @@ Libs.prototype.getFiles = function(_lib_) {
 			]
 		}
 	);
+	alert("getFiles2");
 	var _libs_ = new Array();
 	this.libraries.forEach(function(d){
 		if(d.name == _lib_)
