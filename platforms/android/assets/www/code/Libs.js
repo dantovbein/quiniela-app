@@ -1,5 +1,4 @@
 function Libs(_lib_) {
-	alert("Libs");
 	var self = this;
 	this.lib = _lib_;
 	
@@ -50,6 +49,7 @@ Libs.prototype.getFiles = function(_lib_) {
 };
 
 Libs.prototype.loadFiles = function(files) {
+	alert("loadFiles");
 	var index,extension,file;
 	files.forEach(function(f){
 		index = f.lastIndexOf(".",f.length);
