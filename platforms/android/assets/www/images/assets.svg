@@ -276,8 +276,8 @@
 	<circle fill="#FFFFFF" stroke="#004056" stroke-width="1.0199" stroke-miterlimit="10" cx="219.723" cy="56.567" r="22"/>
 </g>
 <g>
-	<circle fill="#FFFFFF" stroke="#004056" stroke-width="1.0199" stroke-miterlimit="10" cx="291.353" cy="56.567" r="22"/>
-	<circle fill="#004056" cx="291.353" cy="56.567" r="14"/>
+	<circle fill="#FFFFFF" stroke="#F1623E" stroke-width="1.0199" stroke-miterlimit="10" cx="291.353" cy="56.567" r="22"/>
+	<circle fill="#F1623E" cx="291.353" cy="56.567" r="14"/>
 </g>
 <text transform="matrix(1 0 0 1 223.5312 302.1377)" fill="#FAF39F" font-family="'Lato-Light'" font-size="51.8956">SISTEMA </text>
 <text transform="matrix(1 0 0 1 223.5312 351.5615)" fill="#FAF39F" font-family="'Lato-Light'" font-size="51.8956">DE </text>

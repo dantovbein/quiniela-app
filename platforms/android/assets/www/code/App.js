@@ -51,7 +51,7 @@ App.prototype.startTimerLockApp = function(){
 
 App.prototype.onCompleteTimerLockApp = function(e){
 	e.context.currentResetTimer++;
-	console.log("AppTimer",e.context.currentResetTimer);
+	//console.log("AppTimer",e.context.currentResetTimer);
 	if(e.context.currentResetTimer == Globals.TIME_STANDBY_APP ){
 		console.log("Bloquear app");
 		e.context.showTempLockView();
@@ -123,7 +123,12 @@ App.prototype.createDataBase = function() {
 App.prototype.removeContent = function() {
 	if(this.views.length > 0){
 		this.views.forEach(function(v){
-			v.destroy();
+			console.log(v);
+			try {
+				v.destroy();
+			}catch(err){
+				console.log("Error al acceder al metodo destroy");
+			}
 		});
 	}
 	this.views = [];
@@ -261,6 +266,7 @@ App.prototype.getBets = function() {
 	this.removeContent();
 	this.bets = new BetsList({ container : $("main") });
 	this.bets.initialize();
+	this.views.push(this.bet);
 }
 
 
@@ -272,7 +278,7 @@ App.prototype.editBet = function(e) {
 	e.data.context.removeContent();
 	this.bet = new BetEditor({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData)), betData : e.betData });
 	this.bet.initialize();
-	this.views.push(this.bet);
+	e.data.context.views.push(this.bet);
 
 	$(this.bet.node).bind( "newBet", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
 }
