@@ -14,11 +14,13 @@ BetsList.prototype.initialize = function(){
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
 
+
+	
 	var today = new Date();
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
 	if(betsData.length > 0) {
 		var lastBetDate = new Date(Date.parse(betsData[betsData.length-1].bet_created));
-		if(lastBetDate < today){
+		if(lastBetDate.getDate() < today.getDate() || lastBetDate.getMonth() < today.getMonth() || lastBetDate.getFullYear() < today.getFullYear()){
 			// Remover apuestas
 			Utils.getMainInstance().lotteryDataBase.deleteRows("bets");
 			Utils.getMainInstance().lotteryDataBase.commit();
@@ -118,6 +120,8 @@ BetsList.prototype.uploadBet = function(id) {
 			url : Utils.getServices().uploadBet,
 			success : function(r){
 				if(isNaN(r)==false){
+					//Utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
+					//Utils.getMainInstance().lotteryDataBase.commit();
 					alert("Se sincronizo correctamente la apuesta");
 					
 					Utils.getMainInstance().lotteryDataBase.update("bets",{ID: this.betLocalId},function(row){
