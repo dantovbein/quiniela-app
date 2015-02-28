@@ -5,7 +5,7 @@
 	background-color: #004056;
 	font-size: 3.5rem;
 	border:solid .1rem #404041;
-	position: fixed;
+	position: absolute;
 	text-align: center;
 	/*border-radius: 2rem;*/
 
