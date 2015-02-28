@@ -35,3 +35,7 @@ header.default-header .btn-settings {
 	float: right;
 }
 
+header .icon-header-app {
+	width: 58rem;
+	background-position: -10px -677px;
+}

@@ -16,9 +16,13 @@ section.view.user-settings {
 
 .item-content-view.user-data ul li {
 	width: 100%;
-	margin-bottom: .2rem;
+	margin-bottom: .5rem;
 }
 
+
+.user-value {
+	margin-left: .6rem;
+}
 /*
 .list-user-settings {
 	padding: 1em 0 0 0;
