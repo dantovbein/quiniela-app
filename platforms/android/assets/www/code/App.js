@@ -1,5 +1,4 @@
 function App(config) {
-	alert("App");
 	this.config = config;
 	this.initialize();
 } 
@@ -7,7 +6,6 @@ function App(config) {
 App.prototype.contstructor = App;
 
 App.prototype.initialize = function() {
-	alert("App initialize");
 	this.configure()
 	if(Utils.getUserData().user == "" || Utils.getUserData().user == null) {
 		this.getLogin();
@@ -19,37 +17,39 @@ App.prototype.initialize = function() {
 App.prototype.configure = function() {
 	this.totalToSychronize = 0;
 	this.totalSychronized = 0;
-	alert("App configure 1");
 	this.createDataBase();
 	alert("App configure 2");
 	Utils.setMainInstance(this);
+	alert("App configure 3");
 	$(document).bind( "removePopup", { context:this }, this.removePopup,false );
 	$(document).bind( "appTemporaryUnlocked", { context:this }, function(e){
 		localStorage.setItem("is_temporary_locked","0");
 		e.data.context.startTimerLockApp();
 	},false );
+	alert("App configure 4");
 	$(document).bind( "betEditor", { context:this }, this.editBet,false );
 	$(document).bind( "blockUser", { context:this }, function(e){
 		localStorage.setItem("is_locked", 1);
 		e.data.context.getLockView();
 	},false );
+	alert("App configure 5");
 	$(document).bind("resetBetView", { context:this }, function(e){
 		e.data.context.getHome();
 	},false );
-
+	alert("App configure 6");
 	this.delay = 1000 * (Utils.getLimitMinute() * 60);
 	this.startTimer();
-
+	alert("App configure 7");
 	this.currentResetTimer = 0;
 	
 	if(parseInt(localStorage.getItem("is_temporary_locked"))==0){
 		this.startTimerLockApp();
 	}
-
+	alert("App configure 7");
 	$(document).click( {context:this}, function(e){
     	e.data.context.currentResetTimer = 0;
   	});
-
+	
   	alert("App configure");
 }
 

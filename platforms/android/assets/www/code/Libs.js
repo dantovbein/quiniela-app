@@ -41,7 +41,6 @@ Libs.prototype.getFiles = function(_lib_) {
 			]
 		}
 	);
-	alert("getFiles2");
 	var _libs_ = new Array();
 	this.libraries.forEach(function(d){
 		if(d.name == _lib_)
@@ -51,7 +50,6 @@ Libs.prototype.getFiles = function(_lib_) {
 };
 
 Libs.prototype.loadFiles = function(files) {
-	alert("loadFiles");
 	var index,extension,file;
 	files.forEach(function(f){
 		index = f.lastIndexOf(".",f.length);
@@ -77,12 +75,10 @@ Libs.prototype.loadFiles = function(files) {
 					url : f,
 					dataType : "script",
 					success : function(result) {
-						//console.log("Se cargo: " + f);
-						alert("Se cargo: " + f);
+						console.log("Se cargo: " + f);
 					},
 					error : function(error) {
-						//console.log("No se pudo cargar " + f);
-						alert("No se pudo cargar " + f);
+						console.log("No se pudo cargar " + f);
 					}
 				});
 
