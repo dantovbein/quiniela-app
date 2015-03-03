@@ -35,7 +35,7 @@ Bet.prototype.startTimer = function() {
 
 Bet.prototype.onCompleteTimer = function(e){
 	e.context.betTime++;
-	//console.log("betTime",e.context.betTime);
+	//console.log(e.context.betTime,Globals.TIME_RESET_BET_VIEW);
 	if(e.context.betTime == Globals.TIME_RESET_BET_VIEW ){
 		console.log("Reset Bet");
 		$(document).trigger({ type:"resetBetView" });

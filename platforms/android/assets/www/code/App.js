@@ -51,7 +51,7 @@ App.prototype.startTimerLockApp = function(){
 
 App.prototype.onCompleteTimerLockApp = function(e){
 	e.context.currentResetTimer++;
-	//console.log("AppTimer",e.context.currentResetTimer);
+	console.log("AppTimer",e.context.currentResetTimer,Globals.TIME_STANDBY_APP);
 	if(e.context.currentResetTimer == Globals.TIME_STANDBY_APP ){
 		console.log("Bloquear app");
 		e.context.showTempLockView();
