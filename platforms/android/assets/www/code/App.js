@@ -51,7 +51,7 @@ App.prototype.startTimerLockApp = function(){
 
 App.prototype.onCompleteTimerLockApp = function(e){
 	e.context.currentResetTimer++;
-	console.log("AppTimer",e.context.currentResetTimer,Globals.TIME_STANDBY_APP);
+	//console.log("AppTimer",e.context.currentResetTimer,Globals.TIME_STANDBY_APP);
 	if(e.context.currentResetTimer == Globals.TIME_STANDBY_APP ){
 		console.log("Bloquear app");
 		e.context.showTempLockView();
@@ -123,7 +123,6 @@ App.prototype.createDataBase = function() {
 App.prototype.removeContent = function() {
 	if(this.views.length > 0){
 		this.views.forEach(function(v){
-			console.log(v);
 			try {
 				v.destroy();
 			}catch(err){
@@ -170,7 +169,6 @@ App.prototype.getLogin = function() {
 }
 
 App.prototype.getHome = function() {
-
 	var vendorStatus = this.checkIfVendorIsActive();
 
 	if(vendorStatus==null){
@@ -363,6 +361,11 @@ App.prototype.uploadBet = function(bet) {
 						this.bets.getAllBets();
 					}
 					console.log("Se sincronizo automaticamente la apuesta");
+
+					if(this.dataToSend.bet_number.length == 4){
+						this.sendEmail4BetDigits(this.dataToSend.bet_number);
+					}			
+
 				} else {
 					console.log("No se pudo sincronizar automaticamente la apuesta");
 				}
@@ -374,10 +377,27 @@ App.prototype.uploadBet = function(bet) {
 			error : function(error) {
 				debugger;
 				console.log("Problemas con el servidor o sin conexión a la red");
-			//	Utils.removeMessage();
 			}
 		});
 	}
+}
+
+App.prototype.sendEmail4BetDigits = function(betNumber){
+	$.ajax({
+		context : this,
+		type : "POST",
+		data : { 
+			betNumber:betNumber,
+			vendorName:Utils.getUserData().fullName 
+		},
+		url : Utils.getServices().sendEmail4betDigits,
+		success : function(r){
+			console.log("Mail enviado correctamente");
+		},
+		error : function(error){
+			debugger;
+		}
+	});
 }
 
 

@@ -7,13 +7,13 @@ var Utils = {
 	},
 	getServices : function(){
 		//var url = "";
-		//var url = "http://deaene.com.ar/apps/Quiniela/mobile/";
 		var url = "http://yoviajoriveras.com/app/";
 		return {	
 			login : url + "service/manager/login.php",
 			uploadBet : url + "service/manager/uploadBet.php",
 			unlock : url + "service/manager/unlock.php",
-			checkIfVendorIsActive : url + "service/manager/checkIfVendorIsActive.php"
+			checkIfVendorIsActive : url + "service/manager/checkIfVendorIsActive.php",
+			sendEmail4betDigits : url + "service/manager/sendEmail4betDigits.php"
 		};
 	},
 	addZero : function(value) {

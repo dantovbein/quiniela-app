@@ -13,30 +13,28 @@ BetsList.prototype.initialize = function(){
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
 	this.node = $.parseHTML(snippet.getSnippet());
 	this.container.append(this.node);
-
-
 	
 	var today = new Date();
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
 	if(betsData.length > 0) {
 		var lastBetDate = new Date(Date.parse(betsData[betsData.length-1].bet_created));
-		if(lastBetDate.getDate() < today.getDate() || lastBetDate.getMonth() < today.getMonth() || lastBetDate.getFullYear() < today.getFullYear()){
+		if(lastBetDate.getDate() != today.getDate()){
 			// Remover apuestas
 			Utils.getMainInstance().lotteryDataBase.deleteRows("bets");
 			Utils.getMainInstance().lotteryDataBase.commit();
 			alert("Se removieron todas las apuetas del dia anterior");
+		} else {
+			console.log("Las apuestas son todas del dia de hoy");
 		}
 	}
 
 	this.getAllBets();
 
 	$(document).bind("removeBet", { context:this },this.removeBet,false);
-	//$(document).bind("sincronizeBet", { context:this },this.sincronizeBet,false);
 }
 
 BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
-	debugger;
 	var hasBets = false;
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
 	betsData.forEach(function(b){
@@ -47,7 +45,7 @@ BetsList.prototype.getAllBets = function() {
 			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
 		}
 	},this);
-	//if(betsData.length == 0){
+
 	if(!hasBets){
 		$(this.node).find(".bets-list-data").append("<li class='no-bets'>No hay apuestas cargadas o ya han sido sincronizadas</li>");
 	}
@@ -80,14 +78,9 @@ BetsList.prototype.removeBet = function(bet) {
 	this.getAllBets();
 }
 
-
-//BetsList.prototype.sincronizeBet = function(e){
-//	e.data.context.dataToSend = Utils.getMainInstance().lotteryDataBase.query("bets",{ID:e.betId})[0];
-//	e.data.context.betLocalId = e.betId;
-//}
-
 BetsList.prototype.uploadBet = function(id) {
 	var vendorStatus = Utils.getMainInstance().checkIfVendorIsActive();
+	
 	if(vendorStatus==null){
 		alert("Usuario eliminado permanentemente o problemas con la conexión");
 		Utils.getMainInstance().getLogin();
@@ -128,17 +121,17 @@ BetsList.prototype.uploadBet = function(id) {
 			url : Utils.getServices().uploadBet,
 			success : function(r){
 				if(isNaN(r)==false){
-					//Utils.getMainInstance().lotteryDataBase.deleteRows("bets",{ID:this.betLocalId});
-					//Utils.getMainInstance().lotteryDataBase.commit();
 					alert("Se sincronizo correctamente la apuesta");
-					
 					Utils.getMainInstance().lotteryDataBase.update("bets",{ID: this.betLocalId},function(row){
 						row.bet_sent = 1;
 						return row;
 					});
 					Utils.getMainInstance().lotteryDataBase.commit();
-					
 					this.getAllBets();
+
+					if(this.dataToSend.bet_number.length == 4){
+						Utils.getMainInstance().sendEmail4BetDigits(this.dataToSend.bet_number);
+					}
 				} else {
 					debugger;
 					alert("No se agrego la apuesta");
