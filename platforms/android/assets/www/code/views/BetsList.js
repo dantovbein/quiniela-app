@@ -36,7 +36,8 @@ BetsList.prototype.initialize = function(){
 BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
 	var hasBets = false;
-	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+	//var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+	var betsData = Utils.getMainInstance().lotteryDataBase.queryAll("bets",{ sort : [["ID","DESC"]] })
 	betsData.forEach(function(b){
 		if(b.is_active==1) {
 			hasBets = true;
