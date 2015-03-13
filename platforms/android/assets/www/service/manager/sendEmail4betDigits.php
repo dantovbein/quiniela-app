@@ -7,9 +7,9 @@ if(isset($_POST['vendorName'])) { $vendorName = $_POST['vendorName']; }
 $to = "dtovbein@gmail.com";
 $subject = $vendorName . " ha subido una apuesta de 4 dígitos (" . $betNumber . ")";
 $message = '<div style="width:800px;height:230px;background-color:#FCFCFC;position:relative;margin:0 auto;display:block;color:#000000;">
-				<div style="width:780px;height:30px;padding:5px 10px;background-color:#004056;float:left;border-bottom:solid 5px #F1623D;position:relative;margin:5px 0 0 10px;">
-					<div style="width:302px;height:53px;">
-						<img src="http://yoviajoriveras.com/images/logo-mail.png" width="302" height="53" />
+				<div style="width:800px;height:73px;background-color:#004056;float:left;border-bottom:solid 5px #F1623D;position:relative;">
+					<div style="width:312px;height:73px;">
+						<img src="http://yoviajoriveras.com/images/logo-mail.png" width="312" height="73" />
 					</div>
 				</div>
 				<div style="width:800px;height:200px;float:left;">

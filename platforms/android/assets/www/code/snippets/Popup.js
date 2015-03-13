@@ -1,10 +1,15 @@
 function Popup(config) {
 	this.config = config;
-	this.container = this.config.container;
-	this.snippetData = [];
+	this.initializeParameters();
+	this.initialize();
 }
 
 Popup.prototype.constructor = Popup;
+
+Popup.prototype.initializeParameters = function() {
+	this.container = this.config.container;
+	this.snippetData = [];
+}
 
 Popup.prototype.initialize = function() {
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : this.snippetData });

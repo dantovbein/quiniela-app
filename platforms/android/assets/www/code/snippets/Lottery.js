@@ -1,10 +1,15 @@
 function Lottery(config) {
 	this.config = config;
-	this.container = this.config.container;
-	this.lotteryData = this.config.lotteryData;
+	this.initializeParameters();
+	this.initialize();
 }
 
 Lottery.prototype.constructor = Lottery;
+
+Lottery.prototype.initializeParameters = function(){
+	this.container = this.config.container;
+	this.lotteryData = this.config.lotteryData;
+}
 
 Lottery.prototype.initialize = function() {
 	var snippet = new Snippet( { "path" : "snippets/lottery.html", "data" : [this.lotteryData.lotteryType,Utils.getLotteryType(this.lotteryData.lotteryType),this.lotteryData.expirate] });

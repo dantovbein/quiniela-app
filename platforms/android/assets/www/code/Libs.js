@@ -37,6 +37,8 @@ Libs.prototype.getFiles = function(_lib_) {
 				"code/views/BetEditor.js",
 				"code/views/BetsList.js",
 				"code/views/LockView.js",
+				"code/views/AppLockView.js",
+				"code/views/ChangeTimeLockView.js",
 				"code/views/TempLockView.js"
 			]
 		}

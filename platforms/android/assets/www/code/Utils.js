@@ -31,6 +31,7 @@ var Utils = {
 		localStorage.setItem("expiration", this.getExpirationDate());
 		localStorage.setItem("is_locked", 0);
 		localStorage.setItem("is_temporary_locked", 0);
+		localStorage.setItem("changed_time", 0);
 	},
 	showMessage : function(text) {
 		$("body").append("<div class='app-message'><span class='app-message-desc'>" + text + "</span></div>");

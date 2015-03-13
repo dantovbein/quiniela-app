@@ -1,10 +1,16 @@
 function ItemBetsList(config) {
-	this.container = config.container;
-	this.betData = config.betData;
-	this.pathSnippet = "snippets/itemBetsList.html";
+	this.config = config;
+	this.initializeParameters();
+	this.initialize();
 }
 
 ItemBetsList.prototype.constructor = ItemBetsList;
+
+ItemBetsList.prototype.initializeParameters = function(){
+	this.container = this.config.container;
+	this.betData = this.config.betData;
+	this.pathSnippet = "snippets/itemBetsList.html";
+}
 
 ItemBetsList.prototype.initialize = function(){
 	var hour = new Date(this.betData.bet_created);

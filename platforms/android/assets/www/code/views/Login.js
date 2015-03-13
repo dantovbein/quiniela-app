@@ -1,12 +1,15 @@
 function Login(config) {
-	View.call(this,config);
-	this.container = config.container;
-	this.pathSnippet = "views/login.html";
+	View.call(this,config);	
 }
 
 inheritPrototype(Login, View);
 
 Login.prototype.constructor = Login;
+
+Login.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);
+	this.pathSnippet = "views/login.html";
+}
 
 Login.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
@@ -54,7 +57,6 @@ Login.prototype.signIn = function(e) {
 				
 			},
 			error : function(error) {
-				//errorElement.text("error",error);
 				alert("Problemas con el servidor o sin conexión a la red");
 				Utils.removeMessage();
 			}

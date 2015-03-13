@@ -1,12 +1,15 @@
 function BetsList(config) {
-	View.call(this,config);
-	this.container = config.container;	
-	this.pathSnippet = "views/betsList.html";
+	View.call(this,config);	
 }
 
 inheritPrototype(BetsList, View);
 
 BetsList.prototype.constructor = BetsList;
+
+BetsList.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);
+	this.pathSnippet = "views/betsList.html";
+}
 
 BetsList.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
@@ -42,7 +45,7 @@ BetsList.prototype.getAllBets = function() {
 		if(b.is_active==1) {
 			hasBets = true;
 			var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
-			itemBetsList.initialize();
+			//itemBetsList.initialize();
 			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
 		}
 	},this);
@@ -55,7 +58,7 @@ BetsList.prototype.getAllBets = function() {
 BetsList.prototype.showItemOptions = function(e) {
 	Utils.getOverlay();
 	var betOptions = new PopupBetOptions( { container:$("body"), _parent:e.data.context, data:e.item.betData } );
-	betOptions.initialize();
+	//betOptions.initialize();
 }
 
 BetsList.prototype.removeBet = function(bet) {

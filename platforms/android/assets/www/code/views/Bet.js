@@ -1,15 +1,18 @@
 function Bet(config) {
 	View.call(this,config);
-	this.container = config.container;
-	this.todayslotteries = config.todayslotteries;
-	this.betData = [];
-	this.pathSnippet = "views/bet.html";
-	this.dataSnippet = [];
 }
 
 inheritPrototype(Bet, View);
 
 Bet.prototype.constructor = Bet;
+
+Bet.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);
+	this.todayslotteries = this.config.todayslotteries;
+	this.betData = [];
+	this.pathSnippet = "views/bet.html";
+	this.dataSnippet = [];
+}
 
 Bet.prototype.initialize = function(){
 	View.prototype.initialize.call(this);
@@ -181,7 +184,7 @@ Bet.prototype.generateTodaysLotteries = function() {
 	this.todayslotteries.lotteries.forEach(function(d){
 		if(Utils.compareHours(d.expirate)) {
 			var lottery = new Lottery( { container : $(this.node).find("#container-lotteries .wrapper-container-lotteries"), lotteryData : d } );
-			lottery.initialize();
+			//lottery.initialize();
 		}		
 	},this);
 }

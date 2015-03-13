@@ -1,13 +1,16 @@
 function UserSettings(config) {
-	View.call(this,config);
-	this.container = config.container;
-	this.pathSnippet = "views/userSettings.html";
-	this.isVisible = false;
+	View.call(this,config);	
 }
 
 inheritPrototype(UserSettings, View);
 
 UserSettings.prototype.constructor = UserSettings;
+
+UserSettings.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);
+	this.pathSnippet = "views/userSettings.html";
+	this.isVisible = false;
+}
 
 UserSettings.prototype.initialize = function(){
 	View.prototype.initialize.call(this);

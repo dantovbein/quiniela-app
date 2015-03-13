@@ -1,12 +1,15 @@
 function Home(config) {
 	View.call(this,config);
-	this.container = config.container;
-	this.pathSnippet = "views/home.html";
 }
 
 inheritPrototype(Home, View);
 
 Home.prototype.constructor = Home;
+
+Home.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);	
+	this.pathSnippet = "views/home.html";
+}
 
 Home.prototype.initialize = function(){
 	View.prototype.initialize.call(this);

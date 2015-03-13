@@ -1,12 +1,15 @@
 function TempLockView(config) {
-	View.call(this,config);
-	this.container = config.container;
-	this.pathSnippet = "views/tempLockView.html";
+	View.call(this,config);	
 }
 
 inheritPrototype(TempLockView, View);
 
 TempLockView.prototype.constructor = TempLockView;
+
+TempLockView.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);
+	this.pathSnippet = "views/tempLockView.html";
+}
 
 TempLockView.prototype.initialize = function(){
 	View.prototype.initialize.call(this);

@@ -1,13 +1,17 @@
 function PopupBetOptions(config) {
 	Popup.call(this,config);
-	this.betData = this.config.data;
-	this.pathSnippet = "snippets/popupBetOptions.html";
-	this._parent = this.config._parent;
 }
 
 inheritPrototype(PopupBetOptions,Popup);
 
 PopupBetOptions.prototype.constructor = PopupBetOptions;
+
+PopupBetOptions.prototype.initializeParameters = function() {
+	Popup.prototype.initializeParameters.call(this);
+	this.betData = this.config.data;
+	this.pathSnippet = "snippets/popupBetOptions.html";
+	this._parent = this.config._parent;
+}
 
 PopupBetOptions.prototype.initialize = function() {
 	this.snippetData = [ this.betData.ID, this.betData.bet_number ];

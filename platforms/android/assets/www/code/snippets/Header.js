@@ -1,9 +1,15 @@
 function Header(config) {
-	this.container = config.container;
-	this.pathSnippet = "snippets/header.html";
+	this.config = config;
+	this.initializeParameters();
+	this.initialize();
 }
 
 Header.prototype.constructor = Header;
+
+Header.prototype.initializeParameters = function(){
+	this.container = this.config.container;
+	this.pathSnippet = "snippets/header.html";
+}
 
 Header.prototype.initialize = function(){
 	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [ ] });

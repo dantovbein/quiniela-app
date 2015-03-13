@@ -1,13 +1,17 @@
 function BetEditor(config) {
 	Bet.call(this,config);
-	this.betData = this.config.betData;
-	this.pathSnippet = "views/bet.html";
-	this.dataSnippet = ["Editar jugada"];
 }
 
 inheritPrototype(BetEditor,Bet);
 
 BetEditor.prototype.constructor = BetEditor;
+
+BetEditor.prototype.initializeParameters = function(){
+	Bet.prototype.initializeParameters.call(this);
+	this.betData = this.config.betData;
+	this.pathSnippet = "views/bet.html";
+	this.dataSnippet = ["Editar jugada"];
+}
 
 BetEditor.prototype.initialize = function() {
 	Bet.prototype.initialize.call(this);

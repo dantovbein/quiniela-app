@@ -1,12 +1,15 @@
 function LockView(config) {
-	View.call(this,config);
-	this.container = config.container;
-	this.pathSnippet = "views/lockView.html";
+	View.call(this,config);	
 }
 
 inheritPrototype(LockView, View);
 
 LockView.prototype.constructor = LockView;
+
+LockView.prototype.initializeParameters = function(){
+	View.prototype.initializeParameters.call(this);
+	//this.pathSnippet = "views/lockView.html";
+}
 
 LockView.prototype.initialize = function(){
 	View.prototype.initialize.call(this);

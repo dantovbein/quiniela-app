@@ -9,7 +9,11 @@ App.prototype.initialize = function() {
 	this.configure()
 	if(Utils.getUserData().user == "" || Utils.getUserData().user == null) {
 		this.getLogin();
-	} else {		
+	} else {
+		if(localStorage.getItem("changed_time")==1) {
+			this.getChangeTimeLockView();
+			return false;
+		}		
 		this.getHome();
 	}
 }
@@ -27,7 +31,7 @@ App.prototype.configure = function() {
 	$(document).bind( "betEditor", { context:this }, this.editBet,false );
 	$(document).bind( "blockUser", { context:this }, function(e){
 		localStorage.setItem("is_locked", 1);
-		e.data.context.getLockView();
+		e.data.context.getAppLockView();
 	},false );
 	$(document).bind("resetBetView", { context:this }, function(e){
 		e.data.context.getHome();
@@ -43,7 +47,35 @@ App.prototype.configure = function() {
     	e.data.context.currentResetTimer = 0;
   	});
   	this.views = [];
+
+  	this.lastTimes = [];
+  	this.startTimerToCheckChangedTime();
 }
+
+App.prototype.startTimerToCheckChangedTime = function(){
+	setTimeout(this.onCompleteTimeCheckChangedTime,1000 * 45,{context:this});
+}
+
+App.prototype.onCompleteTimeCheckChangedTime = function(e){
+	if(e.context.lastTimes.length == 0){
+		e.context.lastTimes.push(new Date());
+	}else{
+		var last = new Date(e.context.lastTimes[e.context.lastTimes.length - 1]);
+		var now = new Date();
+		if(last > now) {
+			//console.log("Se modificó el horario");
+			localStorage.setItem("changed_time", 1);
+			e.context.getChangeTimeLockView();
+			return false;
+		}else{
+			//console.log("No se modifico el horario");
+		}
+		e.context.lastTimes = [];
+		e.context.lastTimes.push(now);
+	}
+	e.context.startTimerToCheckChangedTime();
+}
+
 
 App.prototype.startTimerLockApp = function(){
 	this.timerLockApp = setTimeout(this.onCompleteTimerLockApp,1000,{context:this}); // 60 * 1000 = 1 minuto
@@ -51,7 +83,6 @@ App.prototype.startTimerLockApp = function(){
 
 App.prototype.onCompleteTimerLockApp = function(e){
 	e.context.currentResetTimer++;
-	//console.log("AppTimer",e.context.currentResetTimer,Globals.TIME_STANDBY_APP);
 	if(e.context.currentResetTimer == Globals.TIME_STANDBY_APP ){
 		console.log("Bloquear app");
 		e.context.showTempLockView();
@@ -63,7 +94,6 @@ App.prototype.onCompleteTimerLockApp = function(e){
 App.prototype.showTempLockView = function() {
 	localStorage.setItem("is_temporary_locked","1");
 	var tempLockView = new TempLockView( { container : $("body") } );
-	tempLockView.initialize();
 	this.views.push(tempLockView);
 }
 
@@ -146,7 +176,7 @@ App.prototype.removeContent = function() {
 
 App.prototype.getHeader = function() {
 	var header = new Header( { container : $("body") } );
-	header.initialize();
+	//header.initialize();
 
 	$(header.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); }, false);
 	$(header.node).bind( "userSettings", { context:this }, function(e) { e.data.context.getSettings(); },false);
@@ -162,7 +192,6 @@ App.prototype.getLogin = function() {
 	this.removeContent();
 	
 	var login = new Login( { container : $("main") } );
-	login.initialize();
 	this.views.push(login);
 
 	$(login.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); },false);  	
@@ -184,19 +213,20 @@ App.prototype.getHome = function() {
 	}
 
 	if(this.isLocked()){
-		this.getLockView();
+		this.getAppLockView();
 		return false;
 	} else {
 		if($("header.default-header").length == 0) this.getHeader();
 		this.removeContent();
 
 		var home = new Home( { container : $("main") } );
-		home.initialize();
 		this.views.push(home);
 
 		$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
 	  	$(home.node).bind( "showBets", { context:this }, function(e) { e.data.context.getBets(); });
-	  	$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });			
+	  	$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });
+
+	  	this.startTimerToCheckChangedTime();	
 	}
 
 	if(parseInt(localStorage.getItem("is_temporary_locked"))==1){
@@ -205,15 +235,25 @@ App.prototype.getHome = function() {
 	}
 }
 
-App.prototype.getLockView = function() {
+App.prototype.getAppLockView = function() {
 	if($("header.default-header").length > 0) $("header.default-header").remove();
 	this.removeContent();
-	var lockView = new LockView( { container : $("main") } );
-	lockView.initialize();
-	this.views.push(lockView);
+	var appLockView = new AppLockView( { container : $("main") } );
+	this.views.push(appLockView);
 
-	$(lockView.node).bind( "home", { context:this }, function(e) { 
+	$(appLockView.node).bind( "home", { context:this }, function(e) { 
 		e.data.context.unlockApp(); 
+	},false);
+}
+
+App.prototype.getChangeTimeLockView = function() {
+	if($("header.default-header").length > 0) $("header.default-header").remove();
+	this.removeContent();
+	var changeTimeLockView = new ChangeTimeLockView( { container : $("main") } );
+	this.views.push(changeTimeLockView);
+
+	$(changeTimeLockView.node).bind( "home", { context:this }, function(e) { 
+		e.data.context.unlockChangedTime(); 
 	},false);
 }
 
@@ -231,6 +271,14 @@ App.prototype.isLocked = function() {
 
 App.prototype.unlockApp = function() {
 	localStorage.setItem("is_locked", 0);
+	this.lotteryDataBase.deleteRows("bets")
+	this.getHome();
+}
+
+App.prototype.unlockChangedTime = function() {
+	localStorage.setItem("changed_time", 0);
+	this.lotteryDataBase.deleteRows("bets")
+	this.lastTimes = [];
 	this.getHome();
 }
 
@@ -238,7 +286,7 @@ App.prototype.unlockApp = function() {
 App.prototype.getSettings = function() {
 	if($(".view.user-settings").length == 0) {
 		this.userSettings = new UserSettings( { container : $("body") } );
-		this.userSettings.initialize();
+		//this.userSettings.initialize();
 
 		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); },false);
 		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); },false);
@@ -251,7 +299,7 @@ App.prototype.getSettings = function() {
 App.prototype.generateBet = function() {
 	this.removeContent();
 	this.bet = new BetGenerator({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
-	this.bet.initialize();
+	//this.bet.initialize();
 	this.views.push(this.bet);
 
 	//$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
@@ -263,7 +311,7 @@ App.prototype.generateBet = function() {
 App.prototype.getBets = function() {
 	this.removeContent();
 	this.bets = new BetsList({ container : $("main") });
-	this.bets.initialize();
+	//this.bets.initialize();
 	this.views.push(this.bet);
 }
 
@@ -275,7 +323,7 @@ App.prototype.editBet = function(e) {
 	}
 	e.data.context.removeContent();
 	this.bet = new BetEditor({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData)), betData : e.betData });
-	this.bet.initialize();
+	//this.bet.initialize();
 	e.data.context.views.push(this.bet);
 
 	$(this.bet.node).bind( "newBet", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
