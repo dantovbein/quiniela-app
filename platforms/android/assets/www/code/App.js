@@ -143,7 +143,7 @@ App.prototype.checkBets = function() {
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_number","bet_data","bet_position","bet_amount","bet_number_redoblona","bet_position_redoblona","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","bet_sent"]);
+		this.lotteryDataBase.createTable("bets",["bet_type","bet_number","bet_data","bet_position","bet_amount","bet_number_redoblona","bet_position_redoblona","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","bet_sent"]);
 		this.lotteryDataBase.commit();
 	} else {
 		// Existe la base de datos
