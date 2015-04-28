@@ -9,7 +9,8 @@ BetBorratina.prototype.constructor = BetBorratina;
 BetBorratina.prototype.initializeParameters = function(){
 	Bet.prototype.initializeParameters.call(this);
 	this.path = "views/betBorratina.html";
-	this.dataSnippet = ["Ingresar apuesta Borratina"];
+	this.dataSnippet = ["Ingresar jugada Borratina"];
+	this.betNumbers = [];
 	this.betType = Utils.getBetType(Globals.BET_BORRATINA);
 	
 }
@@ -30,12 +31,32 @@ BetBorratina.prototype.initialize = function(){
 }
 
 BetBorratina.prototype.generateInputNumbers = function(){
+	this.betNumbers = [];
+	var totalBetNumbersBetted = $(this.node).find(".wrapper-container-numbers input[type='number']").length;
+	for(var j=0;j<totalBetNumbersBetted;j++){
+		this.betNumbers.push($($(this.node).find(".wrapper-container-numbers input[type='number']")[j]).val());
+	}
+
 	$(this.node).find(".wrapper-container-numbers").empty();
-	$(this.node).find(".list-lotteries .item-checkbox input:checkbox").prop("checked",false);
-	$(this.node).find(".list-lotteries .item-checkbox input:checkbox").prop("disabled",false);
 	for(var i=0;i<this.gameType;i++){
-		var inp = "<input id='bet-number-" + i + "' type='number' placeholder='Número " + (i+1) + "' maxlength='2' />";
+		var placeholder = (this.betNumbers[i]!=undefined && this.betNumbers[i]!="") ? "value='" + this.betNumbers[i] + "'" : "placeholder='Número " + (i+1) + "'";
+		var inp = "<input id='bet-number-" + i + "' type='number' " + placeholder + "  maxlength='2' />";
 		$(this.node).find(".wrapper-container-numbers").append(inp);
+	}
+	//$(this.node).find(".list-lotteries .item-checkbox input:checkbox").prop("checked",false);
+	//$(this.node).find(".list-lotteries .item-checkbox input:checkbox").prop("disabled",false);
+	if(this.gameType==8){
+		for(var l=0;l<$(this.node).find(".wrapper-container-lotteries .lottery").length;l++){
+			var lottery = $($(this.node).find(".wrapper-container-lotteries .lottery")[l]);
+			for(var m=0;m<$(lottery).find(".item-checkbox input:checkbox").length;m++){
+				var checkbox = $($(lottery).find(".item-checkbox input:checkbox")[m]);
+				debugger;
+				if($(checkbox).prop("checked")){
+					$(lottery).find(".item-checkbox input:checkbox").prop("checked",true);
+					//$(checkbox).prop("checked",true);
+				}
+			}
+		}
 	}
 }
 
@@ -120,9 +141,7 @@ BetBorratina.prototype.saveBet = function() {
 																			});
 
 	Utils.getMainInstance().lotteryDataBase.commit();
-	Utils.showMessage("Partida guardada");
-	$( this ).trigger( { type : Globals.NEW_BET } );
-	
+	this.onConfirmSaveData();
 }
 
 BetBorratina.prototype.getTotalAmount = function() {

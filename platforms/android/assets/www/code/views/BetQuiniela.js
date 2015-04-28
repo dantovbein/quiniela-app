@@ -9,11 +9,12 @@ BetQuiniela.prototype.constructor = BetQuiniela;
 BetQuiniela.prototype.initializeParameters = function(){
 	Bet.prototype.initializeParameters.call(this);
 	this.path = "views/betQuiniela.html";
-	this.dataSnippet = ["Ingresar apuesta"];
+	this.dataSnippet = ["Ingresar jugada"];
 	this.betType = Utils.getBetType(Globals.BET_QUINIELA);
 }
 
 BetQuiniela.prototype.saveBet = function() {
+	debugger;
 	var currentBet = {};
 
 	var betNumber = $(this.node).find("#bet-number").val();
@@ -77,6 +78,7 @@ BetQuiniela.prototype.saveBet = function() {
 	currentBet.betTotalAmount = this.getTotalAmount();
 	currentBet.betCreated = new Date();
 
+	debugger;
 	var id = (this.betData.ID != undefined) ? this.betData.ID : -1;
 	Utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { 	
 																				bet_type : this.betType,
@@ -91,15 +93,17 @@ BetQuiniela.prototype.saveBet = function() {
 																				is_active : 1,
 																				is_editable : 1,
 																				bet_sent : 0 });
+	debugger;
 
 	Utils.getMainInstance().lotteryDataBase.commit();
-	Utils.showMessage("Partida guardada");
-	$( this ).trigger( { type : Globals.NEW_BET } );
-	
+	debugger;
+	this.onConfirmSaveData();	
 }
 
 BetQuiniela.prototype.getTotalAmount = function() {
+	debugger;
 	Bet.prototype.getTotalAmount.call(this);
+	debugger;
 	return 	parseFloat($(this.node).find("#partial-amount").val() * this.totalChecked).toFixed(2);
 }
 

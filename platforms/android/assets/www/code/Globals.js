@@ -15,5 +15,6 @@ var Globals = {
 	SHOW_ITEM_OPTIONS : "showItemOptions",
 	CHECKBOX_CHECKED : "checkboxChecked",
 	SHOW_QUINIELA_BETS : "showQuinielaBets",
-	SHOW_BORRATINA_BETS : "showBorratinaBets"
+	SHOW_BORRATINA_BETS : "showBorratinaBets",
+	EDIT_BET : "editBet"
 }

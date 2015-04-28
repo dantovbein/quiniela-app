@@ -20,7 +20,6 @@ ItemBetsList.prototype.addHandlers = function() {
 }
 
 ItemBetsList.prototype.showMoreOptions = function(e) {
-	debugger;
 	$( e.data.context ).trigger( { 
 									type : Globals.SHOW_ITEM_OPTIONS,
 									betData : e.data.context.config.betData

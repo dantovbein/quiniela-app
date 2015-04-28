@@ -29,7 +29,7 @@ PopupBetOptions.prototype.onClickRemove = function(e) {
 
 PopupBetOptions.prototype.onClickEdit = function(e) {
 	e.data.context.destroy();
-	$(document).trigger({ 	type : "betEditor",
+	$(document).trigger({ 	type : Globals.EDIT_BET,
 							betData : e.data.context.betData } );
 }
 

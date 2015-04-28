@@ -9,7 +9,7 @@ Bet.prototype.constructor = Bet;
 Bet.prototype.initializeParameters = function(){
 	GenericView.prototype.initializeParameters.call(this);
 	this.todayslotteries = this.config.todayslotteries;
-	this.betData = [];
+	this.betData = (this.config.betData != undefined) ? this.config.betData : [];
 	this.dataSnippet = [];
 	this.betTime = 0;
 	this.lotteries = [];
@@ -54,11 +54,6 @@ Bet.prototype.addHandlers = function() {
 		$(e.data.context.node).find(".total-amount").html(e.data.context.getTotalAmount());
 	});
 
-	/*$($(this.node).find(".item-checkbox input")).change({ context : this }, function(e) {
-    	e.stopImmediatePropagation();
-		$(e.data.context.node).find(".total-amount").html(e.data.context.getTotalAmount());
-	});*/
-
 	$(this.node).find(".btn-save").click( { context:this }, function(e){
 		e.stopImmediatePropagation();
 		e.data.context.saveBet();
@@ -68,6 +63,10 @@ Bet.prototype.addHandlers = function() {
 Bet.prototype.newBet = function(e) { }
 
 Bet.prototype.saveBet = function() { }
+
+Bet.prototype.onConfirmSaveData = function() {
+	$( this ).trigger( { type : Globals.NEW_BET } );
+}
 
 Bet.prototype.getTotalAmount = function() {
 	this.totalChecked = 0;

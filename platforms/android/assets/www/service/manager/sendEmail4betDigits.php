@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 if(isset($_POST['betNumber'])) { $betNumber = $_POST['betNumber']; }
 if(isset($_POST['vendorName'])) { $vendorName = $_POST['vendorName']; }
 
-$to = "dtovbein@gmail.com";
+$to = "alertas@gyoviajoriveras.com";
 $subject = $vendorName . " ha subido una apuesta de 4 dígitos (" . $betNumber . ")";
 $message = '<div style="width:800px;height:230px;background-color:#FCFCFC;position:relative;margin:0 auto;display:block;color:#000000;">
 				<div style="width:800px;height:73px;background-color:#004056;float:left;border-bottom:solid 5px #F1623D;position:relative;">
