@@ -1,13 +1,14 @@
 .popup.popup-bet-options {
-	width: 80%;
-	padding: 4rem 2rem 3rem 2rem;
-	color: #fff;
-	background-color: #004056;
-	font-size: 3.5rem;
-	border:solid .1rem #404041;
-	position: absolute;
-	text-align: center;
-	/*border-radius: 2rem;*/
+	width: 70%;
+  padding: 4rem 2rem 3rem 2rem;
+  color: #fff;
+  background-color: #E2E2E2;
+  color: #000;
+  font-size: 3.5rem;
+  border: solid .3rem #A9A9A9;
+  position: absolute;
+  text-align: center;
+  border-radius: 1rem;
 
 }
 

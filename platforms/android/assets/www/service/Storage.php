@@ -75,7 +75,7 @@ class Storage {
 
 	public function uploadBet($data) {
 		$this->connect();		
-		$query =  'INSERT INTO bets (bet_number,bet_position,id_device,id_vendor,bet_amount,bet_total_amount,bet_time_created,bet_time_canceled,bet_is_active,bet_number_redoblona,bet_position_redoblona) VALUES (' . "'" . $data['betNumber'] . "','" . $data['betPosition'] . "','" . $data['idDevice'] . "','" . $data['idVendor'] . "','" . $data['betAmount'] . "','" . $data['betTotalAmount'] . "','" . $data['betCreated'] . "','" . $data['betCanceled'] . "','" . $data['isActive'] . "','" . $data['betNumberRedoblona'] . "','" . $data['betPositionRedoblona'] . "'" . ')';
+		$query =  'INSERT INTO bets (bet_number,bet_position,id_device,id_vendor,bet_amount,bet_total_amount,bet_time_created,bet_time_canceled,bet_is_active,bet_number_redoblona,bet_position_redoblona,bet_type,bet_borratina_type) VALUES (' . "'" . $data['betNumber'] . "','" . $data['betPosition'] . "','" . $data['idDevice'] . "','" . $data['idVendor'] . "','" . $data['betAmount'] . "','" . $data['betTotalAmount'] . "','" . $data['betCreated'] . "','" . $data['betCanceled'] . "','" . $data['isActive'] . "','" . $data['betNumberRedoblona'] . "','" . $data['betPositionRedoblona'] . "','" . $data['betType'] . "','" . $data['betBorratinaType'] . "'" . ')'; 
 		mysql_query($query) or die('Error en la consulta -> ' .  $query);
 		$insertID = mysql_insert_id();
 

@@ -11,17 +11,11 @@ BetHome.prototype.initializeParameters = function(){
 }
 
 BetHome.prototype.initialize = function(){
-	GenericView.prototype.initialize.call(this);
+	GenericView.prototype.initialize.call(this);	
+}
 
+BetHome.prototype.addHandlers = function() {
 	$(this.node).find(".generate-bet").click( { context:this }, function(e){
 		$( e.data.context ).trigger( Globals.GENERATE_BET );
-	} );
-
-	$(this.node).find(".show-bets").click( { context:this }, function(e){
-		$( e.data.context ).trigger( Globals.SHOW_BETS );
-	} );
-
-	$(this.node).find(".synchronize").click( { context:this }, function(e){
-		$( e.data.context ).trigger( Globals.SYNCHRONIZE );
 	} );
 }

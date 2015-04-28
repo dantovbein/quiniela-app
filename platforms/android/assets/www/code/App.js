@@ -155,7 +155,7 @@ App.prototype.checkBets = function() {
 App.prototype.createDataBase = function() {
 	this.lotteryDataBase = new localStorageDB("lottery", localStorage);
 	if(this.lotteryDataBase.isNew()) {
-		this.lotteryDataBase.createTable("bets",["bet_type","bet_number","bet_data","bet_position","bet_amount","bet_number_redoblona","bet_position_redoblona","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","bet_sent"]);
+		this.lotteryDataBase.createTable("bets",["bet_type","bet_borratina_type","bet_number","bet_data","bet_position","bet_amount","bet_number_redoblona","bet_position_redoblona","bet_total_amount","bet_created","bet_canceled","is_active","is_editable","bet_sent"]);
 		this.lotteryDataBase.commit();
 	} else {
 		// Existe la base de datos
@@ -245,19 +245,22 @@ App.prototype.getHome = function() {
 		
 		this.removeContent();
 
-		var home = new Home( { container : $("main") } );
-		this.views.push(home);
+		var view = new Home( { container : $("main") } );
+		this.views.push(view);
 
-		$(home).bind( Globals.GET_BET_QUINIELA_HOME, { context:this }, function(e) { 
+		$(view).bind( Globals.GET_BET_QUINIELA_HOME, { context:this }, function(e) { 
 			e.stopImmediatePropagation();
 			e.data.context.getBet({ betType:Globals.BET_QUINIELA });
-			//e.data.context.getBetQuinielaHome();
 		},false);
 
-		$(home).bind( Globals.GET_BET_BORRATINA_HOME, { context:this }, function(e) { 
+		$(view).bind( Globals.GET_BET_BORRATINA_HOME, { context:this }, function(e) { 
 			e.stopImmediatePropagation();
 			e.data.context.getBet({ betType:Globals.BET_BORRATINA });
-			//e.data.context.getBetBorratinaHome(); 
+		},false);
+
+		$(view).bind( Globals.SYNCHRONIZE, { context:this }, function(e) {
+			e.stopImmediatePropagation();
+			e.data.context.synchronize();
 		},false);
 
 	  	this.startTimerToCheckChangedTime();	
@@ -277,26 +280,24 @@ App.prototype.getBet = function(b) {
 	switch(this.currentBetType){
 		case Globals.BET_QUINIELA:
 			var view = new BetQuinielaHome({ container : $("main") });
+			$(view).bind( Globals.SHOW_QUINIELA_BETS, { context:this }, function(e) { 
+				e.stopImmediatePropagation();
+				e.data.context.showBets(Globals.BET_QUINIELA);
+			},false);
 			break;
 		case Globals.BET_BORRATINA:
 			var view = new BetBorratinaHome({ container : $("main") });
+			$(view).bind( Globals.SHOW_BORRATINA_BETS, { context:this }, function(e) { 
+				e.stopImmediatePropagation();
+				e.data.context.showBets(Globals.BET_BORRATINA);
+			},false);
 			break;
 	}
 
 	$(view).bind( Globals.GENERATE_BET, { context:this }, function(e) { 
 		e.stopImmediatePropagation();
 		e.data.context.generateBet(); 
-	},false);
-	
-	$(view).bind( Globals.SHOW_BETS, { context:this }, function(e) { 
-		e.stopImmediatePropagation();
-		e.data.context.showBets();
-	});
-	
-	$(view).bind( Globals.SYNCHRONIZE, { context:this }, function(e) {
-		e.stopImmediatePropagation();
-		e.data.context.synchronize();
-	});
+	},false);	
 
 	this.views.push(view);
 
@@ -359,9 +360,6 @@ App.prototype.generateBet = function() {
 			break;
 	}
 	
-	//this.bet = new BetGenerator({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
-	
-
 	$(bet).bind( Globals.NEW_BET, { context:this }, function(e) { 
 		debugger;
 		e.stopImmediatePropagation();
@@ -377,10 +375,25 @@ App.prototype.generateBet = function() {
 	
 }
 
-App.prototype.showBets = function() {
+/*App.prototype.showBets = function() {
 	this.removeContent();
 	this.bets = new BetsList({ container : $("main") });
 	this.views.push(this.bet);
+}*/
+
+App.prototype.showBets = function(betType) {
+	this.removeContent();
+
+	switch(betType) {
+		case Globals.BET_QUINIELA:
+			var bet = new BetsQuinielaList({ container : $("main") });
+			break;
+		case Globals.BET_BORRATINA:
+			var bet = new BetsBorratinaList({ container : $("main") });
+			break;
+	}
+
+	this.views.push(bet);	
 }
 
 
@@ -436,6 +449,7 @@ App.prototype.synchronize = function() {
 	this.totalSychronized = 0;
 
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+	debugger;
 
 	betsData.forEach(function(b){
 		if(b.is_editable==0) {
@@ -470,6 +484,7 @@ App.prototype.uploadBet = function(bet) {
 	if(Utils.getMainInstance().lotteryDataBase.query("bets",{ID:this.betLocalId})[0].bet_sent == 1) {
 		console.log("La jugada ya se sincronizó previamente");
 	}else {
+		debugger;
 		$.ajax({
 			context : this,
 			async : false,
@@ -487,7 +502,9 @@ App.prototype.uploadBet = function(bet) {
 				idVendor:Utils.getUserData().idVendor,
 				betCreated:this.dataToSend.bet_created,
 				betCanceled:this.dataToSend.bet_canceled,
-				isActive:this.dataToSend.is_active
+				isActive:this.dataToSend.is_active,
+				betType : this.dataToSend.bet_type,
+				betBorratinaType : this.dataToSend.bet_borratina_type
 				
 			},
 			url : Utils.getServices().uploadBet,

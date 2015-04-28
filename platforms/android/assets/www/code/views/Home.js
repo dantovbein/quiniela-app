@@ -21,4 +21,8 @@ Home.prototype.initialize = function(){
 	$(this.node).find(".bet-borratina-home").click( { context:this }, function(e){
 		$( e.data.context ).trigger( { type:Globals.GET_BET_BORRATINA_HOME } );
 	} );
+
+	$(this.node).find(".synchronize").click( { context:this }, function(e){
+		$( e.data.context ).trigger( Globals.SYNCHRONIZE );
+	} );
 }

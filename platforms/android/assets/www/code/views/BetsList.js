@@ -8,7 +8,6 @@ BetsList.prototype.constructor = BetsList;
 
 BetsList.prototype.initializeParameters = function(){
 	GenericView.prototype.initializeParameters.call(this);
-	this.path = "views/betsList.html";
 }
 
 BetsList.prototype.initialize = function(){
@@ -36,12 +35,20 @@ BetsList.prototype.initialize = function(){
 BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
 	var hasBets = false;
-	var betsData = Utils.getMainInstance().lotteryDataBase.queryAll("bets",{ sort : [["ID","DESC"]] })
+	var betsData = Utils.getMainInstance().lotteryDataBase.queryAll("bets",{ query:{ bet_type:this.betType },sort : [["ID","DESC"]] });
 	betsData.forEach(function(b){
 		if(b.is_active==1) {
 			hasBets = true;
-			var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
-			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
+			switch(this.betType){
+				case 1:
+					var itemBetsList = new ItemBetsQuinielaList( { container : $(this.node).find(".bets-list-data"), betData : b } );
+					break;
+				case 2:
+					var itemBetsList = new ItemBetsBorratinaList( { container : $(this.node).find(".bets-list-data"), betData : b } );
+					break;
+			}
+			
+			$(itemBetsList).bind( Globals.SHOW_ITEM_OPTIONS, { context:this }, this.showItemOptions, false );
 		}
 	},this);
 
@@ -52,7 +59,7 @@ BetsList.prototype.getAllBets = function() {
 
 BetsList.prototype.showItemOptions = function(e) {
 	Utils.getOverlay();
-	var betOptions = new PopupBetOptions( { container:$("body"), _parent:e.data.context, data:e.item.betData } );
+	var betOptions = new PopupBetOptions( { container:$("body"), _parent:e.data.context, betData:e.betData } );
 }
 
 BetsList.prototype.removeBet = function(bet) {
@@ -104,17 +111,19 @@ BetsList.prototype.uploadBet = function(id) {
 			data : {
 				idLocal:this.betId,
 				betNumber:this.dataToSend.bet_number,
-				betData:this.dataToSend.bet_data,
 				betPosition:this.dataToSend.bet_position,
 				betAmount:this.dataToSend.bet_amount,
+				betNumberRedoblona:this.dataToSend.bet_number_redoblona,
+				betPositionRedoblona:this.dataToSend.bet_position_redoblona,
+				betData:this.dataToSend.bet_data,
 				betTotalAmount:this.dataToSend.bet_total_amount,
 				idDevice:Utils.getUserData().idDevice,
 				idVendor:Utils.getUserData().idVendor,
 				betCreated:this.dataToSend.bet_created,
 				betCanceled:this.dataToSend.bet_canceled,
 				isActive:this.dataToSend.is_active,
-				betNumberRedoblona:this.dataToSend.bet_number_redoblona,
-				betPositionRedoblona:this.dataToSend.bet_position_redoblona,
+				betType : this.dataToSend.bet_type,
+				betBorratinaType : this.dataToSend.bet_borratina_type
 			},
 			url : Utils.getServices().uploadBet,
 			success : function(r){

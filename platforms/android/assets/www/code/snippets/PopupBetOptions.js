@@ -9,7 +9,7 @@ PopupBetOptions.prototype.constructor = PopupBetOptions;
 PopupBetOptions.prototype.initializeParameters = function() {
 	Popup.prototype.initializeParameters.call(this);
 	this._parent = this.config._parent;
-	this.betData = this.config.data;
+	this.betData = this.config.betData;
 	this.path = "snippets/popupBetOptions.html";
 	this.snippetData = [ this.betData.ID, this.betData.bet_number ];
 }

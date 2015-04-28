@@ -18,29 +18,24 @@ ul.bets-list-data {
 li.item-bets-list {
 	width: 96%;
 	padding: 1.5rem 2% 1rem 2%;
-	border-bottom: solid .2rem #fff;
+	border-bottom: solid .2rem #D2D2D2;
 	text-align: center;
-	/*cursor: pointer;*/
 }
 
-/*li.item-bets-list:hover {
-	background-color: #c2c2c2;
-}*/
-
 ul.list-header li:nth-child(1), li.item-bets-list ul li:nth-child(1){
-	width: 20%;
+	width: 24%;
 }
 
 ul.list-header li:nth-child(2), li.item-bets-list ul li:nth-child(2){
-	width: 24%;
+	width: 18%;
 }
 
 ul.list-header li:nth-child(3), li.item-bets-list ul li:nth-child(3){
-	width: 24%;
+	width: 25%;
 }
 
 ul.list-header li:nth-child(4), li.item-bets-list ul li:nth-child(4){
-	width: 24%;
+	width: 25%;
 }
 
 ul.list-header li:nth-child(5), li.item-bets-list ul li:nth-child(5){

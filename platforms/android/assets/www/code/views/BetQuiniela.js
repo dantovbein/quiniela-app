@@ -73,8 +73,8 @@ BetQuiniela.prototype.saveBet = function() {
 
 	currentBet.betAmount = partialAmount;
 	currentBet.betPosition = betPosition;
-	//currentBet.betTotalAmount = this.getTotalAmount();
-	currentBet.betTotalAmount = $(this.node).find(".total-amount").val();
+	
+	currentBet.betTotalAmount = this.getTotalAmount();
 	currentBet.betCreated = new Date();
 
 	var id = (this.betData.ID != undefined) ? this.betData.ID : -1;

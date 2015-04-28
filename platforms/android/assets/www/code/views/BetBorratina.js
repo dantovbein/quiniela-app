@@ -41,20 +41,48 @@ BetBorratina.prototype.generateInputNumbers = function(){
 
 BetBorratina.prototype.saveBet = function() {
 	var currentBet = {};	
+	
 	var betNumber = "";
 	var totalNumbers = $(".wrapper-container-numbers input[type='number']").length;
+	var numbersBetted = [];
+	this.numberRepeated = false;
 	for(var b=0;b<totalNumbers;b++){
 		var inp = $(".wrapper-container-numbers input[type='number']")[b];
-		if($(inp).val() != "" && $(inp).val().length == 2 && !isNaN($(inp).val())){
-			if(b<totalNumbers-1){
-				betNumber += ($(inp).val() + "-");
-			}else{
-				betNumber += $(inp).val();
-			}			
-		}else{
-			alert("Error en la carga de números");
+		if($(inp).val() == ""){
+			alert("No pueden haber números sin cargar");
 			return false;
+		}else if($(inp).val().length != 2){
+			alert("Los números apostados deben ser de 2 dígitos");
+			return false;
+		}else if(isNaN($(inp).val())){
+			alert("Los números apostados deben ser números reales");
+			return false;
+		}else{
+			var numberBetted = $(inp).val();
+			if(numbersBetted.length == 0){
+				numbersBetted.push(numberBetted);
+				console.log("Agrego",numberBetted);
+			}else{
+				numbersBetted.forEach(function(n){
+					console.log(numberBetted,n,numbersBetted);
+					if(numberBetted==n){
+						this.numberRepeated = true;
+						return false;
+					}
+				},this);
+				numbersBetted.push(numberBetted);
+			}
+			if(b<totalNumbers-1){
+				betNumber += (numberBetted + "-");
+			}else{
+				betNumber += numberBetted;
+			}
+			//numbersBetted.push($(inp).val());	
 		}
+	}
+	if(this.numberRepeated) {
+		alert("No pueden haber números repetidos");
+		return false;
 	}
 	currentBet.betNumber = betNumber;
 
@@ -74,13 +102,13 @@ BetBorratina.prototype.saveBet = function() {
 	}
 	currentBet.betAmount = partialAmount;
 	
-	//currentBet.betTotalAmount = this.getTotalAmount();
-	currentBet.betTotalAmount = $(this.node).find(".total-amount").val();
+	currentBet.betTotalAmount = this.getTotalAmount();
 	currentBet.betCreated = new Date();
 
 	var id = (this.betData.ID != undefined) ? this.betData.ID : -1;
 	Utils.getMainInstance().lotteryDataBase.insertOrUpdate("bets", {ID: id}, { 	
 																				bet_type : this.betType,
+																				bet_borratina_type : this.gameType,
 																				bet_number : currentBet.betNumber,
 																				bet_data : currentBet.bet,
 																				bet_amount : currentBet.betAmount,
@@ -110,8 +138,7 @@ BetBorratina.prototype.generateTodaysLotteries = function() {
 	for(var i=0; i<$(this.node).find(".wrapper-container-lotteries .lottery .item-checkbox").length;i++){
 		var c = $($(this.node).find(".wrapper-container-lotteries .lottery .item-checkbox")[i]);
 		var n = $(c).attr("data-name");
-		if(n != 1 && n != 2){
-			
+		if(n != 1 && n != 2){			
 			if(itemsToDelete.length==0){
 				itemsToDelete.push(n);
 			}else{

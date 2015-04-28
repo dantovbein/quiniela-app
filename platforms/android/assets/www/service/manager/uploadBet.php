@@ -14,6 +14,8 @@
 	if(isset($_POST['isActive'])) { $isActive = $_POST['isActive']; }
 	if(isset($_POST['betNumberRedoblona'])) { $betNumberRedoblona = $_POST['betNumberRedoblona']; }
 	if(isset($_POST['betPositionRedoblona'])) { $betPositionRedoblona = $_POST['betPositionRedoblona']; }
+	if(isset($_POST['betType'])) { $betType = $_POST['betType']; }
+	if(isset($_POST['betBorratinaType'])) { $betBorratinaType = $_POST['betBorratinaType']; }
 
 	$data = array(
 	    "betNumber" => $betNumber,
@@ -27,7 +29,9 @@
 	    "betCanceled" => $betCanceled,
 	    "isActive" => $isActive,
 	    "betNumberRedoblona" => $betNumberRedoblona,
-	    "betPositionRedoblona" => $betPositionRedoblona
+	    "betPositionRedoblona" => $betPositionRedoblona,
+	    "betType" => $betType,
+	    "betBorratinaType" => $betBorratinaType
 	);
 
 	$storage = new Storage();
