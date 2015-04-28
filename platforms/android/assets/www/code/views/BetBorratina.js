@@ -10,9 +10,8 @@ BetBorratina.prototype.initializeParameters = function(){
 	Bet.prototype.initializeParameters.call(this);
 	this.path = "views/betBorratina.html";
 	this.dataSnippet = ["Ingresar jugada Borratina"];
-	this.betNumbers = [];
 	this.betType = Utils.getBetType(Globals.BET_BORRATINA);
-	
+	this.betNumbers = [];
 }
 
 BetBorratina.prototype.addHandlers = function() {
@@ -26,38 +25,37 @@ BetBorratina.prototype.addHandlers = function() {
 
 BetBorratina.prototype.initialize = function(){
 	Bet.prototype.initialize.call(this);
-	this.gameType = parseFloat($(this.node).find("#bet-borratina-type").val());
+	this.gameType = this.getGameType();
 	this.generateInputNumbers();
 }
 
+BetBorratina.prototype.getGameType = function(){
+	return parseFloat($(this.node).find("#bet-borratina-type").val());
+}
+
 BetBorratina.prototype.generateInputNumbers = function(){
-	this.betNumbers = [];
 	var totalBetNumbersBetted = $(this.node).find(".wrapper-container-numbers input[type='number']").length;
 	for(var j=0;j<totalBetNumbersBetted;j++){
 		this.betNumbers.push($($(this.node).find(".wrapper-container-numbers input[type='number']")[j]).val());
 	}
-
 	$(this.node).find(".wrapper-container-numbers").empty();
 	for(var i=0;i<this.gameType;i++){
 		var placeholder = (this.betNumbers[i]!=undefined && this.betNumbers[i]!="") ? "value='" + this.betNumbers[i] + "'" : "placeholder='Número " + (i+1) + "'";
 		var inp = "<input id='bet-number-" + i + "' type='number' " + placeholder + "  maxlength='2' />";
 		$(this.node).find(".wrapper-container-numbers").append(inp);
 	}
-	//$(this.node).find(".list-lotteries .item-checkbox input:checkbox").prop("checked",false);
-	//$(this.node).find(".list-lotteries .item-checkbox input:checkbox").prop("disabled",false);
 	if(this.gameType==8){
 		for(var l=0;l<$(this.node).find(".wrapper-container-lotteries .lottery").length;l++){
 			var lottery = $($(this.node).find(".wrapper-container-lotteries .lottery")[l]);
 			for(var m=0;m<$(lottery).find(".item-checkbox input:checkbox").length;m++){
 				var checkbox = $($(lottery).find(".item-checkbox input:checkbox")[m]);
-				debugger;
 				if($(checkbox).prop("checked")){
 					$(lottery).find(".item-checkbox input:checkbox").prop("checked",true);
-					//$(checkbox).prop("checked",true);
 				}
 			}
 		}
 	}
+	this.betNumbers = [];
 }
 
 BetBorratina.prototype.saveBet = function() {
@@ -82,10 +80,8 @@ BetBorratina.prototype.saveBet = function() {
 			var numberBetted = $(inp).val();
 			if(numbersBetted.length == 0){
 				numbersBetted.push(numberBetted);
-				console.log("Agrego",numberBetted);
 			}else{
 				numbersBetted.forEach(function(n){
-					console.log(numberBetted,n,numbersBetted);
 					if(numberBetted==n){
 						this.numberRepeated = true;
 						return false;

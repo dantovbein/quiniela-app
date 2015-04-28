@@ -31,18 +31,22 @@ section.view.home .content-view {
 }
 
 .item-menu-home .icon {
-	width: 21.5rem;
-	height: 21.5rem;
+	width: 23rem;
+	height: 23rem;
 }
 
 .icon-generate-bet {	
-	background-position: -20px -881px;
+	background-position: -2px -863px;
+}
+
+.icon-bet-home {
+  	background-position: -209px -863px;
 }
 
 .icon-show-bets {	
-	background-position: -841px -878px;
+	background-position: -824px -863px;
 }
 
 .icon-synchronize {	
-	background-position: -629px -878px;
+	background-position: -612px -863px;
 }

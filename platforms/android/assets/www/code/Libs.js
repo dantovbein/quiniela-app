@@ -42,7 +42,6 @@ Libs.prototype.getFiles = function(_lib_) {
 				"code/views/Bet.js",
 				"code/views/BetQuiniela.js",
 				"code/views/BetBorratina.js",
-				"code/views/BetEditor.js",
 				"code/views/BetQuinielaEditor.js",
 				"code/views/BetBorratinaEditor.js",
 				"code/views/BetsList.js",

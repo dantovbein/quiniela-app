@@ -11,7 +11,8 @@ PopupBetOptions.prototype.initializeParameters = function() {
 	this._parent = this.config._parent;
 	this.betData = this.config.betData;
 	this.path = "snippets/popupBetOptions.html";
-	this.snippetData = [ this.betData.ID, this.betData.bet_number ];
+	//debugger;
+	this.dataSnippet = [ this.betData.ID, this.betData.bet_number ];
 }
 
 PopupBetOptions.prototype.addHandlers  = function() {
