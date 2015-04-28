@@ -1,27 +1,23 @@
 function TempLockView(config) {
-	View.call(this,config);	
+	GenericView.call(this,config);	
 }
 
-inheritPrototype(TempLockView, View);
+inheritPrototype(TempLockView, GenericView);
 
 TempLockView.prototype.constructor = TempLockView;
 
 TempLockView.prototype.initializeParameters = function(){
-	View.prototype.initializeParameters.call(this);
-	this.pathSnippet = "views/tempLockView.html";
+	GenericView.prototype.initializeParameters.call(this);
+	this.path = "views/tempLockView.html";
 }
 
 TempLockView.prototype.initialize = function(){
-	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
-	this.node = $.parseHTML(snippet.getSnippet());
+	GenericView.prototype.initialize.call(this);
 	$(this.node).css({ height : $(document).height() });
-	this.container.append(this.node);
-	this.addHandlers();	
 }
 
 TempLockView.prototype.addHandlers = function() {
-	View.prototype.addHandlers.call(this);
+	GenericView.prototype.addHandlers.call(this);
 	
 	$(this.node).find(".btn-sign-in").click( { context:this }, this.signIn );
 }

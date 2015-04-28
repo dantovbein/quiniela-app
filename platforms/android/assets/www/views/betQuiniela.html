@@ -1,0 +1,69 @@
+<section class="view bet bet-quiniela">
+    <header class="header-view">
+        <h1 class="main-title">[0]</h1>
+    </header>
+    <div class="content-view">
+        <ul class="list-options-bet">
+            <li class="item-bet-option">
+                <label>Número:</label>
+                <input id="bet-number" type="number" /> 
+            </li>
+            <li id="container-lotteries" class="item-bet-option">
+                <label>Loterias disponibles:</label>
+                <div class="wrapper-container-lotteries"></div>
+            </li>
+            <li class="item-bet-option">
+                <label>Importe por jugada:</label>
+                <input id="partial-amount" type="number" />
+            </li>
+             <li class="item-bet-option">
+                <label>Posición:</label>
+                <select id="bet-position">
+                    <option></option>
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>20</option>
+                </select>
+            </li>
+            <li class="item-bet-option item-redoblona">
+                <h1 class="main-title">Jugada de Redoblona</h1>
+                <ul class="sublist-item-bet-option">
+                    <li class="item-bet-option">
+                        <label>Número Redoblona:</label>
+                        <input id="bet-number-redoblona" type="number" /> 
+                    </li>
+                    <li class="item-bet-option">
+                        <label>Posición Redoblona:</label>
+                        <select id="bet-position-redoblona">
+                            <option></option>
+                            <option>1</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                        </select>
+                    </li>
+                </ul>
+            </li>          
+            <li class="item-bet-option item-total-amount">
+                <span>Importe total: $<span class="total-amount">0</span></span>
+            </li>
+        </ul>
+        <nav class="commands-nav">
+            <ul class="commands-list">
+                <li>
+                    <div class="btn btn-cancel">
+                        <div class="icon icon-cancel"></div>
+                        <span>CANCELAR</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="btn btn-save">
+                        <div class="icon icon-save"></div>
+                        <span>GUARDAR</span>                        
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>    
+</section>

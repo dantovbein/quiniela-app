@@ -15,6 +15,9 @@ Snippet.prototype.getSnippet = function() {
        	url:    this.config.path,
        	success: function(result) {
         	element = self.render(String(result),self.config.data);
+        },
+        error : function(error){
+        	debugger;
         }
     });          
 	return element;

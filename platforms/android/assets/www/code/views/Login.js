@@ -1,27 +1,23 @@
 function Login(config) {
-	View.call(this,config);	
+	GenericView.call(this,config);	
 }
 
-inheritPrototype(Login, View);
+inheritPrototype(Login, GenericView);
 
 Login.prototype.constructor = Login;
 
 Login.prototype.initializeParameters = function(){
-	View.prototype.initializeParameters.call(this);
-	this.pathSnippet = "views/login.html";
+	GenericView.prototype.initializeParameters.call(this);
+	this.path = "views/login.html";
 }
 
 Login.prototype.initialize = function(){
-	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
-	this.node = $.parseHTML(snippet.getSnippet());
+	GenericView.prototype.initialize.call(this);
 	$(this.node).css({ height : $(document).height() });
-	this.container.append(this.node);
-	this.addHandlers();	
 }
 
 Login.prototype.addHandlers = function() {
-	View.prototype.addHandlers.call(this);
+	GenericView.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-sign-in").click( { context:this }, this.signIn );
 }
 

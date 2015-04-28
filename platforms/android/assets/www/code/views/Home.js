@@ -1,33 +1,24 @@
 function Home(config) {
-	View.call(this,config);
+	GenericView.call(this,config);
 }
 
-inheritPrototype(Home, View);
+inheritPrototype(Home, GenericView);
 
 Home.prototype.constructor = Home;
 
 Home.prototype.initializeParameters = function(){
-	View.prototype.initializeParameters.call(this);	
-	this.pathSnippet = "views/home.html";
+	GenericView.prototype.initializeParameters.call(this);	
+	this.path = "views/home.html";
 }
 
 Home.prototype.initialize = function(){
-	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
-	this.node = $.parseHTML(snippet.getSnippet());
-	this.container.append(this.node);
-
-	$(this.node).find(".generate-bet").click( { context:this }, function(e){
-		$( e.data.context.node ).trigger( "generateBet" );
+	GenericView.prototype.initialize.call(this);
+	
+	$(this.node).find(".bet-quiniela-home").click( { context:this }, function(e){
+		$( e.data.context ).trigger( { type:Globals.GET_BET_QUINIELA_HOME } );
 	} );
 
-	$(this.node).find(".show-bets").click( { context:this }, function(e){
-		$( e.data.context.node ).trigger( "showBets" );
+	$(this.node).find(".bet-borratina-home").click( { context:this }, function(e){
+		$( e.data.context ).trigger( { type:Globals.GET_BET_BORRATINA_HOME } );
 	} );
-
-	$(this.node).find(".synchronize").click( { context:this }, function(e){
-		$( e.data.context.node ).trigger( "synchronize" );
-	} );
-
-	this.addHandlers();	
 }

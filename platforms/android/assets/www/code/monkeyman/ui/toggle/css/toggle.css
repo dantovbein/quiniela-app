@@ -1,0 +1,62 @@
+.ui-toggle,.mask-wrapper-toggle-btn {
+	width: 72px;
+	height: 26px;
+	border-radius: 22px;
+}
+
+.ui-toggle {
+	transition: background-color 0.15s ease;
+	background-color: #d5d5d5;
+	border: solid 1px #C3C3C3;
+	float: left;
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
+}
+
+.wrapper-toggle-btn {
+	width: 100%;
+	height: 26px;
+}
+
+.mask-wrapper-toggle-btn {
+	width: 200%;
+	height: 26px;
+	position: relative;
+}
+
+.toggle-section {
+	width: 50%;
+	height: 26px;
+	float: left;
+	position: relative;
+}
+
+.toggle-section.mode-off {
+	background-color: rgb(245, 89, 89);
+}
+
+.toggle-section.mode-on {
+	background-color: rgb(108, 211, 108);
+}
+
+.mode-desc {
+	color: #fff;
+	font-size: 11px;
+	line-height: 26px;
+}
+
+
+.toggle-ball {
+	width: 22px;
+	height: 22px;
+	border-radius: 11px;	
+	background-color: #fff;
+	border: solid 1px #C3C3C3;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	position: absolute;
+}

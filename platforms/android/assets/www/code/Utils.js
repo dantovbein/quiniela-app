@@ -93,9 +93,10 @@ var Utils = {
 		return (now <= limit);
 	},
 	compareHours : function(sampleTime) {
+		var limit = 30;
 		var time1 = new Date();
 		var splitTime = sampleTime.split(":");
-		time1.setHours(splitTime[0],splitTime[1]-10,0);
+		time1.setHours(splitTime[0],splitTime[1]-limit,0);
 		var now = new Date();
 		return (now <= time1);
 	},
@@ -118,6 +119,16 @@ var Utils = {
 	},
 	removeOverlay : function() {
 		if($(".overlay").length > 0) $(".overlay").remove();
+	},
+	getBetType : function(b){
+		switch(b){
+			case Globals.BET_QUINIELA:
+				return 1;
+				break;
+			case Globals.BET_BORRATINA:
+				return 2;
+				break;
+		}
 	},
 	getLotteryType : function(value) {
 		switch(value) {

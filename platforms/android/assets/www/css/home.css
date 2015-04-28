@@ -1,5 +1,5 @@
 section.view.home .content-view {
-	padding-top: 10rem;
+	/*padding-top: 10rem;*/
 }
 
 .list-menu-home {
@@ -14,9 +14,7 @@ section.view.home .content-view {
 	float: left;
 }
 
-.item-menu-home:nth-child(even) {
-	/*margin-right: 0;*/
-}
+.item-menu-home:nth-child(even) { }
 
 .btn-home {
 	width: 100%;

@@ -8,5 +8,5 @@ ChangeTimeLockView.prototype.constructor = ChangeTimeLockView;
 
 ChangeTimeLockView.prototype.initializeParameters = function(){
 	LockView.prototype.initializeParameters.call(this);
-	this.pathSnippet = "views/changeTimeLockView.html";
+	this.path = "views/changeTimeLockView.html";
 }

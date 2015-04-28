@@ -1,27 +1,22 @@
 function LockView(config) {
-	View.call(this,config);	
+	GenericView.call(this,config);	
 }
 
-inheritPrototype(LockView, View);
+inheritPrototype(LockView, GenericView);
 
 LockView.prototype.constructor = LockView;
 
 LockView.prototype.initializeParameters = function(){
-	View.prototype.initializeParameters.call(this);
-	//this.pathSnippet = "views/lockView.html";
+	GenericView.prototype.initializeParameters.call(this);
 }
 
 LockView.prototype.initialize = function(){
-	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
-	this.node = $.parseHTML(snippet.getSnippet());
+	GenericView.prototype.initialize.call(this);
 	$(this.node).css({ height : $(document).height() });
-	this.container.append(this.node);
-	this.addHandlers();	
 }
 
 LockView.prototype.addHandlers = function() {
-	View.prototype.addHandlers.call(this);
+	GenericView.prototype.addHandlers.call(this);
 	$(this.node).find(".btn-sign-in").click( { context:this }, this.signIn );
 }
 
@@ -53,7 +48,6 @@ LockView.prototype.signIn = function(e) {
 				}				
 			},
 			error : function(error) {
-				//errorElement.text("error",error);
 				alert("Problemas con el servidor o sin conexión a la red");
 				Utils.removeMessage();
 			}

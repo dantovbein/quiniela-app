@@ -1,19 +1,26 @@
 <?php
 class Storage {
 	
-	/*public $host = "localhost";
-	public $server = "root";
+	public $host = "";	
+	public $server = "";
 	public $password = "";
-	public $dataBase = "quiniela";*/
-
-	public $host = "192.186.248.103";
-	public $server = "yoviajoriveras";
-	public $password = "Lucho1974";
-	public $dataBase = "quiniela";
-	
+	public $dataBase = "";
 	private $sql;
 
-	public function Storage() { }
+	public function Storage() {
+		$debug = !true;
+		if($debug) {
+			$this->host = "localhost";	
+			$this->server = "root";
+			$this->password = "";
+			$this->dataBase = "quiniela";
+		} else {
+			$this->host = "192.186.248.103";	
+			$this->server = "yoviajoriveras";
+			$this->password = "Lucho1974";
+			$this->dataBase = "quiniela";
+		}
+	}
 
 	private function connect() {
 		$this->sql = mysql_connect($this->host , $this->server , $this->password) or die ('Error al conectarse a sql');

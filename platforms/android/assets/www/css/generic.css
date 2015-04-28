@@ -75,6 +75,14 @@ li {
 	float: left;
 }
 
+.quiniela {
+	background-color: #64A2B2 !important;
+}
+
+.borratina {
+	background-color: #12B571 !important;
+}
+
 .item-bet-option input {
 	background-color: #fff;
 	border-radius: 1.5rem;

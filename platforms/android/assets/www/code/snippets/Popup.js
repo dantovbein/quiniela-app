@@ -1,22 +1,14 @@
 function Popup(config) {
-	this.config = config;
-	this.initializeParameters();
-	this.initialize();
+	GenericSnippet.call(this,config);
 }
+
+inheritPrototype(Popup,GenericSnippet);
 
 Popup.prototype.constructor = Popup;
 
 Popup.prototype.initializeParameters = function() {
 	this.container = this.config.container;
 	this.snippetData = [];
-}
-
-Popup.prototype.initialize = function() {
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : this.snippetData });
-	this.node = $.parseHTML(snippet.getSnippet());
-	this.container.append(this.node);
-
-	this.addHandlers();
 }
 
 Popup.prototype.addHandlers  = function() {

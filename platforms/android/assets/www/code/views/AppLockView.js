@@ -8,5 +8,5 @@ AppLockView.prototype.constructor = AppLockView;
 
 AppLockView.prototype.initializeParameters = function(){
 	LockView.prototype.initializeParameters.call(this);
-	this.pathSnippet = "views/appLockView.html";
+	this.path = "views/appLockView.html";
 }

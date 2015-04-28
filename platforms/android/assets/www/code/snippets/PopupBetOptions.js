@@ -8,14 +8,10 @@ PopupBetOptions.prototype.constructor = PopupBetOptions;
 
 PopupBetOptions.prototype.initializeParameters = function() {
 	Popup.prototype.initializeParameters.call(this);
-	this.betData = this.config.data;
-	this.pathSnippet = "snippets/popupBetOptions.html";
 	this._parent = this.config._parent;
-}
-
-PopupBetOptions.prototype.initialize = function() {
+	this.betData = this.config.data;
+	this.path = "snippets/popupBetOptions.html";
 	this.snippetData = [ this.betData.ID, this.betData.bet_number ];
-	Popup.prototype.initialize.call(this);
 }
 
 PopupBetOptions.prototype.addHandlers  = function() {
@@ -27,8 +23,6 @@ PopupBetOptions.prototype.addHandlers  = function() {
 
 PopupBetOptions.prototype.onClickRemove = function(e) {
 	e.data.context.destroy();
-	/*$(document).trigger({ 	type : "removeBet",
-							betId : e.data.context.betData.ID });*/
 	e.data.context._parent.removeBet(e.data.context.betData);
 	
 }
@@ -41,8 +35,6 @@ PopupBetOptions.prototype.onClickEdit = function(e) {
 
 PopupBetOptions.prototype.onClickSincronize = function(e) {
 	e.data.context.destroy();
-	/*$(document).trigger({ 	type : "sincronizeBet",
-							betId : e.data.context.betData.ID } );*/
 	e.data.context._parent.uploadBet(e.data.context.betData.ID);
 }
 

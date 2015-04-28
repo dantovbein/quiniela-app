@@ -24,18 +24,29 @@ App.prototype.configure = function() {
 	this.createDataBase();
 	Utils.setMainInstance(this);
 	$(document).bind( "removePopup", { context:this }, this.removePopup,false );
+	
 	$(document).bind( "appTemporaryUnlocked", { context:this }, function(e){
+		e.stopImmediatePropagation();
 		localStorage.setItem("is_temporary_locked","0");
 		e.data.context.startTimerLockApp();
 	},false );
-	$(document).bind( "betEditor", { context:this }, this.editBet,false );
+	
+	$(document).bind( "betEditor", { context:this },function(e){ 
+		e.stopImmediatePropagation();
+		e.data.context.editBet();
+	},false );
+
 	$(document).bind( "blockUser", { context:this }, function(e){
+		e.stopImmediatePropagation();
 		localStorage.setItem("is_locked", 1);
 		e.data.context.getAppLockView();
 	},false );
+	
 	$(document).bind("resetBetView", { context:this }, function(e){
+		e.stopImmediatePropagation();
 		e.data.context.getHome();
 	},false );
+	
 	this.delay = 1000 * (Utils.getLimitMinute() * 60);
 	this.startTimer();
 	this.currentResetTimer = 0;
@@ -44,6 +55,7 @@ App.prototype.configure = function() {
 		this.startTimerLockApp();
 	}
 	$(document).click( {context:this}, function(e){
+		e.stopImmediatePropagation();
     	e.data.context.currentResetTimer = 0;
   	});
   	this.views = [];
@@ -172,14 +184,22 @@ App.prototype.removeContent = function() {
 	if($(".popup").length > 0) {
 		$(".popup").remove();
 	}
+
+	$("main").empty();
 }
 
 App.prototype.getHeader = function() {
 	var header = new Header( { container : $("body") } );
-	//header.initialize();
 
-	$(header.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); }, false);
-	$(header.node).bind( "userSettings", { context:this }, function(e) { e.data.context.getSettings(); },false);
+	$(header.node).bind( "home", { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.getHome(); 
+	}, false);
+	
+	$(header.node).bind( "userSettings", { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.getSettings(); 
+	},false);
 }
 
 App.prototype.getLogin = function() {
@@ -194,7 +214,10 @@ App.prototype.getLogin = function() {
 	var login = new Login( { container : $("main") } );
 	this.views.push(login);
 
-	$(login.node).bind( "home", { context:this }, function(e) { e.data.context.getHome(); },false);  	
+	$(login.node).bind( "home", { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.getHome();
+	},false);  	
 }
 
 App.prototype.getHome = function() {
@@ -216,15 +239,26 @@ App.prototype.getHome = function() {
 		this.getAppLockView();
 		return false;
 	} else {
-		if($("header.default-header").length == 0) this.getHeader();
+		if($("header.default-header").length == 0) {
+			this.getHeader();
+		}
+		
 		this.removeContent();
 
 		var home = new Home( { container : $("main") } );
 		this.views.push(home);
 
-		$(home.node).bind( "generateBet", { context:this }, function(e) { e.data.context.generateBet(); },false);
-	  	$(home.node).bind( "showBets", { context:this }, function(e) { e.data.context.getBets(); });
-	  	$(home.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); });
+		$(home).bind( Globals.GET_BET_QUINIELA_HOME, { context:this }, function(e) { 
+			e.stopImmediatePropagation();
+			e.data.context.getBet({ betType:Globals.BET_QUINIELA });
+			//e.data.context.getBetQuinielaHome();
+		},false);
+
+		$(home).bind( Globals.GET_BET_BORRATINA_HOME, { context:this }, function(e) { 
+			e.stopImmediatePropagation();
+			e.data.context.getBet({ betType:Globals.BET_BORRATINA });
+			//e.data.context.getBetBorratinaHome(); 
+		},false);
 
 	  	this.startTimerToCheckChangedTime();	
 	}
@@ -235,98 +269,158 @@ App.prototype.getHome = function() {
 	}
 }
 
-App.prototype.getAppLockView = function() {
-	if($("header.default-header").length > 0) $("header.default-header").remove();
+App.prototype.getBet = function(b) {
 	this.removeContent();
-	var appLockView = new AppLockView( { container : $("main") } );
-	this.views.push(appLockView);
 
-	$(appLockView.node).bind( "home", { context:this }, function(e) { 
-		e.data.context.unlockApp(); 
+	this.currentBetType = b.betType;
+
+	switch(this.currentBetType){
+		case Globals.BET_QUINIELA:
+			var view = new BetQuinielaHome({ container : $("main") });
+			break;
+		case Globals.BET_BORRATINA:
+			var view = new BetBorratinaHome({ container : $("main") });
+			break;
+	}
+
+	$(view).bind( Globals.GENERATE_BET, { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.generateBet(); 
 	},false);
+	
+	$(view).bind( Globals.SHOW_BETS, { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.showBets();
+	});
+	
+	$(view).bind( Globals.SYNCHRONIZE, { context:this }, function(e) {
+		e.stopImmediatePropagation();
+		e.data.context.synchronize();
+	});
+
+	this.views.push(view);
+
 }
 
-App.prototype.getChangeTimeLockView = function() {
-	if($("header.default-header").length > 0) $("header.default-header").remove();
+/*App.prototype.getBetQuinielaHome = function() {
 	this.removeContent();
-	var changeTimeLockView = new ChangeTimeLockView( { container : $("main") } );
-	this.views.push(changeTimeLockView);
-
-	$(changeTimeLockView.node).bind( "home", { context:this }, function(e) { 
-		e.data.context.unlockChangedTime(); 
+	var view = new BetQuinielaHome({ container : $("main") });
+	$(view).bind( Globals.GENERATE_BET, { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.generateBet(); 
 	},false);
+	
+	$(view).bind( Globals.SHOW_BETS, { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.showBets();
+	});
+	
+	$(view).bind( Globals.SYNCHRONIZE, { context:this }, function(e) {
+		e.stopImmediatePropagation();
+		e.data.context.synchronize();
+	});
+
+	this.views.push(view);
 }
 
-App.prototype.isLocked = function() {
-	var today = new Date();
-	var expiration = new Date(Utils.getUserData().expiration);
-	if(parseInt(Utils.getUserData().isLocked) == 1){
-		return true;
-	}else if (today > expiration) {
-		return true;
-	} else {
-		return false;
-	}
+App.prototype.getBetBorratinaHome = function() {
+	this.removeContent();
+	var view = new BetBorratinaHome({ container : $("main") });
+	this.views.push(view);
 }
+*/
 
-App.prototype.unlockApp = function() {
-	localStorage.setItem("is_locked", 0);
-	this.lotteryDataBase.deleteRows("bets")
-	this.getHome();
-}
+/*App.prototype.generateBet = function() {
+	this.removeContent();
+	this.bet = new BetGenerator({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
+	this.views.push(this.bet);
 
-App.prototype.unlockChangedTime = function() {
-	localStorage.setItem("changed_time", 0);
-	this.lotteryDataBase.deleteRows("bets")
-	this.lastTimes = [];
-	this.getHome();
-}
+	$(this.bet.node).bind( "newBet", { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.generateBet();
+	});
 
+	$(this.bet.node).bind( "cancel", { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.getHome();
+	});
 
-App.prototype.getSettings = function() {
-	if($(".view.user-settings").length == 0) {
-		this.userSettings = new UserSettings( { container : $("body") } );
-		//this.userSettings.initialize();
-
-		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); },false);
-		$(this.userSettings.node).bind( "logout", { context:this }, function(e) { e.data.context.getLogin(); },false);
-		$(this.userSettings.node).bind( "synchronize", { context:this }, function(e) { e.data.context.synchronize(); },false);
-	} else {
-		this.userSettings.show();
-	}
-}
+}*/
 
 App.prototype.generateBet = function() {
 	this.removeContent();
-	this.bet = new BetGenerator({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
-	//this.bet.initialize();
-	this.views.push(this.bet);
 
-	//$(bet.node).bind( "bets", { context:this }, function(e) { e.data.context.getBets(); });
-	$(this.bet.node).bind( "newBet", { context:this }, function(e) { e.data.context.generateBet(); });
-	$(this.bet.node).bind( "cancel", { context:this }, function(e) { e.data.context.getHome(); });
+	switch(this.currentBetType) {
+		case Globals.BET_QUINIELA:
+			var bet = new BetQuiniela({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
+			break;
+		case Globals.BET_BORRATINA:
+			var bet = new BetBorratina({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
+			break;
+	}
+	
+	//this.bet = new BetGenerator({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData) ) });
+	
 
+	$(bet).bind( Globals.NEW_BET, { context:this }, function(e) { 
+		debugger;
+		e.stopImmediatePropagation();
+		e.data.context.generateBet();
+	});
+
+	$(bet).bind( Globals.CANCEL, { context:this }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.getHome();
+	});
+
+	this.views.push(bet);
+	
 }
 
-App.prototype.getBets = function() {
+App.prototype.showBets = function() {
 	this.removeContent();
 	this.bets = new BetsList({ container : $("main") });
-	//this.bets.initialize();
 	this.views.push(this.bet);
 }
 
 
-App.prototype.editBet = function(e) {
+App.prototype.editBet = function() {
 	if(!Utils.checkBetLimit(e.betData)) {
 		alert("No se puede editar la apuesta");
 		return false;
 	}
 	e.data.context.removeContent();
 	this.bet = new BetEditor({ container : $("main"), todayslotteries : Utils.getTodayLotteries(Utils.getLotteriesData(this.lotteryData)), betData : e.betData });
-	//this.bet.initialize();
 	e.data.context.views.push(this.bet);
 
-	$(this.bet.node).bind( "newBet", { context:e.data.context }, function(e) { e.data.context.getBets(); },false);
+	$(this.bet.node).bind( Globals.NEW_BET, { context:e.data.context }, function(e) { 
+		e.stopImmediatePropagation();
+		e.data.context.showBets();
+	},false);
+}
+
+App.prototype.getSettings = function() {
+	if($(".view.user-settings").length == 0) {
+		this.userSettings = new UserSettings( { container : $("body") } );
+
+		$(this.userSettings.node).bind( "bets", { context:this }, function(e) { 
+			e.stopImmediatePropagation();
+			e.data.context.showBets();
+		},false);
+		
+		$(this.userSettings.node).bind( "logout", { context:this }, function(e) {
+			e.stopImmediatePropagation();
+			e.data.context.getLogin();
+		},false);
+		
+		$(this.userSettings.node).bind( "synchronize", { context:this }, function(e) {
+			e.stopImmediatePropagation();
+			e.data.context.synchronize();
+		},false);
+	
+	} else {
+		this.userSettings.show();
+	}
 }
 
 App.prototype.removePopup = function() {
@@ -428,6 +522,55 @@ App.prototype.uploadBet = function(bet) {
 			}
 		});
 	}
+}
+
+App.prototype.getAppLockView = function() {
+	if($("header.default-header").length > 0) $("header.default-header").remove();
+	this.removeContent();
+	var appLockView = new AppLockView( { container : $("main") } );
+	this.views.push(appLockView);
+
+	$(appLockView.node).bind( "home", { context:this }, function(e) {
+		e.stopImmediatePropagation();
+		e.data.context.unlockApp(); 
+	},false);
+}
+
+App.prototype.getChangeTimeLockView = function() {
+	if($("header.default-header").length > 0) $("header.default-header").remove();
+	this.removeContent();
+	var changeTimeLockView = new ChangeTimeLockView( { container : $("main") } );
+	this.views.push(changeTimeLockView);
+
+	$(changeTimeLockView.node).bind( "home", { context:this }, function(e) {
+		e.stopImmediatePropagation();
+		e.data.context.unlockChangedTime(); 
+	},false);
+}
+
+App.prototype.isLocked = function() {
+	var today = new Date();
+	var expiration = new Date(Utils.getUserData().expiration);
+	if(parseInt(Utils.getUserData().isLocked) == 1){
+		return true;
+	}else if (today > expiration) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+App.prototype.unlockApp = function() {
+	localStorage.setItem("is_locked", 0);
+	this.lotteryDataBase.deleteRows("bets")
+	this.getHome();
+}
+
+App.prototype.unlockChangedTime = function() {
+	localStorage.setItem("changed_time", 0);
+	this.lotteryDataBase.deleteRows("bets")
+	this.lastTimes = [];
+	this.getHome();
 }
 
 App.prototype.sendEmail4BetDigits = function(betNumber){

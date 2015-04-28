@@ -1,21 +1,18 @@
 function BetsList(config) {
-	View.call(this,config);	
+	GenericView.call(this,config);	
 }
 
-inheritPrototype(BetsList, View);
+inheritPrototype(BetsList, GenericView);
 
 BetsList.prototype.constructor = BetsList;
 
 BetsList.prototype.initializeParameters = function(){
-	View.prototype.initializeParameters.call(this);
-	this.pathSnippet = "views/betsList.html";
+	GenericView.prototype.initializeParameters.call(this);
+	this.path = "views/betsList.html";
 }
 
 BetsList.prototype.initialize = function(){
-	View.prototype.initialize.call(this);
-	var snippet = new Snippet( { "path" : this.pathSnippet, "data" : [] });
-	this.node = $.parseHTML(snippet.getSnippet());
-	this.container.append(this.node);
+	GenericView.prototype.initialize.call(this);
 	
 	var today = new Date();
 	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
@@ -39,13 +36,11 @@ BetsList.prototype.initialize = function(){
 BetsList.prototype.getAllBets = function() {
 	$(this.node).find(".bets-list-data").empty();
 	var hasBets = false;
-	//var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
 	var betsData = Utils.getMainInstance().lotteryDataBase.queryAll("bets",{ sort : [["ID","DESC"]] })
 	betsData.forEach(function(b){
 		if(b.is_active==1) {
 			hasBets = true;
 			var itemBetsList = new ItemBetsList( { container : $(this.node).find(".bets-list-data"), betData : b } );
-			//itemBetsList.initialize();
 			$(itemBetsList.node).bind( "showItemOptions", { context:this }, this.showItemOptions , false );
 		}
 	},this);
@@ -58,7 +53,6 @@ BetsList.prototype.getAllBets = function() {
 BetsList.prototype.showItemOptions = function(e) {
 	Utils.getOverlay();
 	var betOptions = new PopupBetOptions( { container:$("body"), _parent:e.data.context, data:e.item.betData } );
-	//betOptions.initialize();
 }
 
 BetsList.prototype.removeBet = function(bet) {

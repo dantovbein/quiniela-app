@@ -9,7 +9,7 @@ BetEditor.prototype.constructor = BetEditor;
 BetEditor.prototype.initializeParameters = function(){
 	Bet.prototype.initializeParameters.call(this);
 	this.betData = this.config.betData;
-	this.pathSnippet = "views/bet.html";
+	this.path = "views/bet.html";
 	this.dataSnippet = ["Editar jugada"];
 }
 
