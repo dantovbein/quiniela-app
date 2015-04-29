@@ -4,8 +4,8 @@ header('Access-Control-Allow-Origin: *');
 if(isset($_POST['betNumber'])) { $betNumber = $_POST['betNumber']; }
 if(isset($_POST['vendorName'])) { $vendorName = $_POST['vendorName']; }
 
-$to = "alertas@gyoviajoriveras.com";
-$subject = $vendorName . " ha subido una apuesta de 4 dígitos (" . $betNumber . ")";
+$to = "alertas@yoviajoriveras.com";
+$subject = $vendorName . " ha subido una apuesta de 4 digitos (" . $betNumber . ")";
 $message = '<div style="width:800px;height:230px;background-color:#FCFCFC;position:relative;margin:0 auto;display:block;color:#000000;">
 				<div style="width:800px;height:73px;background-color:#004056;float:left;border-bottom:solid 5px #F1623D;position:relative;">
 					<div style="width:312px;height:73px;">
@@ -16,7 +16,7 @@ $message = '<div style="width:800px;height:230px;background-color:#FCFCFC;positi
 					<ul style="display:inline-block;list-style:none;width:600px;">
 						<li style="margin-botom:10px;float:left;display:block;width:600px;">
 							<p style="font-size:20px;">
-								<span style="float:left;">Número apostado:</span>
+								<span style="float:left;">Numero apostado:</span>
 								<span style="font-weight:bold;float:left;margin-left:5px;">' . $betNumber . '</span>
 							</p>
 						</li>

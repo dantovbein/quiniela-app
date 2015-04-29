@@ -98,8 +98,8 @@ BetBorratina.prototype.saveBet = function() {
 		}
 	}
 	if(this.numberRepeated) {
-		alert("No pueden haber números repetidos");
-		return false;
+	//	alert("No pueden haber números repetidos");
+	//	return false;
 	}
 	currentBet.betNumber = betNumber;
 
