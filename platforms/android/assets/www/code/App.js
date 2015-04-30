@@ -360,6 +360,10 @@ App.prototype.editBet = function(betData) {
 	}
 
 	// Cheaquear si ya fue sincronizada
+	if(betData.bet_sent == 1) {
+		alert("La jugada ya se sincronizó previamente");
+		return false;
+	}
 
 	this.removeContent();
 
