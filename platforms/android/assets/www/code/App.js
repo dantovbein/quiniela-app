@@ -150,7 +150,7 @@ App.prototype.checkBets = function() {
 		});
 	},this);
 	this.lotteryDataBase.commit();
-	this.synchronize();
+	this.synchronizeByTimer();
 }
 
 App.prototype.createDataBase = function() {
@@ -353,10 +353,14 @@ App.prototype.showBets = function(betType) {
 
 
 App.prototype.editBet = function(betData) {
+	debugger;
 	if(!Utils.checkBetLimit(betData)) {
 		alert("No se puede editar la apuesta");
 		return false;
 	}
+
+	// Cheaquear si ya fue sincronizada
+
 	this.removeContent();
 
 
@@ -405,19 +409,48 @@ App.prototype.synchronize = function() {
 	this.totalToSychronize = 0;
 	this.totalSychronized = 0;
 
-	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");	
 
 	betsData.forEach(function(b){
-		if(b.is_editable==0) {
-			this.totalToScronize++;
-		} 
+		if(b.bet_sent == 0) {
+			this.totalToSychronize++;
+		}		
+	},this);
+
+	if(this.totalToSychronize > 0) {
+		Utils.showMessage("Sincronizando las apuestas con el servidor");
+	}else{
+		alert("No hay jugadas para sincronizar");
+	}
+
+	betsData.forEach(function(b){
 		if(b.bet_sent == 0) {
 			this.uploadBet(b);
 		}		
 	},this);
-	if(this.totalToScronize > 0) {
-		Utils.showMessage("Sincronizando las apuestas con el servidor");
+	
+}
+
+App.prototype.synchronizeByTimer = function() {
+	if(this.userSettings)
+		this.userSettings.hide();
+
+	this.totalToSychronize = 0;
+	this.totalSychronized = 0;
+
+	var betsData = Utils.getMainInstance().lotteryDataBase.query("bets");
+
+	betsData.forEach(function(b){
+		if(b.bet_sent == 0) {
+			this.totalToSychronize++;
+			this.uploadBet(b);
+		}		
+	},this);
+
+	if(this.totalToSychronize == 0) {
+		console.log("No hay jugadas para sincronizar");
 	}
+	
 }
 
 App.prototype.uploadBet = function(bet) {
@@ -440,7 +473,6 @@ App.prototype.uploadBet = function(bet) {
 	if(Utils.getMainInstance().lotteryDataBase.query("bets",{ID:this.betLocalId})[0].bet_sent == 1) {
 		console.log("La jugada ya se sincronizó previamente");
 	}else {
-		debugger;
 		$.ajax({
 			context : this,
 			async : false,
@@ -476,7 +508,7 @@ App.prototype.uploadBet = function(bet) {
 						this.bets.getAllBets();
 					}
 					console.log("Se sincronizo automaticamente la apuesta");
-
+					
 					if(this.dataToSend.bet_number.length == 4){
 						this.sendEmail4BetDigits(this.dataToSend.bet_number);
 					}			
@@ -485,13 +517,17 @@ App.prototype.uploadBet = function(bet) {
 					console.log("No se pudo sincronizar automaticamente la apuesta");
 				}
 				this.totalSychronized++;
+				debugger;
 				if(this.totalSychronized == this.totalToSychronize){
 					Utils.removeMessage();
 				}				
 			},
 			error : function(error) {
 				debugger;
+
 				console.log("Problemas con el servidor o sin conexión a la red");
+				//alert("Problemas con el servidor o sin conexión a la red");
+				Utils.removeMessage();
 			}
 		});
 	}
